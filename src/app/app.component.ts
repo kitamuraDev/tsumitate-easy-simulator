@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CalculateService } from './shared/services/calculate.service';
 import type { Tsumitate, Output } from './shared/types/tsumitate';
+import { TsumitateDatabaseService } from './core/tsumitate-database.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import type { Tsumitate, Output } from './shared/types/tsumitate';
 })
 export class AppComponent {
   private readonly calcService = inject(CalculateService);
+  private readonly dbService = inject(TsumitateDatabaseService);
   tsumitate!: Tsumitate;
 
   inputs = new FormGroup({
@@ -59,5 +61,8 @@ export class AppComponent {
 
     // Outputのセット
     await this.setTsumitateOutput(output);
+
+    // DB登録
+    this.dbService.add(this.tsumitate);
   }
 }
