@@ -1,7 +1,20 @@
 <div class="grid h-screen place-content-center bg-white px-4">
-  <h1 class="uppercase tracking-widest text-gray-500">
-    積立かんたんシュミレーター
-  </h1>
+  <form [formGroup]="inputs">
+    <div>
+      <label for="amount">月間積立投資額: </label>
+      <input id="amount" type="number" formControlName="amountReqired" />
+    </div>
+    <div>
+      <label for="year">投資期間: </label>
+      <input id="year" type="number" formControlName="yearRequired" />
+    </div>
+    <div>
+      <label for="rate">想定利回り: </label>
+      <input id="rate" type="number" formControlName="rate" />
+    </div>
+
+    <button (click)="onCalculate()">計算する</button>
+  </form>
 </div>
 
 <router-outlet></router-outlet>
