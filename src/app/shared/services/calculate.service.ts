@@ -54,7 +54,7 @@ export class CalculateService {
    * @returns 年間積立投資額
    */
   private convertToYearlyAmounts(monthlyAmounts: number[]): number[] {
-    return monthlyAmounts.map(amount => amount * 12);
+    return monthlyAmounts.map(amount => amount * 10000 * 12);
   }
 
   /**
