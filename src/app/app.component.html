@@ -2,18 +2,41 @@
   <form [formGroup]="inputs">
     <div>
       <label for="amount">月間積立投資額: </label>
-      <input id="amount" type="number" formControlName="amountReqired" />
+      <input id="amount" type="number" formControlName="amountReqired" required min="1" max="10" (input)="onInput()" />
+      @if (inputs.get('amountReqired')?.dirty && inputs.get('amountReqired')?.getError('required')) {
+        <p>必須項目です</p>
+      } @else if (inputs.get('amountReqired')?.dirty && inputs.get('amountReqired')?.getError('min')) {
+        <p>1以上の数値を入力してください</p>
+      } @else if (inputs.get('amountReqired')?.dirty && inputs.get('amountReqired')?.getError('max')) {
+        <p>10以下の数値を入力してください</p>
+      }
     </div>
     <div>
       <label for="year">投資期間: </label>
-      <input id="year" type="number" formControlName="yearRequired" />
+      <input id="year" type="number" formControlName="yearRequired" required min="1" max="40" (input)="onInput()" />
+      @if (inputs.get('yearRequired')?.dirty && inputs.get('yearRequired')?.getError('required')) {
+        <p>必須項目です</p>
+      } @else if (inputs.get('yearRequired')?.dirty && inputs.get('yearRequired')?.getError('min')) {
+        <p>1以上の数値を入力してください</p>
+      } @else if (inputs.get('yearRequired')?.dirty && inputs.get('yearRequired')?.getError('max')) {
+        <p>40以下の数値を入力してください</p>
+      } @else if (inputs.get('yearRequired')?.dirty && inputs.get('yearRequired')?.getError('isNotInteger')) {
+        <p>整数値を入力してください</p>
+      }
     </div>
     <div>
       <label for="rate">想定利回り: </label>
-      <input id="rate" type="number" formControlName="rate" />
+      <input id="rate" type="number" formControlName="rate" required min="0" max="20" (input)="onInput()" />
+      @if (inputs.get('rate')?.dirty && inputs.get('rate')?.getError('required')) {
+        <p>必須項目です</p>
+      } @else if (inputs.get('rate')?.dirty && inputs.get('rate')?.getError('min')) {
+        <p>0以上の数値を入力してください</p>
+      } @else if (inputs.get('rate')?.dirty && inputs.get('rate')?.getError('max')) {
+        <p>20以下の数値を入力してください</p>
+      }
     </div>
 
-    <button (click)="onCalculate()">計算する</button>
+    <button [disabled]="isAbnormalInput" (click)="onCalculate()">計算する</button>
   </form>
 </div>
 
