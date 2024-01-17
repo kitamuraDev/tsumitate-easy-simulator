@@ -23,7 +23,7 @@ export class AppComponent {
   isAbnormalInput = true;
 
   inputs = new FormGroup({
-    amountReqired: new FormControl(30000, [Validators.required, Validators.min(1), Validators.max(10)]),
+    amountReqired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(10)]),
     yearRequired: new FormControl(1, [
       Validators.required,
       Validators.min(1),
