@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalculateService } from './shared/services/calculate.service';
 import type { Tsumitate, Output } from './shared/types/tsumitate';
 import { TsumitateDatabaseService } from './core/tsumitate-database.service';
+import { ValidationService } from './shared/services/validation.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,27 @@ import { TsumitateDatabaseService } from './core/tsumitate-database.service';
 export class AppComponent {
   private readonly calcService = inject(CalculateService);
   private readonly dbService = inject(TsumitateDatabaseService);
+  private readonly validationService = inject(ValidationService);
+
   tsumitate!: Tsumitate;
+  isAbnormalInput = true;
 
   inputs = new FormGroup({
-    amountReqired: new FormControl(30000), // 必須。max: 100000。min: 100。小数点は入力できない。
-    yearRequired: new FormControl(3), // 必須。max: 40。min: 1。小数点は入力できない。
-    rate: new FormControl(5), // 必須。max: 20。min: 0。小数点は入力できない。
+    amountReqired: new FormControl(30000, [Validators.required, Validators.min(1), Validators.max(10)]),
+    yearRequired: new FormControl(1, [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(40),
+      this.validationService.integerValueValidator(),
+    ]),
+    rate: new FormControl(5, [Validators.required, Validators.min(0), Validators.max(20)]),
   });
+
+  onInput() {
+    // FormGroupにある全てのフォームのバリデーションが通れば `true` が返る
+    // [disabled]="" <- をfalseにするとボタン押下できるようになるため、`isAbnormalInput`に代入する際に反転させてる
+    this.isAbnormalInput = !this.inputs.valid;
+  }
 
   setTsumitateInput() {
     this.tsumitate = {
