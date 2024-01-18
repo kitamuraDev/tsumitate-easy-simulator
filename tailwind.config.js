@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,ts}"],
+  content: ['./src/**/*.{html,ts}', './node_modules/flowbite/**/*.js'],
   theme: {
     extend: {
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        inter: ['Inter', 'sans-serif'],
       },
     },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 };

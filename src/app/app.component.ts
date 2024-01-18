@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { CalculateService } from './shared/services/calculate.service';
 import type { Tsumitate, Output } from './shared/types/tsumitate';
 import { TsumitateDatabaseService } from './core/tsumitate-database.service';
 import { ValidationService } from './shared/services/validation.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +15,17 @@ import { ValidationService } from './shared/services/validation.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   private readonly calcService = inject(CalculateService);
   private readonly dbService = inject(TsumitateDatabaseService);
   private readonly validationService = inject(ValidationService);
 
   tsumitate!: Tsumitate;
   isAbnormalInput = true;
+
+  ngOnInit(): void {
+    initFlowbite();
+  }
 
   inputs = new FormGroup({
     amountReqired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(10)]),
