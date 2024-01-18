@@ -3,3 +3,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* spinボタンを削除 */
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    appearance: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: textfield !important;
+  }
+}
