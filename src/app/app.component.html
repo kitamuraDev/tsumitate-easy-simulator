@@ -1,3 +1,6 @@
+<app-header />
+<app-sidebar />
+
 <div class="grid h-screen place-content-center bg-white px-4">
   <form [formGroup]="inputs">
     <div>
@@ -35,7 +38,6 @@
         <p>20以下の数値を入力してください</p>
       }
     </div>
-
     <button [disabled]="isAbnormalInput" (click)="onCalculate()">計算する</button>
   </form>
 </div>

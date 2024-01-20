@@ -7,11 +7,13 @@ import type { Tsumitate, Output } from './shared/types/tsumitate';
 import { TsumitateDatabaseService } from './core/tsumitate-database.service';
 import { ValidationService } from './shared/services/validation.service';
 import { initFlowbite } from 'flowbite';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ReactiveFormsModule],
+  imports: [CommonModule, RouterOutlet, ReactiveFormsModule, HeaderComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
