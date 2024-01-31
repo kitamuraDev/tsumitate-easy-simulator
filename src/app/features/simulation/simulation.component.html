@@ -1,0 +1,209 @@
+<app-head-content [title]="'シュミレーション'" [hasDescription]="false" />
+<section class="sm:w-fit flex flex-col gap-8 sm:p-6">
+  <form [formGroup]="inputs">
+    <div class="space-y-2.5 p-4">
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'rate'" [isRequired]="true">想定利回り</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.rate, 'rate')" />
+            <input
+              id="rate"
+              type="number"
+              formControlName="rate"
+              required
+              min="0"
+              max="20"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.rate, 'rate')" />
+            <app-descriptive-text>%で</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('rate')?.getError('required')) {
+          <app-validation-warning-message>必須項目です</app-validation-warning-message>
+        } @else if (inputs.get('rate')?.getError('min')) {
+          <app-validation-warning-message>0以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('rate')?.getError('max')) {
+          <app-validation-warning-message>20以下の数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'amountRequired'" [isRequired]="true">毎月積立額</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.amountRequired, 'amountRequired')" />
+            <input
+              id="amountRequired"
+              type="number"
+              formControlName="amountRequired"
+              required
+              min="1"
+              max="10"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.amountRequired, 'amountRequired')" />
+            <app-descriptive-text>万円を</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('amountRequired')?.getError('required')) {
+          <app-validation-warning-message>必須項目です</app-validation-warning-message>
+        } @else if (inputs.get('amountRequired')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('amountRequired')?.getError('max')) {
+          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'yearRequired'" [isRequired]="true">投資期間</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.yearRequired, 'yearRequired')" />
+            <input
+              id="yearRequired"
+              type="number"
+              formControlName="yearRequired"
+              required
+              min="1"
+              max="40"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.yearRequired, 'yearRequired')" />
+            <app-descriptive-text>年間</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('yearRequired')?.getError('required')) {
+          <app-validation-warning-message>必須項目です</app-validation-warning-message>
+        } @else if (inputs.get('yearRequired')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearRequired')?.getError('max')) {
+          <app-validation-warning-message>40以下の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearRequired')?.getError('isNotInteger')) {
+          <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+    </div>
+
+    <div class="space-y-2.5 p-4 bg-gray-100">
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.amountAny1, 'amountAny1')" />
+            <input
+              id="amountAny1"
+              type="number"
+              formControlName="amountAny1"
+              min="1"
+              max="10"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.amountAny1, 'amountAny1')" />
+            <app-descriptive-text>万円を</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('amountAny1')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('amountAny1')?.getError('max')) {
+          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'yearAny1'" [isRequired]="false">投資期間</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.yearAny1, 'yearAny1')" />
+            <input
+              id="yearAny1"
+              type="number"
+              formControlName="yearAny1"
+              min="1"
+              max="40"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.yearAny1, 'yearAny1')" />
+            <app-descriptive-text>年間</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('yearAny1')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearAny1')?.getError('max')) {
+          <app-validation-warning-message>40以下の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearAny1')?.getError('isNotInteger')) {
+          <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'amountAny2'" [isRequired]="false">毎月積立額</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.amountAny2, 'amountAny2')" />
+            <input
+              id="amountAny2"
+              type="number"
+              formControlName="amountAny2"
+              min="1"
+              max="10"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.amountAny2, 'amountAny2')" />
+            <app-descriptive-text>万円を</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('amountAny2')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('amountAny2')?.getError('max')) {
+          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'yearAny2'" [isRequired]="false">投資期間</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.yearAny2, 'yearAny2')" />
+            <input
+              id="yearAny2"
+              type="number"
+              formControlName="yearAny2"
+              min="1"
+              max="40"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.yearAny2, 'yearAny2')" />
+            <app-descriptive-text>年間</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('yearAny2')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearAny2')?.getError('max')) {
+          <app-validation-warning-message>40以下の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearAny2')?.getError('isNotInteger')) {
+          <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+    </div>
+  </form>
+
+  <div class="flex flex-col sm:flex-row items-center gap-8">
+    <div class="flex items-center gap-6">
+      <p class="text-base sm:text-xl font-medium">積み立てると</p>
+      <app-base-button [isDisabled]="isAbnormalInput" (clickEvent)="onCalculate()">計算</app-base-button>
+    </div>
+    <div class="w-80 h-20 p-6 flex justify-between items-center bg-blue-100">
+      <span class="text-sm font-medium">最終評価額</span>
+      <div class="flex items-center gap-1">
+        @defer (when tsumitate) {
+          <app-display-amount-value [tsumitate]="tsumitate" />
+        }
+        <span class="text-sm font-medium">万円</span>
+      </div>
+    </div>
+  </div>
+</section>
