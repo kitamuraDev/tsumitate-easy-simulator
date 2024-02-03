@@ -9,7 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       [disabled]="isDisabled"
       (click)="clickEvent.emit()"
       class="
-        text-base font-medium text-center rounded-lg w-32 sm:w-36 h-11 sm:h-12 p-2 transition-opacity text-white
+        text-base font-medium text-center rounded-lg
+        {{ widthDefault }} {{ widthSm }} px-2 py-3 transition-opacity text-white
         {{ isDisabled ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70' }}
       "
     >
@@ -19,5 +20,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class BaseButtonComponent {
   @Input({ required: true }) isDisabled!: boolean;
+  @Input({ required: true }) widthDefault!: string;
+  @Input({ required: true }) widthSm!: string;
   @Output() clickEvent: EventEmitter<void> = new EventEmitter<void>();
 }
