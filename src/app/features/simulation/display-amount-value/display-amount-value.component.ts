@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Tsumitate } from '../../../shared/types/tsumitate';
+import { FormatService } from '../../../shared/services/format.service';
 
 @Component({
   selector: 'app-display-amount-value',
@@ -7,16 +8,11 @@ import { Tsumitate } from '../../../shared/types/tsumitate';
   imports: [],
   template: `
     <span class="text-2xl font-semibold">
-      {{ formatAmount(tsumitate.output.compoundInterestCalcResult) }}
+      {{ formatService.formatAmountToTenThousand(tsumitate.output.compoundInterestCalcResult) }}
     </span>
   `,
 })
 export class DisplayAmountValueComponent {
+  readonly formatService = inject(FormatService);
   @Input({ required: true }) tsumitate!: Tsumitate;
-
-  formatAmount(amount: number) {
-    const roundedDownToTenThousand = Math.floor(amount / 10000); // 万の位以下を切り捨て
-
-    return roundedDownToTenThousand.toLocaleString();
-  }
 }
