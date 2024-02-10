@@ -21,4 +21,14 @@ export class TsumitateDatabaseService extends Dexie {
   async add(tsumitate: Tsumitate) {
     await this.tsumitate.add(tsumitate);
   }
+
+  // 全件取得
+  async getAllTsumitate(): Promise<Tsumitate[]> {
+    return await this.tsumitate.toArray();
+  }
+
+  // 削除
+  async deleteTsumitate(id: number): Promise<void> {
+    await this.tsumitate.delete(id);
+  }
 }

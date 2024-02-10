@@ -10,4 +10,8 @@ export const routes: Routes = [
     path: 'simulation',
     loadComponent: () => import('./features/simulation/simulation.component'),
   },
+  {
+    path: 'history',
+    loadComponent: () => import('./features/history/history.component'),
+  },
 ];
