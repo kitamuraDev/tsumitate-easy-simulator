@@ -1,0 +1,36 @@
+<div class="overflow-x-auto shadow-md">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 whitespace-nowrap">
+    <thead class="text-xs text-gray-700 bg-gray-50">
+      <tr>
+        @for (headerName of tableHeaderNames; track $index) {
+          <th scope="col" class="px-6 py-3">
+            {{ headerName }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <!-- prettier-ignore -->
+    <tbody>
+      @for (tsumitate of tsumitateList(); track $index) {
+        <tr class="odd:bg-white even:bg-gray-50 border-b">
+          <td class="px-6 py-4">{{ tsumitate.input.rate }}%</td>
+          <td class="px-6 py-4">
+            {{ tsumitate.input.amounts[0] }}万円 ({{ tsumitate.input.years[0] }}年)<br class="sm:hidden" />
+            @if (tsumitate.input.amounts[1]) {
+              {{ tsumitate.input.amounts[1] }}万円 ({{ tsumitate.input.years[1] }}年)<br class="sm:hidden" />
+            }
+            @if (tsumitate.input.amounts[2]) {
+              {{ tsumitate.input.amounts[2] }}万円 ({{ tsumitate.input.years[2] }}年)
+            }
+          </td>
+          <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.simpleInterestCalcResult) }}万円</td>
+          <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.diff) }}万円</td>
+          <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.compoundInterestCalcResult) }}万円</td>
+          <td class="px-6 py-4">
+            <app-delete-button (delete)="deleteTsumitate.emit(tsumitate.id)" />
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
