@@ -128,7 +128,6 @@ export default class SimulationComponent {
 
     // Outputのセット
     await this.setTsumitateOutput(output);
-    console.log(this.tsumitate);
 
     // DB登録
     this.dbService.add(this.tsumitate);
