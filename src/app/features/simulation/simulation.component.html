@@ -206,7 +206,7 @@
       <span class="text-sm font-medium">最終評価額</span>
       <div class="flex items-center gap-1">
         @defer (when tsumitate) {
-          <app-display-amount-value [tsumitate]="tsumitate" />
+          <app-display-amount-value [compoundInterestCalcResult]="tsumitate.output.compoundInterestCalcResult" />
         }
         <span class="text-sm font-medium">万円</span>
       </div>

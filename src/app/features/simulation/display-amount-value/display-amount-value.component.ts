@@ -1,5 +1,4 @@
 import { Component, Input, inject } from '@angular/core';
-import { Tsumitate } from '../../../shared/types/tsumitate';
 import { FormatService } from '../../../shared/services/format.service';
 
 @Component({
@@ -8,11 +7,11 @@ import { FormatService } from '../../../shared/services/format.service';
   imports: [],
   template: `
     <span class="text-2xl font-semibold">
-      {{ formatService.formatAmountToTenThousand(tsumitate.output.compoundInterestCalcResult) }}
+      {{ formatService.formatAmountToTenThousand(compoundInterestCalcResult) }}
     </span>
   `,
 })
 export class DisplayAmountValueComponent {
   readonly formatService = inject(FormatService);
-  @Input({ required: true }) tsumitate!: Tsumitate;
+  @Input({ required: true }) compoundInterestCalcResult!: number;
 }
