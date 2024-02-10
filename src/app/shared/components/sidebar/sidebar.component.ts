@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { SidebarLinkComponent } from './sidebar-link/sidebar-link.component';
 
 export type SidebarLinkPath = '/overview' | '/simulation' | '/history';
@@ -16,7 +15,7 @@ type SidebarLinkInfoType = {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, SidebarLinkComponent],
+  imports: [SidebarLinkComponent],
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
