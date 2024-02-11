@@ -35,7 +35,7 @@ export default class SimulationComponent {
   private readonly validationService = inject(ValidationService);
 
   tsumitate!: Tsumitate;
-  isAbnormalInput = true;
+  isAbnormalInput = false;
 
   inputs = new FormGroup({
     amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(10)]),
