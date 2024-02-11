@@ -17,4 +17,9 @@ export const routes: Routes = [
     loadComponent: () => import('./features/history/history.component'),
     data: { title: '履歴' },
   },
+  {
+    path: '**',
+    loadComponent: () => import('./features/not-found/not-found.component'),
+    data: { title: '404 Not Found' },
+  },
 ];
