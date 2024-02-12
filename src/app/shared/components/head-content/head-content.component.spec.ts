@@ -8,16 +8,20 @@ describe('HeadContentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeadContentComponent]
-    })
-    .compileComponents();
-    
+      imports: [HeadContentComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(HeadContentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('タイトルが期待通りに表示されるか', () => {
+    const title = 'タイトル';
+    component.title = title;
+    fixture.detectChanges();
+
+    const titleElement = fixture.nativeElement.querySelector('h1');
+    expect(titleElement.textContent).toContain(title);
   });
 });

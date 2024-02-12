@@ -8,16 +8,20 @@ describe('DeleteButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DeleteButtonComponent]
-    })
-    .compileComponents();
-    
+      imports: [DeleteButtonComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DeleteButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('ボタン押下でクリックイベントが発火されるか', () => {
+    const emitSpy = jest.spyOn(component.delete, 'emit');
+
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
+
+    expect(emitSpy).toHaveBeenCalled();
   });
 });
