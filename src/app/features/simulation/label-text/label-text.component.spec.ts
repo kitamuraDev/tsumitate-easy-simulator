@@ -8,16 +8,28 @@ describe('LabelTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LabelTextComponent]
-    })
-    .compileComponents();
-    
+      imports: [LabelTextComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LabelTextComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('isRequiredがtrueの場合、ラベルが*付きで表示されるか', () => {
+    component.isRequired = true;
+    fixture.detectChanges();
+
+    const labelElement = fixture.nativeElement.querySelector('label');
+    expect(labelElement.querySelector('span')).toBeTruthy();
+    expect(labelElement.querySelector('span').textContent.trim()).toEqual('*');
+  });
+
+  it('isRequiredがfalseの場合、ラベルが*なしで表示されるか', () => {
+    component.isRequired = false;
+    fixture.detectChanges();
+
+    const labelElement = fixture.nativeElement.querySelector('label');
+    expect(labelElement.querySelector('span')).toBeNull();
   });
 });
