@@ -12,6 +12,7 @@ import { LabelTextComponent } from './label-text/label-text.component';
 import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
 import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
+import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
 @Component({
   selector: 'app-simulation',
@@ -26,6 +27,7 @@ import { HeadContentComponent } from '../../shared/components/head-content/head-
     DescriptiveTextComponent,
     BaseButtonComponent,
     DisplayAmountValueComponent,
+    ToggleButtonComponent,
   ],
   templateUrl: './simulation.component.html',
 })
@@ -36,6 +38,11 @@ export default class SimulationComponent {
 
   tsumitate!: Tsumitate;
   isAbnormalInput = false;
+  isOpenAnyInputsBlock = false;
+
+  toggleOpenAnyInputsBlock() {
+    this.isOpenAnyInputsBlock = !this.isOpenAnyInputsBlock;
+  }
 
   inputs = new FormGroup({
     amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(10)]),
