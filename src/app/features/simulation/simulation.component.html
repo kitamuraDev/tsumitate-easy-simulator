@@ -87,7 +87,12 @@
       </div>
     </div>
 
-    <div class="space-y-2.5 p-4 bg-gray-100">
+    <div class="p-2 flex items-center gap-2">
+      <app-toggle-button [isOpen]="isOpenAnyInputsBlock" (clickEvent)="toggleOpenAnyInputsBlock()" />
+      <p class="text-xs font-medium text-gray-900">後から積立額を変更する場合の入力項目</p>
+    </div>
+
+    <div class="space-y-2.5 p-4 bg-gray-100 {{ isOpenAnyInputsBlock ? 'block' : 'hidden' }}">
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
