@@ -93,6 +93,7 @@
     </div>
 
     <div class="space-y-2.5 p-4 bg-gray-100 {{ isOpenAnyInputsBlock ? 'block' : 'hidden' }}">
+      <!-- 任意入力 1 -->
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
@@ -143,6 +144,7 @@
           <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
         }
       </div>
+      <!-- 任意入力 2 -->
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'amountAny2'" [isRequired]="false">毎月積立額</app-label-text>
@@ -190,6 +192,57 @@
         } @else if (inputs.get('yearAny2')?.getError('max')) {
           <app-validation-warning-message>40以下の数値を入力してください</app-validation-warning-message>
         } @else if (inputs.get('yearAny2')?.getError('isNotInteger')) {
+          <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <!-- 任意入力 3 -->
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'amountAny3'" [isRequired]="false">毎月積立額</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.amountAny3, 'amountAny3')" />
+            <input
+              id="amountAny3"
+              type="number"
+              formControlName="amountAny3"
+              min="1"
+              max="10"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.amountAny3, 'amountAny3')" />
+            <app-descriptive-text>万円を</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('amountAny3')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('amountAny3')?.getError('max')) {
+          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
+          <app-label-text [id]="'yearAny3'" [isRequired]="false">積立期間</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.yearAny3, 'yearAny3')" />
+            <input
+              id="yearAny3"
+              type="number"
+              formControlName="yearAny3"
+              min="1"
+              max="40"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.yearAny3, 'yearAny3')" />
+            <app-descriptive-text>年間</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('yearAny3')?.getError('min')) {
+          <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearAny3')?.getError('max')) {
+          <app-validation-warning-message>40以下の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('yearAny3')?.getError('isNotInteger')) {
           <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
         }
       </div>

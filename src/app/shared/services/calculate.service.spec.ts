@@ -70,6 +70,27 @@ describe('CalculateService', () => {
     expect(result).toEqual(expectedSimpleInterest);
   });
 
+  it('【3】複利計算が正しく行われるか', () => {
+    const yearlyAmounts = [240000, 360000, 480000, 600000];
+    const years = [1, 2, 3, 3];
+    const rate = 1.05;
+    const expectedCompoundInterest = 5236137.94125;
+
+    const result = service['compoundInterestCalc'](yearlyAmounts, years, rate);
+
+    expect(result).toBeCloseTo(expectedCompoundInterest);
+  });
+
+  it('【3】単利計算（シンプルな合算）が正しく行われるか', () => {
+    const yearlyAmounts = [240000, 360000, 480000, 600000];
+    const years = [1, 2, 3, 3];
+    const expectedSimpleInterest = 4200000;
+
+    const result = service['simpleInterestCalc'](yearlyAmounts, years);
+
+    expect(result).toEqual(expectedSimpleInterest);
+  });
+
   it('正しく計算が行われ、期待通りのデータが取れるか', () => {
     const monthlyAmounts = [3, 4, 5];
     const years = [3, 5, 8];
