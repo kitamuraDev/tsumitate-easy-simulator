@@ -64,6 +64,12 @@ export default class SimulationComponent {
       Validators.max(40),
       this.validationService.integerValueValidator(),
     ]),
+    amountAny3: new FormControl(null, [Validators.min(1), Validators.max(10)]),
+    yearAny3: new FormControl(null, [
+      Validators.min(1),
+      Validators.max(40),
+      this.validationService.integerValueValidator(),
+    ]),
     rate: new FormControl(5, [Validators.required, Validators.min(0), Validators.max(20)]),
   });
 
@@ -93,16 +99,31 @@ export default class SimulationComponent {
       this.inputs.value.yearAny2,
     );
 
+    const resultAnyInput3 = this.validationService.isOneInputEmptyValidator(
+      this.inputs.value.amountAny3,
+      this.inputs.value.yearAny3,
+    );
+
     // `this.inputs.valid`は全てのフォームのバリデーションが通れば`true`が返る
     // `[disabled]=""`をfalseにするとボタン押下できるようになる。つまり、`&&`で繋いだ全ての条件を満たしたときにボタン押下できるようになる
-    this.isAbnormalInput = this.inputs.valid && resultAnyInput1 && resultAnyInput2 ? false : true;
+    this.isAbnormalInput = this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3 ? false : true;
   }
 
   setTsumitateInput() {
     this.tsumitate = {
       input: {
-        amounts: [this.inputs.value.amountRequired!, this.inputs.value.amountAny1!, this.inputs.value.amountAny2!],
-        years: [this.inputs.value.yearRequired!, this.inputs.value.yearAny1!, this.inputs.value.yearAny2!],
+        amounts: [
+          this.inputs.value.amountRequired!,
+          this.inputs.value.amountAny1!,
+          this.inputs.value.amountAny2!,
+          this.inputs.value.amountAny3!,
+        ],
+        years: [
+          this.inputs.value.yearRequired!,
+          this.inputs.value.yearAny1!,
+          this.inputs.value.yearAny2!,
+          this.inputs.value.yearAny3!,
+        ],
         rate: this.inputs.value.rate!,
       },
       output: {

@@ -20,7 +20,10 @@
               {{ tsumitate.input.amounts[1] }}万円 ({{ tsumitate.input.years[1] }}年)<br class="sm:hidden" />
             }
             @if (tsumitate.input.amounts[2]) {
-              {{ tsumitate.input.amounts[2] }}万円 ({{ tsumitate.input.years[2] }}年)
+              {{ tsumitate.input.amounts[2] }}万円 ({{ tsumitate.input.years[2] }}年)<br class="sm:hidden" />
+            }
+            @if (tsumitate.input.amounts[3]) {
+              {{ tsumitate.input.amounts[3] }}万円 ({{ tsumitate.input.years[3] }}年)
             }
           </td>
           <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.simpleInterestCalcResult) }}万円</td>
