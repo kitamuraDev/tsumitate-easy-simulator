@@ -39,7 +39,7 @@ describe('CalculateService', () => {
     expect(result).toBeCloseTo(expectedCompoundInterest);
   });
 
-  it('【1】単利計算（シンプルな合算）が正しく行われるか', () => {
+  it('【1】合算が正しく行われるか', () => {
     const yearlyAmounts = [360000];
     const years = [3];
     const expectedSimpleInterest = 1080000;
@@ -60,7 +60,7 @@ describe('CalculateService', () => {
     expect(result).toBeCloseTo(expectedCompoundInterest);
   });
 
-  it('【2】単利計算（シンプルな合算）が正しく行われるか', () => {
+  it('【2】合算が正しく行われるか', () => {
     const yearlyAmounts = [360000, 480000, 600000];
     const years = [3, 5, 8];
     const expectedSimpleInterest = 8280000;
@@ -81,7 +81,7 @@ describe('CalculateService', () => {
     expect(result).toBeCloseTo(expectedCompoundInterest);
   });
 
-  it('【3】単利計算（シンプルな合算）が正しく行われるか', () => {
+  it('【3】合算が正しく行われるか', () => {
     const yearlyAmounts = [240000, 360000, 480000, 600000];
     const years = [1, 2, 3, 3];
     const expectedSimpleInterest = 4200000;

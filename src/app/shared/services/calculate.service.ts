@@ -14,7 +14,7 @@ export class CalculateService {
    * @param monthlyAmounts 月間積立投資額
    * @param years 積立期間
    * @param rate 想定利回り（年率）
-   * @returns { 複利計算の結果, 単利計算の結果, 差分 }
+   * @returns { 複利計算の結果, 合算の結果, 差分 }
    */
   public tsumitateEasyCalculate = (monthlyAmounts: number[], years: number[], rate: number): {
     compoundInterestCalcResult: number;
@@ -39,7 +39,7 @@ export class CalculateService {
     ), 0);
   }
 
-  // 単利計算
+  // 合算
   private simpleInterestCalc(yearlyAmounts: number[], years: number[]): number {
     return yearlyAmounts.reduce((acc, curr, i) => (
       Array.from({ length: years[i] })
