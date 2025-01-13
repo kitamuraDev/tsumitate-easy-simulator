@@ -4,6 +4,34 @@
     <div class="space-y-2.5 p-4">
       <div>
         <div class="flex items-center">
+          <app-label-text [id]="'initialAsset'" [isRequired]="true">初期資産額</app-label-text>
+          <div class="flex items-center">
+            <app-decrement-button (decrement)="decrement(inputs.value.initialAsset, 'initialAsset')" />
+            <input
+              id="initialAsset"
+              type="number"
+              inputmode="numeric"
+              formControlName="initialAsset"
+              required
+              min="0"
+              max="1800"
+              (input)="updateFormValidState()"
+              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <app-increment-button (increment)="increment(inputs.value.initialAsset, 'initialAsset')" />
+            <app-descriptive-text>万円</app-descriptive-text>
+          </div>
+        </div>
+        @if (inputs.get('initialAsset')?.getError('required')) {
+          <app-validation-warning-message>必須項目です</app-validation-warning-message>
+        } @else if (inputs.get('initialAsset')?.getError('min')) {
+          <app-validation-warning-message>0以上の数値を入力してください</app-validation-warning-message>
+        } @else if (inputs.get('initialAsset')?.getError('max')) {
+          <app-validation-warning-message>1800以下の数値を入力してください</app-validation-warning-message>
+        }
+      </div>
+      <div>
+        <div class="flex items-center">
           <app-label-text [id]="'rate'" [isRequired]="true">想定利回り</app-label-text>
           <div class="flex items-center">
             <app-decrement-button (decrement)="decrement(inputs.value.rate, 'rate')" />

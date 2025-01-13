@@ -16,35 +16,46 @@ export class CalculateService {
    * @param rate 想定利回り（年率）
    * @returns { 複利計算の結果, 合算の結果, 差分 }
    */
-  public tsumitateEasyCalculate = (monthlyAmounts: number[], years: number[], rate: number): {
+  public tsumitateEasyCalculate = (initialAsset: number, monthlyAmounts: number[], years: number[], rate: number): {
     compoundInterestCalcResult: number;
     simpleInterestCalcResult: number;
     diff: number;
   } => {
+    const convertedInitialAsset = this.convertToManen(initialAsset);
     const yearlyAmounts = this.convertToYearlyAmounts(monthlyAmounts);
     const convertedRate = this.convertRate(rate);
 
-    const compoundInterestCalcResult = this.compoundInterestCalc(yearlyAmounts, years, convertedRate);
-    const simpleInterestCalcResult = this.simpleInterestCalc(yearlyAmounts, years);
+    const compoundInterestCalcResult = this.compoundInterestCalc(convertedInitialAsset, yearlyAmounts, years, convertedRate);
+    const simpleInterestCalcResult = this.simpleInterestCalc(convertedInitialAsset, yearlyAmounts, years);
     const diff = compoundInterestCalcResult - simpleInterestCalcResult;
 
     return { compoundInterestCalcResult, simpleInterestCalcResult, diff }
   };
 
   // 複利計算
-  private compoundInterestCalc(yearlyAmounts: number[], years: number[], rate: number): number {
+  private compoundInterestCalc(initialAsset: number, yearlyAmounts: number[], years: number[], rate: number): number {
     return yearlyAmounts.reduce((acc, curr, i) => (
       Array.from({ length: years[i] })
         .reduce<number>((prev) => (prev + curr) * rate, acc)
-    ), 0);
+    ), initialAsset);
   }
 
   // 合算
-  private simpleInterestCalc(yearlyAmounts: number[], years: number[]): number {
+  private simpleInterestCalc(initialAsset: number, yearlyAmounts: number[], years: number[]): number {
     return yearlyAmounts.reduce((acc, curr, i) => (
       Array.from({ length: years[i] })
         .reduce<number>((prev) => prev + curr, acc)
-    ), 0);
+    ), initialAsset);
+  }
+
+  /**
+   * 正の整数を万単位に変換
+   *
+   * @param initialAsset 初期資産
+   * @returns 万円
+   */
+  private convertToManen(initialAsset: number): number {
+    return initialAsset * 10000;
   }
 
   /**

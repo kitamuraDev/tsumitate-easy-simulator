@@ -14,5 +14,13 @@ export class HistoryTableComponent {
   @Output() deleteTsumitate: EventEmitter<number> = new EventEmitter<number>();
   readonly fmtService = inject(FormatService);
 
-  readonly tableHeaderNames = ['想定利回り', '毎月積立額（積立期間）', '運用金額', '評価損益', '最終評価額', '削除'];
+  readonly tableHeaderNames = [
+    '初期資産額',
+    '想定利回り',
+    '毎月積立額（積立期間）',
+    '運用金額',
+    '評価損益',
+    '最終評価額',
+    '削除',
+  ];
 }
