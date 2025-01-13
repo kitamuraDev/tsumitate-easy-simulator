@@ -10,8 +10,9 @@ export class TsumitateDatabaseService extends Dexie {
   constructor() {
     super('tsumitate');
 
-    this.version(1).stores({
-      tsumitate: '++id, *amounts, *years, rate, compoundInterestCalcResult, simpleInterestCalcResult, diff',
+    this.version(2).stores({
+      tsumitate:
+        '++id, initialAsset, *amounts, *years, rate, compoundInterestCalcResult, simpleInterestCalcResult, diff',
     });
 
     this.tsumitate = this.table('tsumitate');

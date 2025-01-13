@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <label for="{{ id }}" class="block w-32 sm:w-48 text-sm font-medium text-gray-900">
+    <label for="{{ id }}" class="block w-28 sm:w-48 text-sm font-medium text-gray-900">
       <ng-content />
       @if (isRequired) {
         <span class="text-red-700 text-base font-medium">*</span>

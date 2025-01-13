@@ -45,6 +45,7 @@ export default class SimulationComponent {
   }
 
   inputs = new FormGroup({
+    initialAsset: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(1800)]),
     amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(10)]),
     yearRequired: new FormControl(1, [
       Validators.required,
@@ -112,6 +113,7 @@ export default class SimulationComponent {
   setTsumitateInput() {
     this.tsumitate = {
       input: {
+        initialAsset: this.inputs.value.initialAsset!,
         amounts: [
           this.inputs.value.amountRequired!,
           this.inputs.value.amountAny1!,
@@ -149,6 +151,7 @@ export default class SimulationComponent {
 
     // 計算
     const output = await this.calcService.tsumitateEasyCalculate(
+      this.tsumitate.input.initialAsset,
       this.tsumitate.input.amounts,
       this.tsumitate.input.years,
       this.tsumitate.input.rate,
