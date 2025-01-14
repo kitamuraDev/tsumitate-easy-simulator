@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Input, Output } from '../types/tsumitate';
 
 // prettier-ignore
 @Injectable({
@@ -11,16 +12,12 @@ export class CalculateService {
    * ユースケース
    * 「n年はxx万円を積立てて、n年はxx万円を積立てる」ような、後から積立投資額を変更するケースに対応した複利計算
    *
-   * @param monthlyAmounts 月間積立投資額
-   * @param years 積立期間
-   * @param rate 想定利回り（年率）
-   * @returns { 複利計算の結果, 合算の結果, 差分 }
+   * @param input 入力
+   * @returns 出力
    */
-  public tsumitateEasyCalculate = (initialAsset: number, monthlyAmounts: number[], years: number[], rate: number): {
-    compoundInterestCalcResult: number;
-    simpleInterestCalcResult: number;
-    diff: number;
-  } => {
+  public tsumitateEasyCalculate = (input: Input): Output => {
+    const { initialAsset, amounts: monthlyAmounts, years, rate } = input;
+
     const convertedInitialAsset = this.convertToManen(initialAsset);
     const yearlyAmounts = this.convertToYearlyAmounts(monthlyAmounts);
     const convertedRate = this.convertRate(rate);

@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CalculateService } from './calculate.service';
+import { Input } from '../types/tsumitate';
 
 describe('CalculateService', () => {
   let service: CalculateService;
@@ -203,16 +204,18 @@ describe('CalculateService', () => {
   });
 
   it('【1】正しく計算が行われ、期待通りのデータが取れるか', () => {
-    const initialAsset = 0;
-    const monthlyAmounts = [3, 4, 5];
-    const years = [3, 5, 8];
-    const rate = 5;
+    const input: Input = {
+      initialAsset: 0,
+      amounts: [3, 4, 5],
+      years: [3, 5, 8],
+      rate: 5,
+    };
 
     const expectedCompoundInterest = 12377555;
     const expectedSimpleInterest = 8280000;
     const expectedDiff = expectedCompoundInterest - expectedSimpleInterest;
 
-    const result = service.tsumitateEasyCalculate(initialAsset, monthlyAmounts, years, rate);
+    const result = service.tsumitateEasyCalculate(input);
 
     expect(Math.trunc(result.compoundInterestCalcResult)).toEqual(expectedCompoundInterest);
     expect(result.simpleInterestCalcResult).toEqual(expectedSimpleInterest);
@@ -220,16 +223,18 @@ describe('CalculateService', () => {
   });
 
   it('【2】正しく計算が行われ、期待通りのデータが取れるか', () => {
-    const initialAsset = 115;
-    const monthlyAmounts = [3, 4, 5];
-    const years = [3, 5, 8];
-    const rate = 5;
+    const input: Input = {
+      initialAsset: 115,
+      amounts: [3, 4, 5],
+      years: [3, 5, 8],
+      rate: 5,
+    };
 
     const expectedCompoundInterest = 14887861;
     const expectedSimpleInterest = 9430000;
     const expectedDiff = expectedCompoundInterest - expectedSimpleInterest;
 
-    const result = service.tsumitateEasyCalculate(initialAsset, monthlyAmounts, years, rate);
+    const result = service.tsumitateEasyCalculate(input);
 
     expect(Math.trunc(result.compoundInterestCalcResult)).toEqual(expectedCompoundInterest);
     expect(result.simpleInterestCalcResult).toEqual(expectedSimpleInterest);

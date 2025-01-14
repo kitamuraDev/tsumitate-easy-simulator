@@ -150,12 +150,7 @@ export default class SimulationComponent {
     await this.setTsumitateInput();
 
     // 計算
-    const output = await this.calcService.tsumitateEasyCalculate(
-      this.tsumitate.input.initialAsset,
-      this.tsumitate.input.amounts,
-      this.tsumitate.input.years,
-      this.tsumitate.input.rate,
-    );
+    const output = await this.calcService.tsumitateEasyCalculate(this.tsumitate.input);
 
     // Outputのセット
     await this.setTsumitateOutput(output);
