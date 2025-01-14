@@ -37,4 +37,4 @@
 1. `git clone https://github.com/kitamuraDev/tsumitate-easy-simulator.git`
 2. `cd`コマンドでプロジェクトへ移動
 3. `npm install`
-4. `ng serve --open`
+4. `npm run dev`
