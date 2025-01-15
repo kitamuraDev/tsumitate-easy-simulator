@@ -1,17 +1,16 @@
-import { Component, Input, inject } from '@angular/core';
-import { FormatService } from '../../../shared/services/format.service';
+import { Component, Input } from '@angular/core';
+import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 
 @Component({
   selector: 'app-display-amount-value',
   standalone: true,
-  imports: [],
+  imports: [TruncateToTenThousandsPipe],
   template: `
     <span class="text-2xl font-semibold">
-      {{ formatService.formatAmountToTenThousand(compoundInterestCalcResult) }}
+      {{ compoundInterestCalcResult | truncateToTenThousands }}
     </span>
   `,
 })
 export class DisplayAmountValueComponent {
-  readonly formatService = inject(FormatService);
   @Input({ required: true }) compoundInterestCalcResult!: number;
 }

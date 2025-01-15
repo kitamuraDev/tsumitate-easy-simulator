@@ -27,9 +27,9 @@
               {{ tsumitate.input.amounts[3] }}万円 ({{ tsumitate.input.years[3] }}年)
             }
           </td>
-          <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.simpleInterestCalcResult) }}万円</td>
-          <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.diff) }}万円</td>
-          <td class="px-6 py-4">{{ fmtService.formatAmountToTenThousand(tsumitate.output.compoundInterestCalcResult) }}万円</td>
+          <td class="px-6 py-4">{{ tsumitate.output.simpleInterestCalcResult | truncateToTenThousands }}万円</td>
+          <td class="px-6 py-4">{{ tsumitate.output.diff | truncateToTenThousands }}万円</td>
+          <td class="px-6 py-4">{{ tsumitate.output.compoundInterestCalcResult | truncateToTenThousands }}万円</td>
           <td class="px-6 py-4">
             <app-delete-button (delete)="deleteTsumitate.emit(tsumitate.id)" />
           </td>
