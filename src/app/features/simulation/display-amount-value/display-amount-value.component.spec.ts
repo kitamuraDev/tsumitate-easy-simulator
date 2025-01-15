@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DisplayAmountValueComponent } from './display-amount-value.component';
-import { FormatService } from '../../../shared/services/format.service';
+import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 
 describe('DisplayAmountValueComponent', () => {
   let component: DisplayAmountValueComponent;
   let fixture: ComponentFixture<DisplayAmountValueComponent>;
-  let formatService: FormatService;
+  let truncateToTenThousandsPipe: TruncateToTenThousandsPipe;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DisplayAmountValueComponent],
-      providers: [FormatService],
+      providers: [TruncateToTenThousandsPipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DisplayAmountValueComponent);
     component = fixture.componentInstance;
-    formatService = TestBed.inject(FormatService);
+    truncateToTenThousandsPipe = TestBed.inject(TruncateToTenThousandsPipe);
     fixture.detectChanges();
   });
 
@@ -24,7 +24,7 @@ describe('DisplayAmountValueComponent', () => {
     const amount = 1280000;
     const formattedAmount = '128';
 
-    jest.spyOn(formatService, 'formatAmountToTenThousand');
+    jest.spyOn(truncateToTenThousandsPipe, 'transform');
 
     component.compoundInterestCalcResult = amount;
     fixture.detectChanges();
@@ -37,7 +37,7 @@ describe('DisplayAmountValueComponent', () => {
     const amount = 12825000;
     const formattedAmount = '1,282';
 
-    jest.spyOn(formatService, 'formatAmountToTenThousand');
+    jest.spyOn(truncateToTenThousandsPipe, 'transform');
 
     component.compoundInterestCalcResult = amount;
     fixture.detectChanges();

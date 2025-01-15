@@ -1,18 +1,17 @@
-import { Component, EventEmitter, Input, Output, WritableSignal, inject } from '@angular/core';
-import { FormatService } from '../../../shared/services/format.service';
+import { Component, EventEmitter, Input, Output, WritableSignal } from '@angular/core';
 import { Tsumitate } from '../../../shared/types/tsumitate';
 import { DeleteButtonComponent } from '../../../shared/components/delete-button/delete-button.component';
+import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 
 @Component({
   selector: 'app-history-table',
   standalone: true,
-  imports: [DeleteButtonComponent],
+  imports: [DeleteButtonComponent, TruncateToTenThousandsPipe],
   templateUrl: 'history-table.component.html',
 })
 export class HistoryTableComponent {
   @Input({ required: true }) tsumitateList!: WritableSignal<Tsumitate[]>;
   @Output() deleteTsumitate: EventEmitter<number> = new EventEmitter<number>();
-  readonly fmtService = inject(FormatService);
 
   readonly tableHeaderNames = [
     '初期資産額',
