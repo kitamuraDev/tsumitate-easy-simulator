@@ -28,7 +28,10 @@
             }
           </td>
           <td class="px-6 py-4">{{ tsumitate.output.simpleInterestCalcResult | truncateToTenThousands }}万円</td>
-          <td class="px-6 py-4">{{ tsumitate.output.diff | truncateToTenThousands }}万円</td>
+          <td class="px-6 py-4">
+            {{ tsumitate.output.diff | truncateToTenThousands }}万円
+            ({{ tsumitate.output.simpleInterestCalcResult | toPercentage:tsumitate.output.compoundInterestCalcResult }})
+          </td>
           <td class="px-6 py-4">{{ tsumitate.output.compoundInterestCalcResult | truncateToTenThousands }}万円</td>
           <td class="px-6 py-4">
             <app-delete-button (delete)="deleteTsumitate.emit(tsumitate.id)" />
