@@ -2,6 +2,7 @@
 <section class="sm:w-fit flex flex-col gap-8 sm:p-6">
   <form [formGroup]="inputs">
     <div class="space-y-2.5 p-4">
+      <!-- 初期資産額 -->
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'initialAsset'" [isRequired]="true">初期資産額</app-label-text>
@@ -30,6 +31,8 @@
           <app-validation-warning-message>1800以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
+
+      <!-- 想定利回り -->
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'rate'" [isRequired]="true">想定利回り</app-label-text>
@@ -58,6 +61,8 @@
           <app-validation-warning-message>20以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
+
+      <!-- 毎月積立額 -->
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'amountRequired'" [isRequired]="true">毎月積立額</app-label-text>
@@ -86,6 +91,8 @@
           <app-validation-warning-message>30以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
+
+      <!-- 積立期間 -->
       <div>
         <div class="flex items-center">
           <app-label-text [id]="'yearRequired'" [isRequired]="true">積立期間</app-label-text>
@@ -177,6 +184,7 @@
           <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
         }
       </div>
+
       <!-- 任意入力 2 -->
       <div>
         <div class="flex items-center">
@@ -230,6 +238,7 @@
           <app-validation-warning-message>整数値を入力してください</app-validation-warning-message>
         }
       </div>
+
       <!-- 任意入力 3 -->
       <div>
         <div class="flex items-center">
