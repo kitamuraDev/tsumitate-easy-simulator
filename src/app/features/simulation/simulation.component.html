@@ -70,7 +70,7 @@
               formControlName="amountRequired"
               required
               min="1"
-              max="10"
+              max="30"
               (input)="updateFormValidState()"
               class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -83,7 +83,7 @@
         } @else if (inputs.get('amountRequired')?.getError('min')) {
           <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
         } @else if (inputs.get('amountRequired')?.getError('max')) {
-          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+          <app-validation-warning-message>30以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
       <div>
@@ -136,7 +136,7 @@
               inputmode="numeric"
               formControlName="amountAny1"
               min="1"
-              max="10"
+              max="30"
               (input)="updateFormValidState()"
               class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -147,7 +147,7 @@
         @if (inputs.get('amountAny1')?.getError('min')) {
           <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
         } @else if (inputs.get('amountAny1')?.getError('max')) {
-          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+          <app-validation-warning-message>30以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
       <div>
@@ -189,7 +189,7 @@
               inputmode="numeric"
               formControlName="amountAny2"
               min="1"
-              max="10"
+              max="30"
               (input)="updateFormValidState()"
               class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -200,7 +200,7 @@
         @if (inputs.get('amountAny2')?.getError('min')) {
           <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
         } @else if (inputs.get('amountAny2')?.getError('max')) {
-          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+          <app-validation-warning-message>30以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
       <div>
@@ -242,7 +242,7 @@
               inputmode="numeric"
               formControlName="amountAny3"
               min="1"
-              max="10"
+              max="30"
               (input)="updateFormValidState()"
               class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -253,7 +253,7 @@
         @if (inputs.get('amountAny3')?.getError('min')) {
           <app-validation-warning-message>1以上の数値を入力してください</app-validation-warning-message>
         } @else if (inputs.get('amountAny3')?.getError('max')) {
-          <app-validation-warning-message>10以下の数値を入力してください</app-validation-warning-message>
+          <app-validation-warning-message>30以下の数値を入力してください</app-validation-warning-message>
         }
       </div>
       <div>
