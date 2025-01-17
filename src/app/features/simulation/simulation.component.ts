@@ -46,26 +46,26 @@ export default class SimulationComponent {
 
   inputs = new FormGroup({
     initialAsset: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(1800)]),
-    amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(10)]),
+    amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(30)]),
     yearRequired: new FormControl(1, [
       Validators.required,
       Validators.min(1),
       Validators.max(40),
       this.validationService.integerValueValidator(),
     ]),
-    amountAny1: new FormControl(null, [Validators.min(1), Validators.max(10)]),
+    amountAny1: new FormControl(null, [Validators.min(1), Validators.max(30)]),
     yearAny1: new FormControl(null, [
       Validators.min(1),
       Validators.max(40),
       this.validationService.integerValueValidator(),
     ]),
-    amountAny2: new FormControl(null, [Validators.min(1), Validators.max(10)]),
+    amountAny2: new FormControl(null, [Validators.min(1), Validators.max(30)]),
     yearAny2: new FormControl(null, [
       Validators.min(1),
       Validators.max(40),
       this.validationService.integerValueValidator(),
     ]),
-    amountAny3: new FormControl(null, [Validators.min(1), Validators.max(10)]),
+    amountAny3: new FormControl(null, [Validators.min(1), Validators.max(30)]),
     yearAny3: new FormControl(null, [
       Validators.min(1),
       Validators.max(40),
