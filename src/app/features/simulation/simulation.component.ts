@@ -111,22 +111,14 @@ export default class SimulationComponent {
   }
 
   setTsumitateInput() {
+    const input = this.inputs.value;
+
     this.tsumitate = {
       input: {
-        initialAsset: this.inputs.value.initialAsset!,
-        amounts: [
-          this.inputs.value.amountRequired!,
-          this.inputs.value.amountAny1!,
-          this.inputs.value.amountAny2!,
-          this.inputs.value.amountAny3!,
-        ],
-        years: [
-          this.inputs.value.yearRequired!,
-          this.inputs.value.yearAny1!,
-          this.inputs.value.yearAny2!,
-          this.inputs.value.yearAny3!,
-        ],
-        rate: this.inputs.value.rate!,
+        initialAsset: input.initialAsset!,
+        amounts: [input.amountRequired!, input.amountAny1!, input.amountAny2!, input.amountAny3!],
+        years: [input.yearRequired!, input.yearAny1!, input.yearAny2!, input.yearAny3!],
+        rate: input.rate!,
       },
       output: {
         compoundInterestCalcResult: 0,
