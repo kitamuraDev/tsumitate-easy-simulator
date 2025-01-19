@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
 
 @Component({
-    selector: 'app-not-found',
-    imports: [RouterLink, HeadContentComponent, BaseButtonComponent],
-    template: `
+  selector: 'app-not-found',
+  imports: [HeadContentComponent, BaseButtonComponent],
+  template: `
     <app-head-content [title]="'ページが見つかりません'" [hasDescription]="true">
       <p>お探しのページは見つかりませんでした。</p>
       <p>
@@ -24,7 +24,7 @@ import { BaseButtonComponent } from '../../shared/components/base-button/base-bu
         ホームヘ戻る
       </app-base-button>
     </div>
-  `
+  `,
 })
 export default class NotFoundComponent {
   private readonly router = inject(Router);
