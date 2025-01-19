@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-validation-warning-message',
-  standalone: true,
   imports: [],
   template: `
     <!-- prettier-ignore -->

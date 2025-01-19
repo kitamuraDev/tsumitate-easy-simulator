@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toggle-button',
-  standalone: true,
   imports: [],
   template: `
     <button

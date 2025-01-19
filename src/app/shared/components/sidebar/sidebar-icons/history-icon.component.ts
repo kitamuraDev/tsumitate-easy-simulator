@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-history-icon',
-  standalone: true,
   imports: [],
   template: `
     <svg

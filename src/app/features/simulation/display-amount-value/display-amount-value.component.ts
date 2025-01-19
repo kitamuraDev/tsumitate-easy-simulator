@@ -3,7 +3,6 @@ import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-te
 
 @Component({
   selector: 'app-display-amount-value',
-  standalone: true,
   imports: [TruncateToTenThousandsPipe],
   template: `
     <span class="text-2xl font-semibold">

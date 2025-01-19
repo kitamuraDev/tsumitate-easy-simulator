@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-head-content',
-  standalone: true,
   imports: [],
   template: `
     <section class="max-w-screen-md p-3 sm:p-6 mb-5">

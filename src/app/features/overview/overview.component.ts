@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview',
-  standalone: true,
   imports: [HeadContentComponent, BaseButtonComponent],
   template: `
     <app-head-content [title]="'はじめに'" [hasDescription]="true">

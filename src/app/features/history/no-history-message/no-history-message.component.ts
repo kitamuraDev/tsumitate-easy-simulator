@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-no-history-message',
-  standalone: true,
   imports: [RouterLink],
   template: `
     <div role="alert" class="flex gap-3 p-4 text-sm border rounded-lg text-blue-800 border-blue-300 bg-blue-50">

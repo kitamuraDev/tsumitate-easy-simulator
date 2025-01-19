@@ -6,7 +6,6 @@ import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
 
 @Component({
   selector: 'app-history-table',
-  standalone: true,
   imports: [DeleteButtonComponent, TruncateToTenThousandsPipe, ToPercentagePipe],
   templateUrl: 'history-table.component.html',
 })

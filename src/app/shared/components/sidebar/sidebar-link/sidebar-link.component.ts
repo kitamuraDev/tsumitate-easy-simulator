@@ -7,7 +7,6 @@ import { SidebarIcon } from '../sidebar.component';
 
 @Component({
   selector: 'app-sidebar-link',
-  standalone: true,
   imports: [RouterLink, OverviewIconComponent, SimulationIconComponent, HistoryIconComponent],
   template: `
     <li>

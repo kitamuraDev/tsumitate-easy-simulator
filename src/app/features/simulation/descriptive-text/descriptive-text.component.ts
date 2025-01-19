@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-descriptive-text',
-  standalone: true,
   imports: [],
   template: `
     <!-- prettier-ignore -->

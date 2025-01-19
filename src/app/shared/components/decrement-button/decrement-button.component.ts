@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-decrement-button',
-  standalone: true,
   imports: [],
   template: `
     <button

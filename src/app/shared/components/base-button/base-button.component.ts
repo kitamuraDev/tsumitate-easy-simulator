@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-base-button',
-  standalone: true,
   imports: [],
   template: `
     <button

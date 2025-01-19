@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
 
 @Component({
   selector: 'app-not-found',
-  standalone: true,
-  imports: [RouterLink, HeadContentComponent, BaseButtonComponent],
+  imports: [HeadContentComponent, BaseButtonComponent],
   template: `
     <app-head-content [title]="'ページが見つかりません'" [hasDescription]="true">
       <p>お探しのページは見つかりませんでした。</p>

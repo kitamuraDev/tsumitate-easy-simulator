@@ -10,7 +10,6 @@ import { PageTitleService } from './shared/services/page-title.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent, OuterLayoutComponent, MainLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

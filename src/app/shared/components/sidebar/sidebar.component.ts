@@ -14,7 +14,6 @@ type SidebarLinkInfoType = {
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true,
   imports: [SidebarLinkComponent],
   templateUrl: './sidebar.component.html',
 })

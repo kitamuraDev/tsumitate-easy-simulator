@@ -7,7 +7,6 @@ import { NoHistoryMessageComponent } from './no-history-message/no-history-messa
 
 @Component({
   selector: 'app-history',
-  standalone: true,
   imports: [HeadContentComponent, HistoryTableComponent, NoHistoryMessageComponent],
   template: `
     <app-head-content [title]="'シュミレーション履歴'" [hasDescription]="false" />
