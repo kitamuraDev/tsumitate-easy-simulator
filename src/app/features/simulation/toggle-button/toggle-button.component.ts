@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'app-toggle-button',
-    imports: [],
-    template: `
+  selector: 'app-toggle-button',
+  imports: [],
+  template: `
     <button
       (click)="clickEvent.emit()"
       class="cursor-pointer p-2 rounded-md hover:bg-gray-100 transition duration-200 ease-in"
@@ -15,7 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         <polygon points="5.9,88.2 50,11.8 94.1,88.2"></polygon>
       </svg>
     </button>
-  `
+  `,
 })
 export class ToggleButtonComponent {
   @Input({ required: true }) isOpen!: boolean;

@@ -4,9 +4,9 @@ import { BaseButtonComponent } from '../../shared/components/base-button/base-bu
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-overview',
-    imports: [HeadContentComponent, BaseButtonComponent],
-    template: `
+  selector: 'app-overview',
+  imports: [HeadContentComponent, BaseButtonComponent],
+  template: `
     <app-head-content [title]="'はじめに'" [hasDescription]="true">
       <p>
         当資産運用シュミレーターでは、想定利回り○%で毎月○万円を○年間、積立投資をした場合の資産評価額を計算できます。
@@ -27,7 +27,7 @@ import { Router } from '@angular/router';
         シュミレーションをする
       </app-base-button>
     </div>
-  `
+  `,
 })
 export default class OverviewComponent {
   private readonly router = inject(Router);

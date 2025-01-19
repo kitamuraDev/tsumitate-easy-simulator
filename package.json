@@ -6,7 +6,9 @@
     "dev": "ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "fmt:check": "prettier --check \"src/**/*.{html,ts}\"",
+    "fmt:write": "prettier --write \"src/**/*.{html,ts}\""
   },
   "private": true,
   "dependencies": {

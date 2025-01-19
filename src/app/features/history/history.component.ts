@@ -6,9 +6,9 @@ import { Tsumitate } from '../../shared/types/tsumitate';
 import { NoHistoryMessageComponent } from './no-history-message/no-history-message.component';
 
 @Component({
-    selector: 'app-history',
-    imports: [HeadContentComponent, HistoryTableComponent, NoHistoryMessageComponent],
-    template: `
+  selector: 'app-history',
+  imports: [HeadContentComponent, HistoryTableComponent, NoHistoryMessageComponent],
+  template: `
     <app-head-content [title]="'シュミレーション履歴'" [hasDescription]="false" />
 
     @if (tsumitateList().length > 0) {
@@ -18,7 +18,7 @@ import { NoHistoryMessageComponent } from './no-history-message/no-history-messa
     } @else {
       <app-no-history-message />
     }
-  `
+  `,
 })
 export default class HistoryComponent implements OnInit {
   private readonly dbService = inject(TsumitateDatabaseService);

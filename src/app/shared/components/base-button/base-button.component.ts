@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'app-base-button',
-    imports: [],
-    template: `
+  selector: 'app-base-button',
+  imports: [],
+  template: `
     <button
       [disabled]="isDisabled"
       (click)="clickEvent.emit()"
@@ -15,7 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     >
       <ng-content />
     </button>
-  `
+  `,
 })
 export class BaseButtonComponent {
   @Input({ required: true }) isDisabled!: boolean;

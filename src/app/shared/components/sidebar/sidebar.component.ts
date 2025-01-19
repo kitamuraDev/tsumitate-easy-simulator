@@ -13,9 +13,9 @@ type SidebarLinkInfoType = {
 };
 
 @Component({
-    selector: 'app-sidebar',
-    imports: [SidebarLinkComponent],
-    templateUrl: './sidebar.component.html'
+  selector: 'app-sidebar',
+  imports: [SidebarLinkComponent],
+  templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent {
   readonly sidebarLinkInfomations: SidebarLinkInfoType[] = [

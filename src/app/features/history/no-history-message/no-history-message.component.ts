@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-no-history-message',
-    imports: [RouterLink],
-    template: `
+  selector: 'app-no-history-message',
+  imports: [RouterLink],
+  template: `
     <div role="alert" class="flex gap-3 p-4 text-sm border rounded-lg text-blue-800 border-blue-300 bg-blue-50">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -29,6 +29,6 @@ import { RouterLink } from '@angular/router';
         </p>
       </div>
     </div>
-  `
+  `,
 })
 export class NoHistoryMessageComponent {}

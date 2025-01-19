@@ -5,9 +5,9 @@ import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-te
 import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
 
 @Component({
-    selector: 'app-history-table',
-    imports: [DeleteButtonComponent, TruncateToTenThousandsPipe, ToPercentagePipe],
-    templateUrl: 'history-table.component.html'
+  selector: 'app-history-table',
+  imports: [DeleteButtonComponent, TruncateToTenThousandsPipe, ToPercentagePipe],
+  templateUrl: 'history-table.component.html',
 })
 export class HistoryTableComponent {
   @Input({ required: true }) tsumitateList!: WritableSignal<Tsumitate[]>;
