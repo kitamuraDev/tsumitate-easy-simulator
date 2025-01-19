@@ -6,10 +6,9 @@ import { HistoryIconComponent } from '../sidebar-icons/history-icon.component';
 import { SidebarIcon } from '../sidebar.component';
 
 @Component({
-  selector: 'app-sidebar-link',
-  standalone: true,
-  imports: [RouterLink, OverviewIconComponent, SimulationIconComponent, HistoryIconComponent],
-  template: `
+    selector: 'app-sidebar-link',
+    imports: [RouterLink, OverviewIconComponent, SimulationIconComponent, HistoryIconComponent],
+    template: `
     <li>
       <a
         routerLink="{{ path }}"
@@ -47,7 +46,7 @@ import { SidebarIcon } from '../sidebar.component';
         <span>{{ name }}</span>
       </a>
     </li>
-  `,
+  `
 })
 export class SidebarLinkComponent {
   @Input({ required: true }) path!: string;

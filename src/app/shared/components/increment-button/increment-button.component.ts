@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-increment-button',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-increment-button',
+    imports: [],
+    template: `
     <button
       type="button"
       id="increment-button"
@@ -28,7 +27,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
         />
       </svg>
     </button>
-  `,
+  `
 })
 export class IncrementButtonComponent {
   @Output() increment: EventEmitter<void> = new EventEmitter<void>();

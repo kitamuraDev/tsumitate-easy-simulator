@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-decrement-button',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-decrement-button',
+    imports: [],
+    template: `
     <button
       type="button"
       id="decrement-button"
@@ -21,7 +20,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
       </svg>
     </button>
-  `,
+  `
 })
 export class DecrementButtonComponent {
   @Output() decrement: EventEmitter<void> = new EventEmitter<void>();

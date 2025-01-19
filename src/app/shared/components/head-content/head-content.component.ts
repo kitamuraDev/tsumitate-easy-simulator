@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-head-content',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-head-content',
+    imports: [],
+    template: `
     <section class="max-w-screen-md p-3 sm:p-6 mb-5">
       <h1 class="text-xl sm:text-2xl font-semibold whitespace-nowrap">{{ title }}</h1>
       @if (hasDescription) {
@@ -13,7 +12,7 @@ import { Component, Input } from '@angular/core';
         </div>
       }
     </section>
-  `,
+  `
 })
 export class HeadContentComponent {
   @Input({ required: true }) title!: string;

@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-delete-button',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'app-delete-button',
+    imports: [],
+    template: `
     <button type="button" id="decrement-button" (click)="delete.emit()">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +20,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
         />
       </svg>
     </button>
-  `,
+  `
 })
 export class DeleteButtonComponent {
   @Output() delete: EventEmitter<void> = new EventEmitter<void>();

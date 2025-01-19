@@ -16,7 +16,6 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
 @Component({
   selector: 'app-simulation',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     HeadContentComponent,
