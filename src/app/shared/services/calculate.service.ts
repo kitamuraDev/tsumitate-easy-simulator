@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Input, Output } from '../types/tsumitate';
+import type { Input, Output } from '../types/tsumitate';
 
-// prettier-ignore
+// biome-ignore format: off
 @Injectable({
   providedIn: 'root',
 })
@@ -26,23 +26,23 @@ export class CalculateService {
     const simpleInterestCalcResult = this.simpleInterestCalc(convertedInitialAsset, yearlyAmounts, years);
     const diff = compoundInterestCalcResult - simpleInterestCalcResult;
 
-    return { compoundInterestCalcResult, simpleInterestCalcResult, diff }
+    return { compoundInterestCalcResult, simpleInterestCalcResult, diff };
   };
 
   // 複利計算
   private compoundInterestCalc(initialAsset: number, yearlyAmounts: number[], years: number[], rate: number): number {
-    return yearlyAmounts.reduce((acc, curr, i) => (
-      Array.from({ length: years[i] })
-        .reduce<number>((prev) => (prev + curr) * rate, acc)
-    ), initialAsset);
+    return yearlyAmounts.reduce(
+      (acc, curr, i) => Array.from({ length: years[i] }).reduce<number>(prev => (prev + curr) * rate, acc),
+      initialAsset,
+    );
   }
 
   // 合算
   private simpleInterestCalc(initialAsset: number, yearlyAmounts: number[], years: number[]): number {
-    return yearlyAmounts.reduce((acc, curr, i) => (
-      Array.from({ length: years[i] })
-        .reduce<number>((prev) => prev + curr, acc)
-    ), initialAsset);
+    return yearlyAmounts.reduce(
+      (acc, curr, i) => Array.from({ length: years[i] }).reduce<number>(prev => prev + curr, acc),
+      initialAsset,
+    );
   }
 
   /**

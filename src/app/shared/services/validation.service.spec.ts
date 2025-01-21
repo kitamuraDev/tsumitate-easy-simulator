@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-
+import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ValidationService } from './validation.service';
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 describe('ValidationService', () => {
   let service: ValidationService;

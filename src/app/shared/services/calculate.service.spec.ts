@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-
+import type { Input } from '../types/tsumitate';
 import { CalculateService } from './calculate.service';
-import { Input } from '../types/tsumitate';
 
 describe('CalculateService', () => {
   let service: CalculateService;

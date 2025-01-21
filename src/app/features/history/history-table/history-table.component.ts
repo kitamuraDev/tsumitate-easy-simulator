@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output, WritableSignal } from '@angular/core';
-import { Tsumitate } from '../../../shared/types/tsumitate';
+import { Component, EventEmitter, Input, Output, type WritableSignal } from '@angular/core';
 import { DeleteButtonComponent } from '../../../shared/components/delete-button/delete-button.component';
-import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
+import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
+import type { Tsumitate } from '../../../shared/types/tsumitate';
 
 @Component({
   selector: 'app-history-table',

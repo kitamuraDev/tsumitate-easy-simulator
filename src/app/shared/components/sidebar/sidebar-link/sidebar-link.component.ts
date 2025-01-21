@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { HistoryIconComponent } from '../sidebar-icons/history-icon.component';
 import { OverviewIconComponent } from '../sidebar-icons/overview-icon.component';
 import { SimulationIconComponent } from '../sidebar-icons/simulation-icon.component';
-import { HistoryIconComponent } from '../sidebar-icons/history-icon.component';
-import { SidebarIcon } from '../sidebar.component';
+import type { SidebarIcon } from '../sidebar.component';
 
 @Component({
   selector: 'app-sidebar-link',

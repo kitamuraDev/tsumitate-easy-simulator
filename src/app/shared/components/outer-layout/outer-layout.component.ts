@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-outer-layout',
   imports: [],
   template: `
-    <!-- prettier-ignore -->
     <div class="p-3 sm:ml-64 mt-16 sm:mt-[68px]">
       <ng-content />
     </div>
