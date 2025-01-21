@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import Dexie from 'dexie';
-import { Tsumitate } from '../shared/types/tsumitate';
+import type { Tsumitate } from '../shared/types/tsumitate';
 
 @Injectable({
   providedIn: 'root',

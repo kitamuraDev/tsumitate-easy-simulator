@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-validation-warning-message',
   imports: [],
   template: `
-    <!-- prettier-ignore -->
     <p class="text-red-700 text-xs font-medium text-right mt-1">
       <ng-content />
     </p>

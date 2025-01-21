@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CalculateService } from '../../shared/services/calculate.service';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
-import { ValidationService } from '../../shared/services/validation.service';
-import { Output, Tsumitate } from '../../shared/types/tsumitate';
-import { ValidationWarningMessageComponent } from '../../shared/components/validation-warning-message/validation-warning-message.component';
-import { DecrementButtonComponent } from '../../shared/components/decrement-button/decrement-button.component';
-import { IncrementButtonComponent } from '../../shared/components/increment-button/increment-button.component';
-import { DescriptiveTextComponent } from './descriptive-text/descriptive-text.component';
-import { LabelTextComponent } from './label-text/label-text.component';
-import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
 import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
+import { DecrementButtonComponent } from '../../shared/components/decrement-button/decrement-button.component';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
+import { IncrementButtonComponent } from '../../shared/components/increment-button/increment-button.component';
+import { ValidationWarningMessageComponent } from '../../shared/components/validation-warning-message/validation-warning-message.component';
+import { CalculateService } from '../../shared/services/calculate.service';
+import { ValidationService } from '../../shared/services/validation.service';
+import type { Output, Tsumitate } from '../../shared/types/tsumitate';
+import { DescriptiveTextComponent } from './descriptive-text/descriptive-text.component';
+import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
+import { LabelTextComponent } from './label-text/label-text.component';
 import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
 @Component({
@@ -106,7 +106,8 @@ export default class SimulationComponent {
 
     // `this.inputs.valid`は全てのフォームのバリデーションが通れば`true`が返る
     // `[disabled]=""`をfalseにするとボタン押下できるようになる。つまり、`&&`で繋いだ全ての条件を満たしたときにボタン押下できるようになる
-    this.isAbnormalInput = this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3 ? false : true;
+    // `!(boolean)`は、すべてtrueなら反転してfalseを返すということ
+    this.isAbnormalInput = !(this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3);
   }
 
   setTsumitateInput() {
@@ -114,9 +115,13 @@ export default class SimulationComponent {
 
     this.tsumitate = {
       input: {
+        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
         initialAsset: input.initialAsset!,
+        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
         amounts: [input.amountRequired!, input.amountAny1!, input.amountAny2!, input.amountAny3!],
+        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
         years: [input.yearRequired!, input.yearAny1!, input.yearAny2!, input.yearAny3!],
+        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
         rate: input.rate!,
       },
       output: {

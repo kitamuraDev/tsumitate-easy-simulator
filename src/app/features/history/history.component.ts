@@ -1,8 +1,8 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
-import { HistoryTableComponent } from './history-table/history-table.component';
+import { Component, type OnInit, inject, signal } from '@angular/core';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
-import { Tsumitate } from '../../shared/types/tsumitate';
+import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
+import type { Tsumitate } from '../../shared/types/tsumitate';
+import { HistoryTableComponent } from './history-table/history-table.component';
 import { NoHistoryMessageComponent } from './no-history-message/no-history-message.component';
 
 @Component({

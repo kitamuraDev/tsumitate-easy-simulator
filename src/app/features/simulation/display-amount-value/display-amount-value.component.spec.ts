@@ -1,7 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DisplayAmountValueComponent } from './display-amount-value.component';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
+import { DisplayAmountValueComponent } from './display-amount-value.component';
 
 describe('DisplayAmountValueComponent', () => {
   let component: DisplayAmountValueComponent;

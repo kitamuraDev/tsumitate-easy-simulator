@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -6,9 +6,9 @@
 
 /* spinボタンを削除 */
 @layer base {
-  input[type='number']::-webkit-outer-spin-button,
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number'] {
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"] {
     appearance: none !important;
     -webkit-appearance: none;
     -moz-appearance: textfield !important;

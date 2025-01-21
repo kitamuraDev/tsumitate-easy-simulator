@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-descriptive-text',
   imports: [],
   template: `
-    <!-- prettier-ignore -->
     <p class="text-sm sm:text-base font-medium text-gray-900 ml-2">
       <ng-content />
     </p>
