@@ -9,24 +9,23 @@
 
 ### 言語
 
-![Node.js](https://img.shields.io/badge/Node-v20.9.0-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-v5.2.2-blue)
+![Node.js](https://img.shields.io/badge/Node-v22.0.0-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-v5.5.4-blue)
 
 ### パッケージマネージャー
 
-![npm](https://img.shields.io/badge/npm-v10.1.0-blue)
+![npm](https://img.shields.io/badge/npm-v10.5.1-blue)
 
 ### ライブラリ
 
-![Angular](https://img.shields.io/badge/Angular-v17.0.3-blue)
+![Angular](https://img.shields.io/badge/Angular-v19.1.1-blue)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.4.0-blue)
 ![Flowbite](https://img.shields.io/badge/Flowbite-v2.2.1-blue)
 ![Dexie](https://img.shields.io/badge/Dexie-v3.2.4-blue)
 
 ### リンター・フォーマッター
 
-![ESLint](https://img.shields.io/badge/ESLint-v8.54.0-blue)
-![Prettier](https://img.shields.io/badge/Prettier-v3.1.1-blue)
+![Biome](https://img.shields.io/badge/Biome-v1.9.4-blue)
 
 ### ホスティング
 
