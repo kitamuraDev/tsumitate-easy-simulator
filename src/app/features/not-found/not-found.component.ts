@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
+import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 
 @Component({
   selector: 'app-not-found',
