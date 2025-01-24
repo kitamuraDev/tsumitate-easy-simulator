@@ -27,6 +27,11 @@
 
 ![Biome](https://img.shields.io/badge/Biome-v1.9.4-blue)
 
+### CI
+
+![simple-git-hooks](https://img.shields.io/badge/simple_git_hooks-v2.11.1-blue)
+![lint-staged](https://img.shields.io/badge/lint_staged-v15.4.2-blue)
+
 ### ホスティング
 
 ![Vercel](https://img.shields.io/badge/Vercel-Supported-blue)
@@ -36,4 +41,5 @@
 1. `git clone https://github.com/kitamuraDev/tsumitate-easy-simulator.git`
 2. `cd`コマンドでプロジェクトへ移動
 3. `npm install`
-4. `npm run dev`
+4. `npm run prepare`
+5. `npm run dev`
