@@ -1,6 +1,10 @@
 {
   "name": "tsumitate-easy-simulator",
   "version": "0.0.0",
+  "private": true,
+  "volta": {
+    "node": "22.0.0"
+  },
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --open",
@@ -12,9 +16,15 @@
     "lint": "biome lint ./src",
     "lint:apy": "biome lint --write ./src",
     "check": "biome check ./src",
-    "check:apy": "biome check --write ./src"
+    "check:apy": "biome check --write ./src",
+    "prepare": "simple-git-hooks > /dev/null"
   },
-  "private": true,
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": ["npm run fmt", "npm run lint", "npm run check"]
+  },
   "dependencies": {
     "@angular/animations": "^19.1.1",
     "@angular/common": "^19.1.1",
@@ -39,11 +49,10 @@
     "autoprefixer": "^10.4.16",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^15.4.2",
     "postcss": "^8.4.32",
+    "simple-git-hooks": "^2.11.1",
     "tailwindcss": "^3.4.0",
     "typescript": "~5.5.4"
-  },
-  "volta": {
-    "node": "22.0.0"
   }
 }
