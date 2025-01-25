@@ -13,7 +13,7 @@ import { NoHistoryMessageComponent } from './no-history-message/no-history-messa
 
     @if (tsumitateList().length > 0) {
       @defer {
-        <app-history-table [tsumitateList]="tsumitateList" (deleteTsumitate)="deleteTsumitate($event)" />
+        <app-history-table [tsumitateList$]="tsumitateList()" (deleteTsumitate)="deleteTsumitate($event)" />
       }
     } @else {
       <app-no-history-message />
