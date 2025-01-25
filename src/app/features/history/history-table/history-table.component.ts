@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, type WritableSignal } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { DeleteButtonComponent } from '../../../shared/components/delete-button/delete-button.component';
 import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
@@ -10,7 +10,7 @@ import type { Tsumitate } from '../../../shared/types/tsumitate';
   templateUrl: 'history-table.component.html',
 })
 export class HistoryTableComponent {
-  @Input({ required: true }) tsumitateList!: WritableSignal<Tsumitate[]>;
+  tsumitateList$ = input.required<Tsumitate[]>();
   @Output() deleteTsumitate: EventEmitter<number> = new EventEmitter<number>();
 
   readonly tableHeaderNames = [
