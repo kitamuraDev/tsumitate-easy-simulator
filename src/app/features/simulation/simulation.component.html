@@ -309,8 +309,8 @@
     <div class="w-80 h-20 p-6 flex justify-between items-center bg-blue-100">
       <span class="text-sm font-medium">最終評価額</span>
       <div class="flex items-center gap-1">
-        @defer (when tsumitate) {
-          <app-display-amount-value [compoundInterestCalcResult]="tsumitate.output.compoundInterestCalcResult" />
+        @defer (when compoundInterestCalcResult()) {
+          <app-display-amount-value [compoundInterestCalcResult]="compoundInterestCalcResult()" />
         }
         <span class="text-sm font-medium">万円</span>
       </div>
