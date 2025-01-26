@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
 import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
@@ -8,7 +8,7 @@ import { IncrementButtonComponent } from '../../shared/components/increment-butt
 import { ValidationWarningMessageComponent } from '../../shared/components/validation-warning-message/validation-warning-message.component';
 import { CalculateService } from '../../shared/services/calculate.service';
 import { ValidationService } from '../../shared/services/validation.service';
-import type { Output, Tsumitate } from '../../shared/types/tsumitate';
+import type { Input } from '../../shared/types/tsumitate';
 import { DescriptiveTextComponent } from './descriptive-text/descriptive-text.component';
 import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
 import { LabelTextComponent } from './label-text/label-text.component';
@@ -35,7 +35,7 @@ export default class SimulationComponent {
   private readonly dbService = inject(TsumitateDatabaseService);
   private readonly validationService = inject(ValidationService);
 
-  tsumitate!: Tsumitate;
+  compoundInterestCalcResult = signal<number>(0);
   isAbnormalInput = false;
   isOpenAnyInputsBlock = false;
 
@@ -89,20 +89,10 @@ export default class SimulationComponent {
 
   // フォームのバリデーション状態を見て、「計算」ボタンの活性と非活性の状態を切り替える
   updateFormValidState() {
-    const resultAnyInput1 = this.validationService.isOneInputEmptyValidator(
-      this.inputs.value.amountAny1,
-      this.inputs.value.yearAny1,
-    );
-
-    const resultAnyInput2 = this.validationService.isOneInputEmptyValidator(
-      this.inputs.value.amountAny2,
-      this.inputs.value.yearAny2,
-    );
-
-    const resultAnyInput3 = this.validationService.isOneInputEmptyValidator(
-      this.inputs.value.amountAny3,
-      this.inputs.value.yearAny3,
-    );
+    const input = this.inputs.value;
+    const resultAnyInput1 = this.validationService.isOneInputEmptyValidator(input.amountAny1, input.yearAny1);
+    const resultAnyInput2 = this.validationService.isOneInputEmptyValidator(input.amountAny2, input.yearAny2);
+    const resultAnyInput3 = this.validationService.isOneInputEmptyValidator(input.amountAny3, input.yearAny3);
 
     // `this.inputs.valid`は全てのフォームのバリデーションが通れば`true`が返る
     // `[disabled]=""`をfalseにするとボタン押下できるようになる。つまり、`&&`で繋いだ全ての条件を満たしたときにボタン押下できるようになる
@@ -110,48 +100,32 @@ export default class SimulationComponent {
     this.isAbnormalInput = !(this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3);
   }
 
-  setTsumitateInput() {
+  private getTsumitateInput(): Input {
     const input = this.inputs.value;
+    const initialAsset = input.initialAsset ?? 0;
+    const amounts = this.filterNull([input.amountRequired, input.amountAny1, input.amountAny2, input.amountAny3]);
+    const years = this.filterNull([input.yearRequired, input.yearAny1, input.yearAny2, input.yearAny3]);
+    const rate = input.rate ?? 5;
 
-    this.tsumitate = {
-      input: {
-        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
-        initialAsset: input.initialAsset!,
-        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
-        amounts: [input.amountRequired!, input.amountAny1!, input.amountAny2!, input.amountAny3!],
-        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
-        years: [input.yearRequired!, input.yearAny1!, input.yearAny2!, input.yearAny3!],
-        // biome-ignore lint/style/noNonNullAssertion: 一旦無視。TODO: 後で修正
-        rate: input.rate!,
-      },
-      output: {
-        compoundInterestCalcResult: 0,
-        simpleInterestCalcResult: 0,
-        diff: 0,
-      },
-    };
-  }
-
-  setTsumitateOutput(output: Output) {
-    const { input } = this.tsumitate;
-
-    this.tsumitate = {
-      input,
-      output,
-    };
+    return { initialAsset, amounts, years, rate };
   }
 
   async onCalculate() {
-    // Inputのセット
-    await this.setTsumitateInput();
+    // Inputの取得
+    const tsumitateInput = this.getTsumitateInput();
 
     // 計算
-    const output = await this.calcService.tsumitateEasyCalculate(this.tsumitate.input);
+    const tsumitateOutput = this.calcService.tsumitateEasyCalculate(tsumitateInput);
 
-    // Outputのセット
-    await this.setTsumitateOutput(output);
+    // compoundInterestCalcResult を更新
+    this.compoundInterestCalcResult.update(() => tsumitateOutput.compoundInterestCalcResult);
 
     // DB登録
-    this.dbService.add(this.tsumitate);
+    await this.dbService.add({ input: tsumitateInput, output: tsumitateOutput });
+  }
+
+  // 配列からnullを除外する
+  private filterNull(array: (number | null | undefined)[]): number[] {
+    return array.filter((v) => v !== null) as number[];
   }
 }
