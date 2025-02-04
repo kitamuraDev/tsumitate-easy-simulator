@@ -16,7 +16,7 @@ describe('CalculateService', () => {
 
     const result = service['convertToManen'](actualInitialAsset);
 
-    expect(result).toEqual(expectedManen);
+    expect(result).toBe(expectedManen);
   });
 
   it('【2】正の整数を万単位に変換できるか', () => {
@@ -25,7 +25,7 @@ describe('CalculateService', () => {
 
     const result = service['convertToManen'](actualInitialAsset);
 
-    expect(result).toEqual(expectedManen);
+    expect(result).toBe(expectedManen);
   });
 
   it('【3】正の整数を万単位に変換できるか', () => {
@@ -34,7 +34,7 @@ describe('CalculateService', () => {
 
     const result = service['convertToManen'](actualInitialAsset);
 
-    expect(result).toEqual(expectedManen);
+    expect(result).toBe(expectedManen);
   });
 
   it('【4】正の整数を万単位に変換できるか', () => {
@@ -43,7 +43,7 @@ describe('CalculateService', () => {
 
     const result = service['convertToManen'](actualInitialAsset);
 
-    expect(result).toEqual(expectedManen);
+    expect(result).toBe(expectedManen);
   });
 
   it('配列の中の「月間積立投資額」を「年間積立投資額」に変換できるか', () => {
@@ -61,7 +61,7 @@ describe('CalculateService', () => {
 
     const result = service['convertRate'](actualIntRate);
 
-    expect(result).toEqual(expectedDecimalRate);
+    expect(result).toBe(expectedDecimalRate);
   });
 
   it('【1】複利計算が正しく行われるか', () => {
@@ -73,7 +73,7 @@ describe('CalculateService', () => {
 
     const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
 
-    expect(Math.trunc(result)).toEqual(expectedCompoundInterest);
+    expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
   it('【1】合算が正しく行われるか', () => {
@@ -84,7 +84,7 @@ describe('CalculateService', () => {
 
     const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
 
-    expect(result).toEqual(expectedSimpleInterest);
+    expect(result).toBe(expectedSimpleInterest);
   });
 
   it('【2】複利計算が正しく行われるか', () => {
@@ -96,7 +96,7 @@ describe('CalculateService', () => {
 
     const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
 
-    expect(Math.trunc(result)).toEqual(expectedCompoundInterest);
+    expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
   it('【2】合算が正しく行われるか', () => {
@@ -107,7 +107,7 @@ describe('CalculateService', () => {
 
     const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
 
-    expect(result).toEqual(expectedSimpleInterest);
+    expect(result).toBe(expectedSimpleInterest);
   });
 
   it('【3】複利計算が正しく行われるか', () => {
@@ -119,7 +119,7 @@ describe('CalculateService', () => {
 
     const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
 
-    expect(Math.trunc(result)).toEqual(expectedCompoundInterest);
+    expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
   it('【3】合算が正しく行われるか', () => {
@@ -130,7 +130,7 @@ describe('CalculateService', () => {
 
     const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
 
-    expect(result).toEqual(expectedSimpleInterest);
+    expect(result).toBe(expectedSimpleInterest);
   });
 
   it('【4】複利計算が正しく行われるか', () => {
@@ -142,7 +142,7 @@ describe('CalculateService', () => {
 
     const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
 
-    expect(Math.trunc(result)).toEqual(expectedCompoundInterest);
+    expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
   it('【4】合算が正しく行われるか', () => {
@@ -153,7 +153,7 @@ describe('CalculateService', () => {
 
     const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
 
-    expect(result).toEqual(expectedSimpleInterest);
+    expect(result).toBe(expectedSimpleInterest);
   });
 
   it('【5】複利計算が正しく行われるか', () => {
@@ -165,7 +165,7 @@ describe('CalculateService', () => {
 
     const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
 
-    expect(Math.trunc(result)).toEqual(expectedCompoundInterest);
+    expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
   it('【5】合算が正しく行われるか', () => {
@@ -176,7 +176,7 @@ describe('CalculateService', () => {
 
     const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
 
-    expect(result).toEqual(expectedSimpleInterest);
+    expect(result).toBe(expectedSimpleInterest);
   });
 
   it('【6】複利計算が正しく行われるか', () => {
@@ -188,7 +188,7 @@ describe('CalculateService', () => {
 
     const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
 
-    expect(Math.trunc(result)).toEqual(expectedCompoundInterest);
+    expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
   it('【6】合算が正しく行われるか', () => {
@@ -199,7 +199,7 @@ describe('CalculateService', () => {
 
     const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
 
-    expect(result).toEqual(expectedSimpleInterest);
+    expect(result).toBe(expectedSimpleInterest);
   });
 
   it('【1】正しく計算が行われ、期待通りのデータが取れるか', () => {
@@ -216,9 +216,9 @@ describe('CalculateService', () => {
 
     const result = service.tsumitateEasyCalculate(input);
 
-    expect(Math.trunc(result.compoundInterestCalcResult)).toEqual(expectedCompoundInterest);
-    expect(result.simpleInterestCalcResult).toEqual(expectedSimpleInterest);
-    expect(Math.trunc(result.diff)).toEqual(expectedDiff);
+    expect(Math.trunc(result.compoundInterestCalcResult)).toBe(expectedCompoundInterest);
+    expect(result.simpleInterestCalcResult).toBe(expectedSimpleInterest);
+    expect(Math.trunc(result.diff)).toBe(expectedDiff);
   });
 
   it('【2】正しく計算が行われ、期待通りのデータが取れるか', () => {
@@ -235,8 +235,8 @@ describe('CalculateService', () => {
 
     const result = service.tsumitateEasyCalculate(input);
 
-    expect(Math.trunc(result.compoundInterestCalcResult)).toEqual(expectedCompoundInterest);
-    expect(result.simpleInterestCalcResult).toEqual(expectedSimpleInterest);
-    expect(Math.trunc(result.diff)).toEqual(expectedDiff);
+    expect(Math.trunc(result.compoundInterestCalcResult)).toBe(expectedCompoundInterest);
+    expect(result.simpleInterestCalcResult).toBe(expectedSimpleInterest);
+    expect(Math.trunc(result.diff)).toBe(expectedDiff);
   });
 });

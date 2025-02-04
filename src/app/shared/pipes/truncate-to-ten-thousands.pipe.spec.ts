@@ -9,7 +9,7 @@ describe('TruncateToTenThousandsPipe', () => {
 
     const formattedAmount = pipe.transform(amount);
 
-    expect(formattedAmount).toEqual(expectedFormattedAmount);
+    expect(formattedAmount).toBe(expectedFormattedAmount);
   });
 
   it('378000の場合、万の位以下を切り捨てて、"37"になるか', () => {
@@ -18,7 +18,7 @@ describe('TruncateToTenThousandsPipe', () => {
 
     const formattedAmount = pipe.transform(amount);
 
-    expect(formattedAmount).toEqual(expectedFormattedAmount);
+    expect(formattedAmount).toBe(expectedFormattedAmount);
   });
 
   it('1280000の場合、万の位以下を切り捨てて、"128"になるか', () => {
@@ -27,7 +27,7 @@ describe('TruncateToTenThousandsPipe', () => {
 
     const formattedAmount = pipe.transform(amount);
 
-    expect(formattedAmount).toEqual(expectedFormattedAmount);
+    expect(formattedAmount).toBe(expectedFormattedAmount);
   });
 
   it('12825000の場合、万の位以下を切り捨てて、"1,282"になるか', () => {
@@ -36,6 +36,6 @@ describe('TruncateToTenThousandsPipe', () => {
 
     const formattedAmount = pipe.transform(amount);
 
-    expect(formattedAmount).toEqual(expectedFormattedAmount);
+    expect(formattedAmount).toBe(expectedFormattedAmount);
   });
 });
