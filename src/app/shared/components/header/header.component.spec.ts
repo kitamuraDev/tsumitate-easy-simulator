@@ -1,33 +1,20 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { render, screen } from '@testing-library/angular';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+  it('data-drawer-target="logo-sidebar" 属性を持つボタンがあるか', async () => {
+    await render(HeaderComponent);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [HeaderComponent],
-      providers: [provideRouter([])],
-    }).compileComponents();
+    const button = screen.getByRole('button', { name: 'open sidebar' });
 
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    expect(button.getAttribute('data-drawer-target')).toBe('logo-sidebar');
   });
 
-  it('ヘッダーが作成されるか', () => {
-    expect(component).toBeTruthy();
-  });
+  it('data-drawer-toggle="logo-sidebar" 属性を持つボタンがあるか', async () => {
+    await render(HeaderComponent);
 
-  it('data-drawer-target="logo-sidebar" 属性を持つボタンがあるか', () => {
-    const button = fixture.nativeElement.querySelector('button[data-drawer-target="logo-sidebar"]');
-    expect(button).toBeTruthy();
-  });
+    const button = screen.getByRole('button', { name: 'open sidebar' });
 
-  it('data-drawer-toggle="logo-sidebar" 属性を持つボタンがあるか', () => {
-    const button = fixture.nativeElement.querySelector('button[data-drawer-toggle="logo-sidebar"]');
-    expect(button).toBeTruthy();
+    expect(button.getAttribute('data-drawer-toggle')).toBe('logo-sidebar');
   });
 });

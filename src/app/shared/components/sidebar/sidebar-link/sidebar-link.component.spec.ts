@@ -1,63 +1,22 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { render, screen } from '@testing-library/angular';
+import type { SidebarIcon } from '../sidebar.component';
 import { SidebarLinkComponent } from './sidebar-link.component';
 
+type InputType = {
+  name: string;
+  icon: SidebarIcon;
+  selector: string;
+};
+
 describe('SidebarLinkComponent', () => {
-  let component: SidebarLinkComponent;
-  let fixture: ComponentFixture<SidebarLinkComponent>;
+  it.each([
+    { name: 'はじめに', icon: 'overview', selector: 'app-overview-icon' },
+    { name: 'シュミレーション', icon: 'simulation', selector: 'app-simulation-icon' },
+    { name: '履歴', icon: 'history', selector: 'app-history-icon' },
+  ] as InputType[])('入力の値に応じた name,icon が表示されるか', async ({ name, icon, selector }) => {
+    const { container } = await render(SidebarLinkComponent, { inputs: { name, icon } });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SidebarLinkComponent, RouterTestingModule],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(SidebarLinkComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('【1】インプットの値に応じた期待通りの name,icon が表示されるか', () => {
-    const name = 'はじめに';
-    const icon = 'overview';
-
-    component.name = name;
-    component.icon = icon;
-    fixture.detectChanges();
-
-    const linkElement = fixture.nativeElement.querySelector('a');
-    expect(linkElement.textContent.trim()).toEqual(name);
-
-    const iconElement = fixture.nativeElement.querySelector('app-overview-icon');
-    expect(iconElement).toBeTruthy();
-  });
-
-  it('【2】インプットの値に応じた期待通りの name,icon が表示されるか', () => {
-    const name = 'シュミレーション';
-    const icon = 'simulation';
-
-    component.name = name;
-    component.icon = icon;
-    fixture.detectChanges();
-
-    const linkElement = fixture.nativeElement.querySelector('a');
-    expect(linkElement.textContent.trim()).toEqual(name);
-
-    const iconElement = fixture.nativeElement.querySelector('app-simulation-icon');
-    expect(iconElement).toBeTruthy();
-  });
-
-  it('【3】インプットの値に応じた期待通りの name,icon が表示されるか', () => {
-    const name = '履歴';
-    const icon = 'history';
-
-    component.name = name;
-    component.icon = icon;
-    fixture.detectChanges();
-
-    const linkElement = fixture.nativeElement.querySelector('a');
-    expect(linkElement.textContent.trim()).toEqual(name);
-
-    const iconElement = fixture.nativeElement.querySelector('app-history-icon');
-    expect(iconElement).toBeTruthy();
+    expect(screen.getAllByText(name)).toBeTruthy();
+    expect(container.querySelector(selector)).toBeTruthy();
   });
 });

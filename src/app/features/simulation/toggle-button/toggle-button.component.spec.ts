@@ -1,44 +1,33 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { ToggleButtonComponent } from './toggle-button.component';
 
 describe('ToggleButtonComponent', () => {
-  let component: ToggleButtonComponent;
-  let fixture: ComponentFixture<ToggleButtonComponent>;
+  it('ボタン押下でクリックイベントが発火されるか', async () => {
+    const user = userEvent.setup();
+    const clickEvent = jest.fn();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ToggleButtonComponent],
-    }).compileComponents();
+    await render(ToggleButtonComponent, { on: { clickEvent } });
+    await user.click(screen.getByRole('button'));
 
-    fixture = TestBed.createComponent(ToggleButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    expect(clickEvent).toHaveBeenCalled();
   });
 
-  it('ボタン押下でクリックイベントが発火されるか', () => {
-    const emitSpy = jest.spyOn(component.clickEvent, 'emit');
+  it('開いている状態の場合、期待通りのクラスが適用されているか', async () => {
+    const { container } = await render(ToggleButtonComponent, {
+      inputs: { isOpen: true },
+    });
 
-    const button = fixture.nativeElement.querySelector('button');
-    button.click();
-
-    expect(emitSpy).toHaveBeenCalled();
+    const svgElement = container.querySelector('svg');
+    expect(svgElement?.classList).toContain('rotate-180');
   });
 
-  it('開いている状態の場合、期待通りのクラスが適用されているか', () => {
-    component.isOpen = true;
-    fixture.detectChanges();
+  it('閉じている状態の場合、期待通りのクラスが適用されているか', async () => {
+    const { container } = await render(ToggleButtonComponent, {
+      inputs: { isOpen: false },
+    });
 
-    const button = fixture.nativeElement.querySelector('svg');
-
-    expect(button.classList).toContain('rotate-180');
-  });
-
-  it('閉じている性状態の場合、期待通りのクラスが適用されているか', () => {
-    component.isOpen = false;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('svg');
-
-    expect(button.classList).toContain('rotate-90');
+    const svgElement = container.querySelector('svg');
+    expect(svgElement?.classList).toContain('rotate-90');
   });
 });
