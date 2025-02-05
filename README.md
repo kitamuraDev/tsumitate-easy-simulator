@@ -16,12 +16,20 @@
 
 ![npm](https://img.shields.io/badge/npm-v10.5.1-blue)
 
-### ライブラリ
+### フレームワーク
 
 ![Angular](https://img.shields.io/badge/Angular-v19.1.1-blue)
+
+### ライブラリ
+
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.4.0-blue)
 ![Flowbite](https://img.shields.io/badge/Flowbite-v2.2.1-blue)
 ![Dexie](https://img.shields.io/badge/Dexie-v3.2.4-blue)
+
+### テスト
+
+![Jest](https://img.shields.io/badge/Jest-v29.7.0-blue)
+![Testing Library Angular](https://img.shields.io/badge/Testing_Library_Angular-v17.3.5-blue)
 
 ### リンター・フォーマッター
 
