@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { BaseButtonComponent } from './base-button.component';
@@ -18,8 +19,10 @@ describe('BaseButtonComponent', () => {
     const clickEvent = jest.fn();
 
     await render(BaseButtonComponent, { inputs: { isDisabled: false }, on: { clickEvent } });
-    await user.click(screen.getByRole('button'));
+    const button = screen.getByRole('button');
 
+    expect(button).toBeEnabled(); // 活性であるか
+    await user.click(button);
     expect(clickEvent).toHaveBeenCalled();
   });
 
@@ -28,8 +31,10 @@ describe('BaseButtonComponent', () => {
     const clickEvent = jest.fn();
 
     await render(BaseButtonComponent, { inputs: { isDisabled: true }, on: { clickEvent } });
-    await user.click(screen.getByRole('button'));
+    const button = screen.getByRole('button');
 
+    expect(button).toBeDisabled(); // 非活性であるか
+    await user.click(button);
     expect(clickEvent).not.toHaveBeenCalled();
   });
 
@@ -38,8 +43,7 @@ describe('BaseButtonComponent', () => {
 
     const button = screen.getByRole('button');
 
-    expect(button.classList).toContain('bg-blue-500');
-    expect(button.classList).toContain('hover:opacity-70');
+    expect(button).toHaveClass('bg-blue-500', 'hover:opacity-70');
   });
 
   it('非活性状態の場合、期待通りのクラスが適用されているか', async () => {
@@ -47,8 +51,6 @@ describe('BaseButtonComponent', () => {
 
     const button = screen.getByRole('button');
 
-    expect(button.classList).toContain('bg-blue-500');
-    expect(button.classList).toContain('bg-opacity-40');
-    expect(button.classList).toContain('cursor-not-allowed');
+    expect(button).toHaveClass('bg-blue-500', 'bg-opacity-40', 'cursor-not-allowed');
   });
 });

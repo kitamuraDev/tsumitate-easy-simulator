@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { DisplayAmountValueComponent } from './display-amount-value.component';
@@ -13,7 +14,6 @@ describe('DisplayAmountValueComponent', () => {
       imports: [TruncateToTenThousandsPipe],
     });
 
-    const spanElement = screen.getByText(formattedAmount);
-    expect(spanElement).toBeTruthy();
+    expect(screen.getByText(formattedAmount)).toBeVisible();
   });
 });

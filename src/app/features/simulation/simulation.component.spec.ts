@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import { DeferBlockState } from '@angular/core/testing';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
@@ -14,13 +15,13 @@ describe('SimulationComponent', () => {
     const anyInputsContainer = screen.getByTestId('any-inputs-container');
 
     // 任意入力エリアが非表示であること（初期表示時）
-    expect(anyInputsContainer.classList).toContain('hidden');
+    expect(anyInputsContainer).toHaveClass('hidden');
 
     await user.click(toggleButton);
-    expect(anyInputsContainer.classList).toContain('block');
+    expect(anyInputsContainer).toHaveClass('block');
 
     await user.click(toggleButton);
-    expect(anyInputsContainer.classList).toContain('hidden');
+    expect(anyInputsContainer).toHaveClass('hidden');
   });
 
   describe('初期資産額', () => {
@@ -28,6 +29,7 @@ describe('SimulationComponent', () => {
     let decrementButton: HTMLButtonElement;
     let incrementButton: HTMLButtonElement;
     let initialAssetInput: HTMLInputElement;
+    let calcButton: HTMLButtonElement;
 
     beforeEach(async () => {
       user = userEvent.setup();
@@ -37,6 +39,7 @@ describe('SimulationComponent', () => {
       decrementButton = iac.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = iac.querySelector('app-increment-button button') as HTMLButtonElement;
       initialAssetInput = screen.getByRole('spinbutton', { name: /初期資産額/ }) as HTMLInputElement;
+      calcButton = screen.getByRole('button', { name: /計算/ });
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -50,15 +53,24 @@ describe('SimulationComponent', () => {
       expect(initialAssetInput.value).toBe('0');
     });
 
+    // biome-ignore format: off
     it.each([
       { input: '', errorMessage: '必須項目です' },
       { input: '-1', errorMessage: '0以上の数値を入力してください' },
       { input: '1801', errorMessage: '1800以下の数値を入力してください' },
-    ])('入力に対するバリデーションエラーメッセージが表示されるか', async ({ input, errorMessage }) => {
+    ])('入力に対するバリデーションエラーメッセージが表示されるか。また、計算ボタンの活性/非活性がバリデーション状態に応じて切り替わるか', async ({ input, errorMessage }) => {
+      expect(calcButton).toBeEnabled();
+
       await user.clear(initialAssetInput);
       if (input) await user.type(initialAssetInput, input); // `input === ''` の場合は `user.type()` を行わない
 
-      expect(screen.getByText(errorMessage)).toBeTruthy();
+      expect(screen.getByText(errorMessage)).toBeVisible();
+      expect(calcButton).toBeDisabled();
+
+      await user.clear(initialAssetInput);
+      await user.type(initialAssetInput, '0'); // 正常な入力に戻す
+
+      expect(calcButton).toBeEnabled();
     });
   });
 
@@ -67,6 +79,7 @@ describe('SimulationComponent', () => {
     let decrementButton: HTMLButtonElement;
     let incrementButton: HTMLButtonElement;
     let rateInput: HTMLInputElement;
+    let calcButton: HTMLButtonElement;
 
     beforeEach(async () => {
       user = userEvent.setup();
@@ -76,6 +89,7 @@ describe('SimulationComponent', () => {
       decrementButton = rc.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = rc.querySelector('app-increment-button button') as HTMLButtonElement;
       rateInput = screen.getByRole('spinbutton', { name: /想定利回り/ }) as HTMLInputElement;
+      calcButton = screen.getByRole('button', { name: /計算/ });
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -89,15 +103,24 @@ describe('SimulationComponent', () => {
       expect(rateInput.value).toBe('5');
     });
 
+    // biome-ignore format: off
     it.each([
       { input: '', errorMessage: '必須項目です' },
       { input: '-1', errorMessage: '0以上の数値を入力してください' },
       { input: '21', errorMessage: '20以下の数値を入力してください' },
-    ])('入力に対するバリデーションエラーメッセージが表示されるか', async ({ input, errorMessage }) => {
+    ])('入力に対するバリデーションエラーメッセージが表示されるか。また、計算ボタンの活性/非活性がバリデーション状態に応じて切り替わるか', async ({ input, errorMessage }) => {
+      expect(calcButton).toBeEnabled();
+
       await user.clear(rateInput);
       if (input) await user.type(rateInput, input);
 
-      expect(screen.getByText(errorMessage)).toBeTruthy();
+      expect(screen.getByText(errorMessage)).toBeVisible();
+      expect(calcButton).toBeDisabled();
+
+      await user.clear(rateInput);
+      await user.type(rateInput, '5'); // 正常な入力に戻す
+
+      expect(calcButton).toBeEnabled();
     });
   });
 
@@ -106,6 +129,7 @@ describe('SimulationComponent', () => {
     let decrementButton: HTMLButtonElement;
     let incrementButton: HTMLButtonElement;
     let amountInput: HTMLInputElement;
+    let calcButton: HTMLButtonElement;
 
     beforeEach(async () => {
       user = userEvent.setup();
@@ -115,6 +139,7 @@ describe('SimulationComponent', () => {
       decrementButton = arc.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = arc.querySelector('app-increment-button button') as HTMLButtonElement;
       amountInput = within(arc).getByRole('spinbutton', { name: /毎月積立額/ }) as HTMLInputElement;
+      calcButton = screen.getByRole('button', { name: /計算/ });
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -128,15 +153,24 @@ describe('SimulationComponent', () => {
       expect(amountInput.value).toBe('3');
     });
 
+    // biome-ignore format: off
     it.each([
       { input: '', errorMessage: '必須項目です' },
       { input: '0', errorMessage: '1以上の数値を入力してください' },
       { input: '31', errorMessage: '30以下の数値を入力してください' },
-    ])('入力に対するバリデーションエラーメッセージが表示されるか', async ({ input, errorMessage }) => {
+    ])('入力に対するバリデーションエラーメッセージが表示されるか。また、計算ボタンの活性/非活性がバリデーション状態に応じて切り替わるか', async ({ input, errorMessage }) => {
+      expect(calcButton).toBeEnabled();
+
       await user.clear(amountInput);
       if (input) await user.type(amountInput, input);
 
-      expect(screen.getByText(errorMessage)).toBeTruthy();
+      expect(screen.getByText(errorMessage)).toBeVisible();
+      expect(calcButton).toBeDisabled();
+
+      await user.clear(amountInput);
+      await user.type(amountInput, '3'); // 正常な入力に戻す
+
+      expect(calcButton).toBeEnabled();
     });
   });
 
@@ -145,6 +179,7 @@ describe('SimulationComponent', () => {
     let decrementButton: HTMLButtonElement;
     let incrementButton: HTMLButtonElement;
     let yearInput: HTMLInputElement;
+    let calcButton: HTMLButtonElement;
 
     beforeEach(async () => {
       user = userEvent.setup();
@@ -154,6 +189,7 @@ describe('SimulationComponent', () => {
       decrementButton = yrc.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = yrc.querySelector('app-increment-button button') as HTMLButtonElement;
       yearInput = within(yrc).getByRole('spinbutton', { name: /積立期間/ }) as HTMLInputElement;
+      calcButton = screen.getByRole('button', { name: /計算/ });
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -167,16 +203,25 @@ describe('SimulationComponent', () => {
       expect(yearInput.value).toBe('1');
     });
 
+    // biome-ignore format: off
     it.each([
       { input: '', errorMessage: '必須項目です' },
       { input: '0', errorMessage: '1以上の数値を入力してください' },
       { input: '41', errorMessage: '40以下の数値を入力してください' },
       { input: '1.5', errorMessage: '整数値を入力してください' },
-    ])('入力に対するバリデーションエラーメッセージが表示されるか', async ({ input, errorMessage }) => {
+    ])('入力に対するバリデーションエラーメッセージが表示されるか。また、計算ボタンの活性/非活性がバリデーション状態に応じて切り替わるか', async ({ input, errorMessage }) => {
+      expect(calcButton).toBeEnabled();
+
       await user.clear(yearInput);
       if (input) await user.type(yearInput, input);
 
-      expect(screen.getByText(errorMessage)).toBeTruthy();
+      expect(screen.getByText(errorMessage)).toBeVisible();
+      expect(calcButton).toBeDisabled();
+
+      await user.clear(yearInput);
+      await user.type(yearInput, '1'); // 正常な入力に戻す
+
+      expect(calcButton).toBeEnabled();
     });
   });
 
@@ -185,6 +230,7 @@ describe('SimulationComponent', () => {
     let decrementButton: HTMLButtonElement;
     let incrementButton: HTMLButtonElement;
     let amountInput: HTMLInputElement;
+    let calcButton: HTMLButtonElement;
 
     beforeEach(async () => {
       user = userEvent.setup();
@@ -194,6 +240,7 @@ describe('SimulationComponent', () => {
       decrementButton = aac.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = aac.querySelector('app-increment-button button') as HTMLButtonElement;
       amountInput = within(aac).getByRole('spinbutton', { name: /毎月積立額/ }) as HTMLInputElement;
+      calcButton = screen.getByRole('button', { name: /計算/ });
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -207,14 +254,20 @@ describe('SimulationComponent', () => {
       expect(amountInput.value).toBe('1');
     });
 
+    // biome-ignore format: off
     it.each([
       { input: '0', errorMessage: '1以上の数値を入力してください' },
       { input: '31', errorMessage: '30以下の数値を入力してください' },
-    ])('入力に対するバリデーションエラーメッセージが表示されるか', async ({ input, errorMessage }) => {
+    ])('入力に対するバリデーションエラーメッセージが表示されるか。また、計算ボタンの活性/非活性がバリデーション状態に応じて切り替わるか', async ({ input, errorMessage }) => {
+      expect(calcButton).toBeEnabled();
+
       await user.clear(amountInput);
       await user.type(amountInput, input);
+      expect(screen.getByText(errorMessage)).toBeVisible();
+      expect(calcButton).toBeDisabled();
 
-      expect(screen.getByText(errorMessage)).toBeTruthy();
+      await user.clear(amountInput);
+      expect(calcButton).toBeEnabled();
     });
   });
 
@@ -223,6 +276,7 @@ describe('SimulationComponent', () => {
     let decrementButton: HTMLButtonElement;
     let incrementButton: HTMLButtonElement;
     let yearInput: HTMLInputElement;
+    let calcButton: HTMLButtonElement;
 
     beforeEach(async () => {
       user = userEvent.setup();
@@ -232,6 +286,7 @@ describe('SimulationComponent', () => {
       decrementButton = yac.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = yac.querySelector('app-increment-button button') as HTMLButtonElement;
       yearInput = within(yac).getByRole('spinbutton', { name: /積立期間/ }) as HTMLInputElement;
+      calcButton = screen.getByRole('button', { name: /計算/ });
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -245,20 +300,129 @@ describe('SimulationComponent', () => {
       expect(yearInput.value).toBe('1');
     });
 
+    // biome-ignore format: off
     it.each([
       { input: '0', errorMessage: '1以上の数値を入力してください' },
       { input: '41', errorMessage: '40以下の数値を入力してください' },
       { input: '1.5', errorMessage: '整数値を入力してください' },
-    ])('入力に対するバリデーションエラーメッセージが表示されるか', async ({ input, errorMessage }) => {
+    ])('入力に対するバリデーションエラーメッセージが表示されるか。また、計算ボタンの活性/非活性がバリデーション状態に応じて切り替わるか', async ({ input, errorMessage }) => {
+      expect(calcButton).toBeEnabled();
+
       await user.clear(yearInput);
       await user.type(yearInput, input);
+      expect(screen.getByText(errorMessage)).toBeVisible();
+      expect(calcButton).toBeDisabled();
 
-      expect(screen.getByText(errorMessage)).toBeTruthy();
+      await user.clear(yearInput);
+      expect(calcButton).toBeEnabled();
     });
   });
 
-  // TODO: 現状の設定では`toBeDisabled()`が使えないので、以下のテストは使えるようになってから書く
-  describe('計算ボタンの活性/非活性チェック', () => {});
+  describe('計算ボタンの活性/非活性チェック', () => {
+    let user: ReturnType<typeof userEvent.setup>;
+    let calcButton: HTMLButtonElement;
+    let initialAssetInput: HTMLInputElement;
+    let rateInput: HTMLInputElement;
+    let amountRequiredInput: HTMLInputElement;
+    let yearRequiredInput: HTMLInputElement;
+    let amountAny1Input: HTMLInputElement;
+    let yearAny1Input: HTMLInputElement;
+    let amountAny3Input: HTMLInputElement;
+    let yearAny3Input: HTMLInputElement;
+
+    beforeEach(async () => {
+      user = userEvent.setup();
+      await render(SimulationComponent);
+
+      calcButton = screen.getByRole('button', { name: /計算/ });
+      initialAssetInput = screen.getByRole('spinbutton', { name: /初期資産額/ });
+      rateInput = screen.getByRole('spinbutton', { name: /想定利回り/ });
+      amountRequiredInput = within(screen.getByTestId('amount-required-container')).getByRole('spinbutton', {
+        name: /毎月積立額/,
+      });
+      yearRequiredInput = within(screen.getByTestId('year-required-container')).getByRole('spinbutton', {
+        name: /積立期間/,
+      });
+      amountAny1Input = within(screen.getByTestId('amount-any-1-container')).getByRole('spinbutton', {
+        name: /毎月積立額/,
+      });
+      yearAny1Input = within(screen.getByTestId('year-any-1-container')).getByRole('spinbutton', {
+        name: /積立期間/,
+      });
+      amountAny3Input = within(screen.getByTestId('amount-any-3-container')).getByRole('spinbutton', {
+        name: /毎月積立額/,
+      });
+      yearAny3Input = within(screen.getByTestId('year-any-3-container')).getByRole('spinbutton', {
+        name: /積立期間/,
+      });
+    });
+
+    it('初期表示時はバリデーションエラーは発生しないため、計算ボタンは活性であるか', async () => {
+      expect(calcButton).toBeEnabled();
+    });
+
+    it('各入力項目の状態に応じて、計算ボタンの活性/非活性が切り替わるか', async () => {
+      expect(calcButton).toBeEnabled();
+
+      // 必須入力の項目をバリデーションエラー状態にする
+      await user.clear(initialAssetInput);
+      await user.clear(rateInput);
+      await user.clear(amountRequiredInput);
+      await user.clear(yearRequiredInput);
+
+      expect(calcButton).toBeDisabled();
+
+      // 正常な入力に戻す
+      await user.type(initialAssetInput, '0');
+      await user.type(rateInput, '5');
+      await user.type(amountRequiredInput, '3');
+      await user.type(yearRequiredInput, '1');
+
+      expect(calcButton).toBeEnabled();
+
+      // 任意入力の項目をバリデーションエラー状態にする
+      await user.type(amountAny1Input, '0');
+      await user.type(yearAny1Input, '0');
+      await user.type(amountAny3Input, '0');
+      await user.type(yearAny3Input, '0');
+
+      expect(calcButton).toBeDisabled();
+
+      // "一部"正常な入力に戻す
+      await user.clear(amountAny1Input);
+      await user.clear(yearAny1Input);
+
+      expect(calcButton).toBeDisabled();
+
+      // すべての項目を正常な入力に戻す
+      await user.clear(amountAny3Input);
+      await user.clear(yearAny3Input);
+
+      expect(calcButton).toBeEnabled();
+    });
+
+    it('片方のみの入力の場合、計算ボタンが非活性になるか', async () => {
+      expect(calcButton).toBeEnabled();
+
+      await user.type(amountAny1Input, '5');
+      expect(calcButton).toBeDisabled(); // 片方
+
+      await user.type(yearAny1Input, '5');
+      expect(calcButton).toBeEnabled(); // 両方
+
+      await user.type(amountAny3Input, '5');
+      expect(calcButton).toBeDisabled(); // 片方
+
+      await user.clear(amountAny1Input);
+      expect(calcButton).toBeDisabled(); // 片方
+
+      await user.type(yearAny3Input, '5');
+      expect(calcButton).toBeDisabled(); // 片方
+
+      await user.type(amountAny1Input, '5');
+      expect(calcButton).toBeEnabled(); // 両方
+    });
+  });
 
   describe('最終評価額', () => {
     const { tsumitateEasyCalculate } = new CalculateService();
@@ -297,7 +461,7 @@ describe('SimulationComponent', () => {
 
       // 計算ボタン押下後、値が0から更新されるのを契機に、`DisplayAmountValueComponent`が初めて表示されるため、`DeferBlockState.Complete`とする
       await renderDeferBlock(DeferBlockState.Complete);
-      expect(await screen.findByText(expectedCalcResult)).toBeTruthy();
+      expect(await screen.findByText(expectedCalcResult)).toBeVisible();
     });
   });
 });
