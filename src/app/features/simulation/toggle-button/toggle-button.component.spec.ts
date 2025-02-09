@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { ToggleButtonComponent } from './toggle-button.component';
@@ -18,8 +19,7 @@ describe('ToggleButtonComponent', () => {
       inputs: { isOpen: true },
     });
 
-    const svgElement = container.querySelector('svg');
-    expect(svgElement?.classList).toContain('rotate-180');
+    expect(container.querySelector('svg')).toHaveClass('rotate-180');
   });
 
   it('閉じている状態の場合、期待通りのクラスが適用されているか', async () => {
@@ -27,7 +27,6 @@ describe('ToggleButtonComponent', () => {
       inputs: { isOpen: false },
     });
 
-    const svgElement = container.querySelector('svg');
-    expect(svgElement?.classList).toContain('rotate-90');
+    expect(container.querySelector('svg')).toHaveClass('rotate-90');
   });
 });
