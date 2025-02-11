@@ -43,34 +43,18 @@ export default class SimulationComponent {
     this.isOpenAnyInputsBlock = !this.isOpenAnyInputsBlock;
   }
 
+  // biome-ignore format: 一行にまとめたいため
   inputs = new FormGroup({
-    initialAsset: new FormControl(0, [Validators.required, Validators.min(0), Validators.max(1800)]),
+    initialAsset: new FormControl(this.getInitialAssetInSessionStorage(), [Validators.required, Validators.min(0), Validators.max(1800)]),
     amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(30)]),
-    yearRequired: new FormControl(1, [
-      Validators.required,
-      Validators.min(1),
-      Validators.max(40),
-      this.validationService.integerValueValidator(),
-    ]),
+    yearRequired: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
     amountAny1: new FormControl(null, [Validators.min(1), Validators.max(30)]),
-    yearAny1: new FormControl(null, [
-      Validators.min(1),
-      Validators.max(40),
-      this.validationService.integerValueValidator(),
-    ]),
+    yearAny1: new FormControl(null, [Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
     amountAny2: new FormControl(null, [Validators.min(1), Validators.max(30)]),
-    yearAny2: new FormControl(null, [
-      Validators.min(1),
-      Validators.max(40),
-      this.validationService.integerValueValidator(),
-    ]),
+    yearAny2: new FormControl(null, [Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
     amountAny3: new FormControl(null, [Validators.min(1), Validators.max(30)]),
-    yearAny3: new FormControl(null, [
-      Validators.min(1),
-      Validators.max(40),
-      this.validationService.integerValueValidator(),
-    ]),
-    rate: new FormControl(5, [Validators.required, Validators.min(0), Validators.max(20)]),
+    yearAny3: new FormControl(null, [Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
+    rate: new FormControl(5, [Validators.required, Validators.min(0), Validators.max(20)])
   });
 
   // インクリメント/デクリメント
@@ -120,8 +104,20 @@ export default class SimulationComponent {
     // compoundInterestCalcResult を更新
     this.compoundInterestCalcResult.update(() => tsumitateOutput.compoundInterestCalcResult);
 
+    // 初期資産額をセッションストレージに保存
+    this.setInitialAssetInSessionStorage(tsumitateInput.initialAsset);
+
     // DB登録
     await this.dbService.add({ input: tsumitateInput, output: tsumitateOutput });
+  }
+
+  // 初期資産額をセッションストレージに保存
+  private setInitialAssetInSessionStorage(initialAsset: number): void {
+    sessionStorage.setItem('initial-asset', initialAsset.toString());
+  }
+  // 初期資産額をセッションストレージから取得
+  private getInitialAssetInSessionStorage(): number {
+    return Number(sessionStorage.getItem('initial-asset'));
   }
 
   // 配列からnullを除外する
