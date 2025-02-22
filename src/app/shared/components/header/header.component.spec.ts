@@ -3,6 +3,10 @@ import { render, screen } from '@testing-library/angular';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
+  });
+
   it('data-drawer-target="logo-sidebar" 属性を持つボタンがあるか', async () => {
     await render(HeaderComponent);
 

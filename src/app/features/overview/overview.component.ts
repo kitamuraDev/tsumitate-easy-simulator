@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 
 @Component({
   selector: 'app-overview',
-  imports: [HeadContentComponent, BaseButtonComponent],
+  imports: [HeadContentComponent],
   template: `
     <app-head-content [title]="'はじめに'" [hasDescription]="true">
       <p>
@@ -18,14 +17,12 @@ import { HeadContentComponent } from '../../shared/components/head-content/head-
       </p>
     </app-head-content>
     <div class="grid place-content-center mt-10">
-      <app-base-button
-        [isDisabled]="false"
-        [widthDefault]="'w-52'"
-        [widthSm]="'sm:w-56'"
-        (clickEvent)="toSimulationPage()"
+      <button
+        (click)="toSimulationPage()"
+        class="text-base font-medium text-center rounded-lg w-52 sm:w-56 px-2 py-3 transition-opacity text-white bg-blue-500 hover:opacity-70"
       >
         シュミレーションをする
-      </app-base-button>
+      </button>
     </div>
   `,
 })
