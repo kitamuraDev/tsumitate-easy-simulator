@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Output, input } from '@angular/core';
-import { DeleteButtonComponent } from '../../../shared/components/delete-button/delete-button.component';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matDelete } from '@ng-icons/material-icons/baseline';
 import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 import type { Tsumitate } from '../../../shared/types/tsumitate';
 
 @Component({
   selector: 'app-history-table',
-  imports: [DeleteButtonComponent, TruncateToTenThousandsPipe, ToPercentagePipe],
+  imports: [NgIcon, TruncateToTenThousandsPipe, ToPercentagePipe],
+  viewProviders: provideIcons({ matDelete }),
   templateUrl: 'history-table.component.html',
 })
 export class HistoryTableComponent {

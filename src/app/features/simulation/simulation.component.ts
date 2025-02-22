@@ -1,16 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matEquals } from '@ng-icons/material-icons/baseline';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
-import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
-import { DecrementButtonComponent } from '../../shared/components/decrement-button/decrement-button.component';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
-import { IncrementButtonComponent } from '../../shared/components/increment-button/increment-button.component';
 import { ValidationWarningMessageComponent } from '../../shared/components/validation-warning-message/validation-warning-message.component';
 import { CalculateService } from '../../shared/services/calculate.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import type { Input } from '../../shared/types/tsumitate';
-import { DescriptiveTextComponent } from './descriptive-text/descriptive-text.component';
+import { DecrementButtonComponent } from './decrement-button/decrement-button.component';
 import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
+import { IncrementButtonComponent } from './increment-button/increment-button.component';
 import { LabelTextComponent } from './label-text/label-text.component';
 import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
@@ -23,11 +23,11 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
     DecrementButtonComponent,
     IncrementButtonComponent,
     LabelTextComponent,
-    DescriptiveTextComponent,
-    BaseButtonComponent,
     DisplayAmountValueComponent,
     ToggleButtonComponent,
+    NgIcon,
   ],
+  viewProviders: provideIcons({ matEquals }),
   templateUrl: './simulation.component.html',
 })
 export default class SimulationComponent {

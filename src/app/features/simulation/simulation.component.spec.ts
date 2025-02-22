@@ -7,6 +7,10 @@ import { CalculateService } from '../../shared/services/calculate.service';
 import SimulationComponent from './simulation.component';
 
 describe('SimulationComponent', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
+  });
+
   it('任意入力エリアがトグルされるか', async () => {
     const user = userEvent.setup();
     const { container } = await render(SimulationComponent);
@@ -39,7 +43,7 @@ describe('SimulationComponent', () => {
       decrementButton = iac.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = iac.querySelector('app-increment-button button') as HTMLButtonElement;
       initialAssetInput = screen.getByRole('spinbutton', { name: /初期資産額/ }) as HTMLInputElement;
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -89,7 +93,7 @@ describe('SimulationComponent', () => {
       decrementButton = rc.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = rc.querySelector('app-increment-button button') as HTMLButtonElement;
       rateInput = screen.getByRole('spinbutton', { name: /想定利回り/ }) as HTMLInputElement;
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -139,7 +143,7 @@ describe('SimulationComponent', () => {
       decrementButton = arc.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = arc.querySelector('app-increment-button button') as HTMLButtonElement;
       amountInput = within(arc).getByRole('spinbutton', { name: /毎月積立額/ }) as HTMLInputElement;
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -189,7 +193,7 @@ describe('SimulationComponent', () => {
       decrementButton = yrc.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = yrc.querySelector('app-increment-button button') as HTMLButtonElement;
       yearInput = within(yrc).getByRole('spinbutton', { name: /積立期間/ }) as HTMLInputElement;
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -240,7 +244,7 @@ describe('SimulationComponent', () => {
       decrementButton = aac.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = aac.querySelector('app-increment-button button') as HTMLButtonElement;
       amountInput = within(aac).getByRole('spinbutton', { name: /毎月積立額/ }) as HTMLInputElement;
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -286,7 +290,7 @@ describe('SimulationComponent', () => {
       decrementButton = yac.querySelector('app-decrement-button button') as HTMLButtonElement;
       incrementButton = yac.querySelector('app-increment-button button') as HTMLButtonElement;
       yearInput = within(yac).getByRole('spinbutton', { name: /積立期間/ }) as HTMLInputElement;
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
     });
 
     it('インクリメント/デクリメントが正常に行えるか', async () => {
@@ -334,7 +338,7 @@ describe('SimulationComponent', () => {
       user = userEvent.setup();
       await render(SimulationComponent);
 
-      calcButton = screen.getByRole('button', { name: /計算/ });
+      calcButton = screen.getByTestId('calculate-button');
       initialAssetInput = screen.getByRole('spinbutton', { name: /初期資産額/ });
       rateInput = screen.getByRole('spinbutton', { name: /想定利回り/ });
       amountRequiredInput = within(screen.getByTestId('amount-required-container')).getByRole('spinbutton', {
@@ -457,7 +461,7 @@ describe('SimulationComponent', () => {
       const expectedCalcResult = transform(calcResult.compoundInterestCalcResult);
 
       // 計算ボタン押下
-      await user.click(screen.getByRole('button', { name: /計算/ }));
+      await user.click(screen.getByTestId('calculate-button'));
 
       // 計算ボタン押下後、値が0から更新されるのを契機に、`DisplayAmountValueComponent`が初めて表示されるため、`DeferBlockState.Complete`とする
       await renderDeferBlock(DeferBlockState.Complete);

@@ -1,12 +1,12 @@
 <app-head-content [title]="'シュミレーション'" [hasDescription]="false" />
 <section class="sm:w-fit flex flex-col gap-8 sm:p-6">
   <form [formGroup]="inputs">
-    <div class="space-y-2.5 p-4">
+    <div class="space-y-2.5 py-4 px-8">
       <!-- 初期資産額 -->
       <div data-testid="initial-asset-container">
         <div class="flex items-center">
           <app-label-text [id]="'initialAsset'" [isRequired]="true">初期資産額</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.initialAsset, 'initialAsset')" />
             <input
               id="initialAsset"
@@ -17,10 +17,9 @@
               min="0"
               max="1800"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.initialAsset, 'initialAsset')" />
-            <app-descriptive-text>万円</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('initialAsset')?.getError('required')) {
@@ -36,7 +35,7 @@
       <div data-testid="rate-container">
         <div class="flex items-center">
           <app-label-text [id]="'rate'" [isRequired]="true">想定利回り</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.rate, 'rate')" />
             <input
               id="rate"
@@ -47,10 +46,9 @@
               min="0"
               max="20"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.rate, 'rate')" />
-            <app-descriptive-text>%で</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('rate')?.getError('required')) {
@@ -66,7 +64,7 @@
       <div data-testid="amount-required-container">
         <div class="flex items-center">
           <app-label-text [id]="'amountRequired'" [isRequired]="true">毎月積立額</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.amountRequired, 'amountRequired')" />
             <input
               id="amountRequired"
@@ -77,10 +75,9 @@
               min="1"
               max="30"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.amountRequired, 'amountRequired')" />
-            <app-descriptive-text>万円を</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('amountRequired')?.getError('required')) {
@@ -96,7 +93,7 @@
       <div data-testid="year-required-container">
         <div class="flex items-center">
           <app-label-text [id]="'yearRequired'" [isRequired]="true">積立期間</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.yearRequired, 'yearRequired')" />
             <input
               id="yearRequired"
@@ -107,10 +104,9 @@
               min="1"
               max="40"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.yearRequired, 'yearRequired')" />
-            <app-descriptive-text>年間</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('yearRequired')?.getError('required')) {
@@ -130,12 +126,12 @@
       <p class="text-xs font-medium text-gray-900">後から積立額を変更する場合の入力項目</p>
     </div>
 
-    <div data-testid="any-inputs-container" class="space-y-2.5 p-4 bg-gray-100 {{ isOpenAnyInputsBlock ? 'block' : 'hidden' }}">
+    <div data-testid="any-inputs-container" class="space-y-2.5 py-4 px-8 bg-gray-100 {{ isOpenAnyInputsBlock ? 'block' : 'hidden' }}">
       <!-- 任意入力 1 -->
       <div data-testid="amount-any-1-container">
         <div class="flex items-center">
           <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.amountAny1, 'amountAny1')" />
             <input
               id="amountAny1"
@@ -145,10 +141,9 @@
               min="1"
               max="30"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.amountAny1, 'amountAny1')" />
-            <app-descriptive-text>万円を</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('amountAny1')?.getError('min')) {
@@ -160,7 +155,7 @@
       <div data-testid="year-any-1-container">
         <div class="flex items-center">
           <app-label-text [id]="'yearAny1'" [isRequired]="false">積立期間</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.yearAny1, 'yearAny1')" />
             <input
               id="yearAny1"
@@ -170,10 +165,9 @@
               min="1"
               max="40"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.yearAny1, 'yearAny1')" />
-            <app-descriptive-text>年間</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('yearAny1')?.getError('min')) {
@@ -189,7 +183,7 @@
       <div data-testid="amount-any-2-container">
         <div class="flex items-center">
           <app-label-text [id]="'amountAny2'" [isRequired]="false">毎月積立額</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.amountAny2, 'amountAny2')" />
             <input
               id="amountAny2"
@@ -199,10 +193,9 @@
               min="1"
               max="30"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.amountAny2, 'amountAny2')" />
-            <app-descriptive-text>万円を</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('amountAny2')?.getError('min')) {
@@ -214,7 +207,7 @@
       <div data-testid="year-any-2-container">
         <div class="flex items-center">
           <app-label-text [id]="'yearAny2'" [isRequired]="false">積立期間</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.yearAny2, 'yearAny2')" />
             <input
               id="yearAny2"
@@ -224,10 +217,9 @@
               min="1"
               max="40"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.yearAny2, 'yearAny2')" />
-            <app-descriptive-text>年間</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('yearAny2')?.getError('min')) {
@@ -243,7 +235,7 @@
       <div data-testid="amount-any-3-container">
         <div class="flex items-center">
           <app-label-text [id]="'amountAny3'" [isRequired]="false">毎月積立額</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.amountAny3, 'amountAny3')" />
             <input
               id="amountAny3"
@@ -253,10 +245,9 @@
               min="1"
               max="30"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.amountAny3, 'amountAny3')" />
-            <app-descriptive-text>万円を</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('amountAny3')?.getError('min')) {
@@ -268,7 +259,7 @@
       <div data-testid="year-any-3-container">
         <div class="flex items-center">
           <app-label-text [id]="'yearAny3'" [isRequired]="false">積立期間</app-label-text>
-          <div class="flex items-center">
+          <div class="flex items-center flex-1">
             <app-decrement-button (decrement)="decrement(inputs.value.yearAny3, 'yearAny3')" />
             <input
               id="yearAny3"
@@ -278,10 +269,9 @@
               min="1"
               max="40"
               (input)="updateFormValidState()"
-              class="h-11 sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+              class="h-11 w-full sm:w-24 text-2xl font-medium text-center border-x-0 border-gray-300 bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
             />
             <app-increment-button (increment)="increment(inputs.value.yearAny3, 'yearAny3')" />
-            <app-descriptive-text>年間</app-descriptive-text>
           </div>
         </div>
         @if (inputs.get('yearAny3')?.getError('min')) {
@@ -295,26 +285,25 @@
     </div>
   </form>
 
-  <div class="flex flex-col sm:flex-row items-center gap-8">
-    <div class="flex items-center gap-6">
-      <p class="text-base sm:text-xl font-medium">積み立てると</p>
-      <app-base-button
-        [isDisabled]="isAbnormalInput"
-        [widthDefault]="'w-32'"
-        [widthSm]="'sm:w-36'"
-        (clickEvent)="onCalculate()"
-      >
-        計算
-      </app-base-button>
-    </div>
-    <div class="w-80 h-20 p-6 flex justify-between items-center bg-blue-100">
-      <span class="text-sm font-medium">最終評価額</span>
-      <div class="flex items-center gap-1">
-        @defer (when compoundInterestCalcResult()) {
-          <app-display-amount-value [compoundInterestCalcResult]="compoundInterestCalcResult()" />
-        }
-        <span class="text-sm font-medium">万円</span>
-      </div>
+  <div class="w-80 h-20 p-6 m-auto flex justify-between items-center bg-blue-100">
+    <span class="text-sm font-medium">最終評価額</span>
+    <div class="flex items-center gap-1">
+      @defer (when compoundInterestCalcResult()) {
+        <app-display-amount-value [compoundInterestCalcResult]="compoundInterestCalcResult()" />
+      }
+      <span class="text-sm font-medium">万円</span>
     </div>
   </div>
 </section>
+
+<!-- 計算ボタン -->
+@let bgStyles = isAbnormalInput ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
+@let bottom = isOpenAnyInputsBlock ? 'bottom-28' : 'bottom-4';
+<button
+  data-testid="calculate-button"
+  [disabled]="isAbnormalInput"
+  (click)="onCalculate()"
+  class="{{bgStyles}} text-white opacity-90 inline-flex justify-center items-center w-14 h-14 rounded-full fixed right-4 {{bottom}} z-50"
+>
+  <ng-icon name="matEquals" size="24" />
+</button>

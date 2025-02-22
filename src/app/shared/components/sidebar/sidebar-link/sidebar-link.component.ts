@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { HistoryIconComponent } from '../sidebar-icons/history-icon.component';
-import { OverviewIconComponent } from '../sidebar-icons/overview-icon.component';
-import { SimulationIconComponent } from '../sidebar-icons/simulation-icon.component';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matCalculate, matHome, matStorage } from '@ng-icons/material-icons/baseline';
 import type { SidebarIcon } from '../sidebar.component';
 
 @Component({
   selector: 'app-sidebar-link',
-  imports: [RouterLink, OverviewIconComponent, SimulationIconComponent, HistoryIconComponent],
+  imports: [RouterLink, NgIcon],
+  viewProviders: provideIcons({ matHome, matCalculate, matStorage }),
   template: `
     <li>
       <a
@@ -16,13 +16,13 @@ import type { SidebarIcon } from '../sidebar.component';
       >
         @switch (icon) {
           @case ('overview') {
-            <app-overview-icon />
+            <ng-icon name="matHome" size="24" />
           }
           @case ('simulation') {
-            <app-simulation-icon />
+            <ng-icon name="matCalculate" size="24" />
           }
           @case ('history') {
-            <app-history-icon />
+            <ng-icon name="matStorage" size="24" />
           }
         }
         <span>{{ name }}</span>
@@ -34,13 +34,13 @@ import type { SidebarIcon } from '../sidebar.component';
       >
         @switch (icon) {
           @case ('overview') {
-            <app-overview-icon />
+            <ng-icon name="matHome" size="24" />
           }
           @case ('simulation') {
-            <app-simulation-icon />
+            <ng-icon name="matCalculate" size="24" />
           }
           @case ('history') {
-            <app-history-icon />
+            <ng-icon name="matStorage" size="24" />
           }
         }
         <span>{{ name }}</span>
