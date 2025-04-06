@@ -18,6 +18,7 @@ describe('SidebarLinkComponent', () => {
     { name: 'はじめに', icon: 'overview', selector: 'ng-icon[name="matHome"]' },
     { name: 'シュミレーション', icon: 'simulation', selector: 'ng-icon[name="matCalculate"]' },
     { name: '履歴', icon: 'history', selector: 'ng-icon[name="matStorage"]' },
+    { name: 'アプリ設定', icon: 'setting', selector: 'ng-icon[name="matSettings"]' },
   ] as InputType[])('入力の値に応じた name,icon が表示されるか', async ({ name, icon, selector }) => {
     const { container } = await render(SidebarLinkComponent, { inputs: { name, icon } });
 

@@ -16,14 +16,17 @@
           <td class="px-6 py-4">{{ tsumitate.input.rate }}%</td>
           <td class="px-6 py-4">
             {{ tsumitate.input.amounts[0] }}万円 ({{ tsumitate.input.years[0] }}年)<br class="sm:hidden" />
-            @if (tsumitate.input.amounts[1]) {
+            @if (tsumitate.input.amounts[1] || tsumitate.input.years[1]) {
               {{ tsumitate.input.amounts[1] }}万円 ({{ tsumitate.input.years[1] }}年)<br class="sm:hidden" />
             }
-            @if (tsumitate.input.amounts[2]) {
+            @if (tsumitate.input.amounts[2] || tsumitate.input.years[2]) {
               {{ tsumitate.input.amounts[2] }}万円 ({{ tsumitate.input.years[2] }}年)<br class="sm:hidden" />
             }
-            @if (tsumitate.input.amounts[3]) {
-              {{ tsumitate.input.amounts[3] }}万円 ({{ tsumitate.input.years[3] }}年)
+            @if (tsumitate.input.amounts[3] || tsumitate.input.years[3]) {
+              {{ tsumitate.input.amounts[3] }}万円 ({{ tsumitate.input.years[3] }}年)<br class="sm:hidden" />
+            }
+            @if (tsumitate.input.amounts[4] || tsumitate.input.years[4]) {
+              {{ tsumitate.input.amounts[4] }}万円 ({{ tsumitate.input.years[4] }}年)
             }
           </td>
           <td class="px-6 py-4">{{ tsumitate.output.simpleInterestCalcResult | truncateToTenThousands }}万円</td>

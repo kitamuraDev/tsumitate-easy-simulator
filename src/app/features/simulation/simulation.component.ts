@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matEquals } from '@ng-icons/material-icons/baseline';
+import { SettingDatabaseService } from '../../core/setting-database.service';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { ValidationWarningMessageComponent } from '../../shared/components/validation-warning-message/validation-warning-message.component';
@@ -32,7 +33,8 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 })
 export default class SimulationComponent {
   private readonly calcService = inject(CalculateService);
-  private readonly dbService = inject(TsumitateDatabaseService);
+  private readonly tsumitateDatabaseService = inject(TsumitateDatabaseService);
+  private readonly settingDatabaseService = inject(SettingDatabaseService);
   private readonly validationService = inject(ValidationService);
 
   compoundInterestCalcResult = signal<number>(0);
@@ -84,11 +86,14 @@ export default class SimulationComponent {
     this.isAbnormalInput = !(this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3);
   }
 
-  private getTsumitateInput(): Input {
+  // biome-ignore format: 一行にまとめたいため
+  private async getTsumitateInput(): Promise<Input> {
     const input = this.inputs.value;
+
     const initialAsset = input.initialAsset ?? 0;
-    const amounts = this.filterNull([input.amountRequired, input.amountAny1, input.amountAny2, input.amountAny3]);
-    const years = this.filterNull([input.yearRequired, input.yearAny1, input.yearAny2, input.yearAny3]);
+    const filteredAmounts = this.filterNull([input.amountRequired, input.amountAny1, input.amountAny2, input.amountAny3]);
+    const filteredYears = this.filterNull([input.yearRequired, input.yearAny1, input.yearAny2, input.yearAny3]);
+    const { amounts, years } = await this.adjustForNoInvestmentPeriod(filteredAmounts, filteredYears);
     const rate = input.rate ?? 5;
 
     return { initialAsset, amounts, years, rate };
@@ -96,7 +101,7 @@ export default class SimulationComponent {
 
   async onCalculate() {
     // Inputの取得
-    const tsumitateInput = this.getTsumitateInput();
+    const tsumitateInput = await this.getTsumitateInput();
 
     // 計算
     const tsumitateOutput = this.calcService.tsumitateEasyCalculate(tsumitateInput);
@@ -108,7 +113,7 @@ export default class SimulationComponent {
     this.setInitialAssetInSessionStorage(tsumitateInput.initialAsset);
 
     // DB登録
-    await this.dbService.add({ input: tsumitateInput, output: tsumitateOutput });
+    await this.tsumitateDatabaseService.add({ input: tsumitateInput, output: tsumitateOutput });
   }
 
   // 初期資産額をセッションストレージに保存
@@ -123,5 +128,21 @@ export default class SimulationComponent {
   // 配列からnullを除外する
   private filterNull(array: (number | null | undefined)[]): number[] {
     return array.filter((v) => v !== null) as number[];
+  }
+
+  // 積立無しの期間を考慮した配列の調整
+  private async adjustForNoInvestmentPeriod(amounts: number[], years: number[]) {
+    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncluded();
+    const currentAge = Number(result.selectedCurrentAge);
+    const endAge = Number(result.selectedEndAge);
+    const noInvestmentPeriodYear = endAge - currentAge - years.reduce((acc, cur) => acc + cur, 0); // 積立無しの期間
+
+    // 積立無しの期間を含めない場合は、引数の配列をそのまま返す
+    if (!result.isNoInvestmentPeriodIncluded) return { amounts, years };
+    // 積立無しの期間が0以下の場合は、引数の配列をそのまま返す
+    if (noInvestmentPeriodYear <= 0) return { amounts, years };
+
+    // 積立無しの期間を含める場合
+    return { amounts: [...amounts, 0], years: [...years, noInvestmentPeriodYear] };
   }
 }
