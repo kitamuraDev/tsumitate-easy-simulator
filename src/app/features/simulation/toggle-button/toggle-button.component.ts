@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     @let rotateStyle = isOpen ? 'rotate-180' : 'rotate-90';
 
     <button
+      type="button"
       (click)="clickEvent.emit()"
       class="cursor-pointer p-2 rounded-md hover:bg-gray-100 transition duration-200 ease-in"
     >
