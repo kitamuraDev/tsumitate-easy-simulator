@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { DeferBlockState } from '@angular/core/testing';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
+import { SettingDatabaseService } from '../../core/setting-database.service';
 import { TruncateToTenThousandsPipe } from '../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { CalculateService } from '../../shared/services/calculate.service';
 import SimulationComponent from './simulation.component';
@@ -443,10 +444,25 @@ describe('SimulationComponent', () => {
      * TODO: 本当な複数パターンをテストしたい
      *  - Dexie.js関連のエラーが2つ目以降のテストで発生してしまう（理由は分からない）ため、一旦は以下のテストだけに留める
      *  - 計算ロジックはサービスのテストで問題がないことを担保しているため、コンポーネントテストでは、「計算結果が画面に問題なく表示される」ことだけを担保する
+     *  - （2025/4/4追記）providersでDexie.jsを呼び出す箇所をモックすればDexie.js固有のエラーは回避できることが分かったため、後で他のテストケースも追加する
      */
     it('「計算」ボタンを押下で、計算結果が表示されるか', async () => {
       const user = userEvent.setup();
-      const { renderDeferBlock } = await render(SimulationComponent);
+      const { renderDeferBlock } = await render(SimulationComponent, {
+        providers: [
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getNoInvestmentPeriodIncluded: () =>
+                Promise.resolve({
+                  isNoInvestmentPeriodIncluded: false,
+                  selectedCurrentAge: '25',
+                  selectedEndAge: '65',
+                }),
+            },
+          },
+        ],
+      });
 
       const iac = within(screen.getByTestId('initial-asset-container'));
       const initialAsset = Number((iac.getByRole('spinbutton', { name: /初期資産額/ }) as HTMLInputElement).value);
@@ -466,6 +482,108 @@ describe('SimulationComponent', () => {
       // 計算ボタン押下後、値が0から更新されるのを契機に、`DisplayAmountValueComponent`が初めて表示されるため、`DeferBlockState.Complete`とする
       await renderDeferBlock(DeferBlockState.Complete);
       expect(await screen.findByText(expectedCalcResult)).toBeVisible();
+    });
+  });
+
+  describe('adjustForNoInvestmentPeriod()', () => {
+    it('積立無しの期間を含めない設定にしている場合は、元の配列が返却されるか', async () => {
+      const { fixture } = await render(SimulationComponent, {
+        providers: [
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getNoInvestmentPeriodIncluded: () =>
+                Promise.resolve({
+                  isNoInvestmentPeriodIncluded: false,
+                  selectedCurrentAge: '25',
+                  selectedEndAge: '65',
+                }),
+            },
+          },
+        ],
+      });
+      const component = fixture.componentInstance;
+
+      const amounts = [1, 2, 3];
+      const years = [1, 2, 3];
+      const result = await component['adjustForNoInvestmentPeriod'](amounts, years);
+
+      expect(result).toEqual({ amounts, years });
+    });
+
+    it('積立無しの期間を含める設定にしている場合は、元の配列に積立無しの期間を追加した配列が返却されるか', async () => {
+      const { fixture } = await render(SimulationComponent, {
+        providers: [
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getNoInvestmentPeriodIncluded: () =>
+                Promise.resolve({
+                  isNoInvestmentPeriodIncluded: true,
+                  selectedCurrentAge: '25',
+                  selectedEndAge: '65',
+                }),
+            },
+          },
+        ],
+      });
+      const component = fixture.componentInstance;
+
+      const amounts = [1, 2, 3];
+      const years = [1, 2, 3]; // 運用終了年齢を超えない積立年数（65 - 25 - 1 - 2 - 3 ... 34となる）
+      const result = await component['adjustForNoInvestmentPeriod'](amounts, years);
+
+      expect(result).toEqual({ amounts: [1, 2, 3, 0], years: [1, 2, 3, 34] });
+    });
+
+    it('積立無しの期間が0未満の場合は、元の配列が返却されるか', async () => {
+      const { fixture } = await render(SimulationComponent, {
+        providers: [
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getNoInvestmentPeriodIncluded: () =>
+                Promise.resolve({
+                  isNoInvestmentPeriodIncluded: true,
+                  selectedCurrentAge: '25',
+                  selectedEndAge: '65',
+                }),
+            },
+          },
+        ],
+      });
+      const component = fixture.componentInstance;
+
+      const amounts = [1, 2, 3];
+      const years = [10, 20, 30]; // 運用終了年齢を超える積立年数（65 - 25 - 10 - 20 - 30 ... 0未満となる）
+      const result = await component['adjustForNoInvestmentPeriod'](amounts, years);
+
+      expect(result).toEqual({ amounts, years });
+    });
+
+    it('積立無しの期間が0の場合は、元の配列が返却されるか', async () => {
+      const { fixture } = await render(SimulationComponent, {
+        providers: [
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getNoInvestmentPeriodIncluded: () =>
+                Promise.resolve({
+                  isNoInvestmentPeriodIncluded: true,
+                  selectedCurrentAge: '25',
+                  selectedEndAge: '65',
+                }),
+            },
+          },
+        ],
+      });
+      const component = fixture.componentInstance;
+
+      const amounts = [1, 2, 3];
+      const years = [10, 20, 10]; // 運用終了年齢と差引0の積立年数（65 - 25 - 10 - 20 - 10 ... 0）
+      const result = await component['adjustForNoInvestmentPeriod'](amounts, years);
+
+      expect(result).toEqual({ amounts, years });
     });
   });
 });

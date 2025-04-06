@@ -1,0 +1,51 @@
+<app-head-content [title]="'アプリ設定'" [hasDescription]="false" />
+<section class="flex flex-col gap-4 px-6">
+  <label class="inline-flex items-center justify-between cursor-pointer">
+    <span class="text-sm font-medium text-gray-900">積立無しの期間を含める</span>
+    <input type="checkbox" [(ngModel)]="isNoInvestmentPeriodIncluded" (ngModelChange)="markAsTouched()" class="sr-only peer">
+    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+  </label>
+
+  <div class="flex flex-col gap-2 w-4/5">
+    <div class="flex flex-col gap-1">
+      <label for="currentAge" class="text-sm font-medium text-gray-900">現在の年齢</label>
+      <select
+        id="currentAge"
+        [disabled]="!isNoInvestmentPeriodIncluded"
+        [(ngModel)]="selectedCurrentAge"
+        (ngModelChange)="markAsTouched()"
+        class="border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+      >
+        @for (age of currentAgeList; track $index) {
+          <option [value]="age">{{ age }}歳</option>
+        }
+      </select>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label for="endAge" class="text-sm font-medium text-gray-900">運用終了年齢</label>
+      <select
+        id="endAge"
+        [disabled]="!isNoInvestmentPeriodIncluded"
+        [(ngModel)]="selectedEndAge"
+        (ngModelChange)="markAsTouched()"
+        class="border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+      >
+        @for (age of endAgeList; track $index) {
+          <option [value]="age">{{ age }}歳</option>
+        }
+      </select>
+    </div>
+  </div>
+</section>
+
+@let bgStyles = !isFormEdited ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
+<div class="absolute bottom-0 left-0 grid place-content-center w-full p-4">
+  <button
+    [disabled]="!isFormEdited"
+    (click)="saveSetting()"
+    class="{{bgStyles}} text-base font-medium text-center rounded-lg w-24 px-2 py-3 transition-opacity text-white bg-blue-500 hover:opacity-70"
+  >
+    保存
+  </button>
+</div>

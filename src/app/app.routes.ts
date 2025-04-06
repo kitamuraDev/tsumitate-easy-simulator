@@ -18,6 +18,11 @@ export const routes: Routes = [
     data: { title: '履歴' },
   },
   {
+    path: 'setting',
+    loadComponent: () => import('./features/setting/setting.component'),
+    data: { title: 'アプリ設定' },
+  },
+  {
     path: '**',
     loadComponent: () => import('./features/not-found/not-found.component'),
     data: { title: '404 Not Found' },
