@@ -17,13 +17,8 @@
     "lint:apy": "biome lint --write ./src",
     "check": "biome check ./src",
     "check:apy": "biome check --write ./src",
-    "prepare": "simple-git-hooks > /dev/null"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
-  "lint-staged": {
-    "*": ["npm run fmt", "npm run lint", "npm run check"]
+    "lefthook_update": "lefthook uninstall && lefthook install",
+    "prepare": "lefthook install > /dev/null"
   },
   "dependencies": {
     "@angular/animations": "^19.1.1",
@@ -55,9 +50,8 @@
     "autoprefixer": "^10.4.16",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.4.2",
+    "lefthook": "^1.11.9",
     "postcss": "^8.4.32",
-    "simple-git-hooks": "^2.11.1",
     "tailwindcss": "^3.4.0",
     "typescript": "~5.5.4"
   }
