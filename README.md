@@ -37,8 +37,7 @@
 
 ### CI
 
-![simple-git-hooks](https://img.shields.io/badge/simple_git_hooks-v2.11.1-blue)
-![lint-staged](https://img.shields.io/badge/lint_staged-v15.4.2-blue)
+![Lefthook](https://img.shields.io/badge/Lefthook-v1.11.9-blue)
 
 ### ホスティング
 
