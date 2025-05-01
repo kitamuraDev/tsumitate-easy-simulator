@@ -50,3 +50,10 @@
 3. `npm install`
 4. `npm run prepare`
 5. `npm run dev`
+
+## リリースタグ更新
+
+1. `package.json > version`を更新
+2. `git commit`
+3. `git tag vn.n.n`
+4. `git push origin main --tags`
