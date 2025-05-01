@@ -5,13 +5,11 @@ import { matEquals } from '@ng-icons/material-icons/baseline';
 import { SettingDatabaseService } from '../../core/setting-database.service';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
-import { ValidationWarningMessageComponent } from '../../shared/components/validation-warning-message/validation-warning-message.component';
 import { CalculateService } from '../../shared/services/calculate.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import type { Input } from '../../shared/types/tsumitate';
-import { DecrementButtonComponent } from './decrement-button/decrement-button.component';
 import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
-import { IncrementButtonComponent } from './increment-button/increment-button.component';
+import { DisplayRangeInputValueComponent } from './display-range-input-value/display-range-input-value.component';
 import { LabelTextComponent } from './label-text/label-text.component';
 import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
@@ -20,11 +18,9 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
   imports: [
     ReactiveFormsModule,
     HeadContentComponent,
-    ValidationWarningMessageComponent,
-    DecrementButtonComponent,
-    IncrementButtonComponent,
     LabelTextComponent,
     DisplayAmountValueComponent,
+    DisplayRangeInputValueComponent,
     ToggleButtonComponent,
     NgIcon,
   ],
@@ -50,28 +46,14 @@ export default class SimulationComponent {
     initialAsset: new FormControl(this.getInitialAssetInSessionStorage(), [Validators.required, Validators.min(0), Validators.max(1800)]),
     amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(30)]),
     yearRequired: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
-    amountAny1: new FormControl(null, [Validators.min(1), Validators.max(30)]),
-    yearAny1: new FormControl(null, [Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
-    amountAny2: new FormControl(null, [Validators.min(1), Validators.max(30)]),
-    yearAny2: new FormControl(null, [Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
-    amountAny3: new FormControl(null, [Validators.min(1), Validators.max(30)]),
-    yearAny3: new FormControl(null, [Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
+    amountAny1: new FormControl(0, [Validators.min(0), Validators.max(30)]),
+    yearAny1: new FormControl(0, [Validators.min(0), Validators.max(40), this.validationService.integerValueValidator()]),
+    amountAny2: new FormControl(0, [Validators.min(0), Validators.max(30)]),
+    yearAny2: new FormControl(0, [Validators.min(0), Validators.max(40), this.validationService.integerValueValidator()]),
+    amountAny3: new FormControl(0, [Validators.min(0), Validators.max(30)]),
+    yearAny3: new FormControl(0, [Validators.min(0), Validators.max(40), this.validationService.integerValueValidator()]),
     rate: new FormControl(5, [Validators.required, Validators.min(0), Validators.max(20)])
   });
-
-  // インクリメント/デクリメント
-  increment(input: number | null | undefined, inputName: string) {
-    const currentValue = input ? input : 0;
-    this.inputs.get(inputName)?.setValue(currentValue + 1);
-
-    this.updateFormValidState();
-  }
-  decrement(input: number | null | undefined, inputName: string) {
-    const currentValue = input ? input : 0;
-    this.inputs.get(inputName)?.setValue(currentValue - 1);
-
-    this.updateFormValidState();
-  }
 
   // フォームのバリデーション状態を見て、「計算」ボタンの活性と非活性の状態を切り替える
   updateFormValidState() {
