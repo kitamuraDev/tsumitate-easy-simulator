@@ -43,7 +43,7 @@ export default class SimulationComponent {
 
   // biome-ignore format: 一行にまとめたいため
   inputs = new FormGroup({
-    initialAsset: new FormControl(this.getInitialAssetInSessionStorage(), [Validators.required, Validators.min(0), Validators.max(1800)]),
+    initialAsset: new FormControl(this.getInitialAssetInSessionStorage(), [Validators.required, Validators.min(0), Validators.max(1000)]),
     amountRequired: new FormControl(3, [Validators.required, Validators.min(1), Validators.max(30)]),
     yearRequired: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(40), this.validationService.integerValueValidator()]),
     amountAny1: new FormControl(0, [Validators.min(0), Validators.max(30)]),
