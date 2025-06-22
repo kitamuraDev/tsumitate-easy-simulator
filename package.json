@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": true,
   "volta": {
-    "node": "22.0.0"
+    "node": "24.0.0"
   },
   "scripts": {
     "ng": "ng",
