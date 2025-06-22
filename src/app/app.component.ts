@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, type OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
@@ -10,7 +9,7 @@ import { PageTitleService } from './shared/services/page-title.service';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, HeaderComponent, SidebarComponent, OuterLayoutComponent, MainLayoutComponent],
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, OuterLayoutComponent, MainLayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
