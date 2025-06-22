@@ -4,205 +4,146 @@ import { CalculateService } from './calculate.service';
 
 describe('CalculateService', () => {
   let service: CalculateService;
+  const monthlyRate = 1.05 ** (1 / 12);
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CalculateService);
   });
 
-  it('【1】正の整数を万単位に変換できるか', () => {
-    const actualInitialAsset = 5;
-    const expectedManen = 50000;
+  it('【複利計算】年利:5%, 初期資産:0万, 積立額:3万, 積立年数:3年', () => {
+    const initialAssetManYen = 0;
+    const monthlyAmounts = [30000];
+    const monthlyYears = [36];
+    const expectedCompoundInterest = 1160679;
 
-    const result = service['convertToManen'](actualInitialAsset);
-
-    expect(result).toBe(expectedManen);
-  });
-
-  it('【2】正の整数を万単位に変換できるか', () => {
-    const actualInitialAsset = 50;
-    const expectedManen = 500000;
-
-    const result = service['convertToManen'](actualInitialAsset);
-
-    expect(result).toBe(expectedManen);
-  });
-
-  it('【3】正の整数を万単位に変換できるか', () => {
-    const actualInitialAsset = 115;
-    const expectedManen = 1150000;
-
-    const result = service['convertToManen'](actualInitialAsset);
-
-    expect(result).toBe(expectedManen);
-  });
-
-  it('【4】正の整数を万単位に変換できるか', () => {
-    const actualInitialAsset = 1800;
-    const expectedManen = 18000000;
-
-    const result = service['convertToManen'](actualInitialAsset);
-
-    expect(result).toBe(expectedManen);
-  });
-
-  it('配列の中の「月間積立投資額」を「年間積立投資額」に変換できるか', () => {
-    const actualMonthlyAmounts = [3, 4, 5];
-    const expectedYearlyAmounts = [360000, 480000, 600000];
-
-    const result = service['convertToYearlyAmounts'](actualMonthlyAmounts);
-
-    expect(result).toEqual(expectedYearlyAmounts);
-  });
-
-  it('整数の年率を小数の年率に変換できるか', () => {
-    const actualIntRate = 5;
-    const expectedDecimalRate = 1.05;
-
-    const result = service['convertRate'](actualIntRate);
-
-    expect(result).toBe(expectedDecimalRate);
-  });
-
-  it('【1】複利計算が正しく行われるか', () => {
-    const initialAsset = 0;
-    const yearlyAmounts = [360000];
-    const years = [3];
-    const rate = 1.05;
-    const expectedCompoundInterest = 1191645;
-
-    const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
+    const result = service['compoundInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
 
     expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
-  it('【1】合算が正しく行われるか', () => {
-    const initialAsset = 0;
-    const yearlyAmounts = [360000];
-    const years = [3];
+  it('【合算】初期資産:0万, 積立額:3万, 積立年数:3年', () => {
+    const initialAssetManYen = 0;
+    const monthlyAmounts = [30000];
+    const monthlyYears = [36];
     const expectedSimpleInterest = 1080000;
 
-    const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
+    const result = service['simpleInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears);
 
     expect(result).toBe(expectedSimpleInterest);
   });
 
-  it('【2】複利計算が正しく行われるか', () => {
-    const initialAsset = 1150000;
-    const yearlyAmounts = [360000];
-    const years = [3];
-    const rate = 1.05;
-    const expectedCompoundInterest = 2522913;
+  it('【複利計算】年利:5%, 初期資産:115万, 積立額:3万, 積立年数:3年', () => {
+    const initialAssetManYen = 1150000;
+    const monthlyAmounts = [30000];
+    const monthlyYears = [36];
+    const expectedCompoundInterest = 2491947;
 
-    const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
+    const result = service['compoundInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
 
     expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
-  it('【2】合算が正しく行われるか', () => {
-    const initialAsset = 1150000;
-    const yearlyAmounts = [360000];
-    const years = [3];
+  it('【合算】初期資産:115万, 積立額:3万, 積立年数:3年', () => {
+    const initialAssetManYen = 1150000;
+    const monthlyAmounts = [30000];
+    const monthlyYears = [36];
     const expectedSimpleInterest = 2230000;
 
-    const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
+    const result = service['simpleInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears);
 
     expect(result).toBe(expectedSimpleInterest);
   });
 
-  it('【3】複利計算が正しく行われるか', () => {
-    const initialAsset = 0;
-    const yearlyAmounts = [360000, 480000, 600000];
-    const years = [3, 5, 8];
-    const rate = 1.05;
-    const expectedCompoundInterest = 12377555;
+  it('【複利計算】年利:5%, 初期資産:0万, 積立額:3万 4万 5万, 積立年数:3年 5年 8年', () => {
+    const initialAssetManYen = 0;
+    const monthlyAmounts = [30000, 40000, 50000];
+    const monthlyYears = [36, 60, 96];
+    const expectedCompoundInterest = 12055913;
 
-    const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
+    const result = service['compoundInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
 
     expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
-  it('【3】合算が正しく行われるか', () => {
-    const initialAsset = 0;
-    const yearlyAmounts = [360000, 480000, 600000];
-    const years = [3, 5, 8];
+  it('【合算】初期資産:0万, 積立額:3万 4万 5万, 積立年数:3年 5年 8年', () => {
+    const initialAssetManYen = 0;
+    const monthlyAmounts = [30000, 40000, 50000];
+    const monthlyYears = [36, 60, 96];
     const expectedSimpleInterest = 8280000;
 
-    const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
+    const result = service['simpleInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears);
 
     expect(result).toBe(expectedSimpleInterest);
   });
 
-  it('【4】複利計算が正しく行われるか', () => {
-    const initialAsset = 1150000;
-    const yearlyAmounts = [360000, 480000, 600000];
-    const years = [3, 5, 8];
-    const rate = 1.05;
-    const expectedCompoundInterest = 14887861;
+  it('【複利計算】年利:5%, 初期資産:115万, 積立額:3万 4万 5万, 積立年数:3年 5年 8年', () => {
+    const initialAssetManYen = 1150000;
+    const monthlyAmounts = [30000, 40000, 50000];
+    const monthlyYears = [36, 60, 96];
+    const expectedCompoundInterest = 14566219;
 
-    const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
+    const result = service['compoundInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
 
     expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
-  it('【4】合算が正しく行われるか', () => {
-    const initialAsset = 1150000;
-    const yearlyAmounts = [360000, 480000, 600000];
-    const years = [3, 5, 8];
+  it('【合算】初期資産:115万, 積立額:3万 4万 5万, 積立年数:3年 5年 8年', () => {
+    const initialAssetManYen = 1150000;
+    const monthlyAmounts = [30000, 40000, 50000];
+    const monthlyYears = [36, 60, 96];
     const expectedSimpleInterest = 9430000;
 
-    const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
+    const result = service['simpleInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears);
 
     expect(result).toBe(expectedSimpleInterest);
   });
 
-  it('【5】複利計算が正しく行われるか', () => {
-    const initialAsset = 0;
-    const yearlyAmounts = [240000, 360000, 480000, 600000];
-    const years = [1, 2, 3, 3];
-    const rate = 1.05;
-    const expectedCompoundInterest = 5236137;
+  it('【複利計算】年利:5%, 初期資産:0万, 積立額:2万 3万 4万 5万, 積立年数:1年 2年 3年 3年', () => {
+    const initialAssetManYen = 0;
+    const monthlyAmounts = [20000, 30000, 40000, 50000];
+    const monthlyYears = [12, 24, 36, 36];
+    const expectedCompoundInterest = 5100072;
 
-    const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
+    const result = service['compoundInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
 
     expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
-  it('【5】合算が正しく行われるか', () => {
-    const initialAsset = 0;
-    const yearlyAmounts = [240000, 360000, 480000, 600000];
-    const years = [1, 2, 3, 3];
+  it('【合算】初期資産:0万, 積立額:2万 3万 4万 5万, 積立年数:1年 2年 3年 3年', () => {
+    const initialAssetManYen = 0;
+    const monthlyAmounts = [20000, 30000, 40000, 50000];
+    const monthlyYears = [12, 24, 36, 36];
     const expectedSimpleInterest = 4200000;
 
-    const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
+    const result = service['simpleInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears);
 
     expect(result).toBe(expectedSimpleInterest);
   });
 
-  it('【6】複利計算が正しく行われるか', () => {
-    const initialAsset = 1150000;
-    const yearlyAmounts = [240000, 360000, 480000, 600000];
-    const years = [1, 2, 3, 3];
-    const rate = 1.05;
-    const expectedCompoundInterest = 7020165;
+  it('【複利計算】年利:5%, 初期資産:115万, 積立額:2万 3万 4万 5万, 積立年数:1年 2年 3年 3年', () => {
+    const initialAssetManYen = 1150000;
+    const monthlyAmounts = [20000, 30000, 40000, 50000];
+    const monthlyYears = [12, 24, 36, 36];
+    const expectedCompoundInterest = 6884099;
 
-    const result = service['compoundInterestCalc'](initialAsset, yearlyAmounts, years, rate);
+    const result = service['compoundInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
 
     expect(Math.trunc(result)).toBe(expectedCompoundInterest);
   });
 
-  it('【6】合算が正しく行われるか', () => {
-    const initialAsset = 1150000;
-    const yearlyAmounts = [240000, 360000, 480000, 600000];
-    const years = [1, 2, 3, 3];
+  it('【合算】初期資産:115万, 積立額:2万 3万 4万 5万, 積立年数:1年 2年 3年 3年', () => {
+    const initialAssetManYen = 1150000;
+    const monthlyAmounts = [20000, 30000, 40000, 50000];
+    const monthlyYears = [12, 24, 36, 36];
     const expectedSimpleInterest = 5350000;
 
-    const result = service['simpleInterestCalc'](initialAsset, yearlyAmounts, years);
+    const result = service['simpleInterestCalc'](initialAssetManYen, monthlyAmounts, monthlyYears);
 
     expect(result).toBe(expectedSimpleInterest);
   });
 
-  it('【1】正しく計算が行われ、期待通りのデータが取れるか', () => {
+  it('年利:5%, 初期資産:0万, 積立額:3万 4万 5万, 積立年数:3年 5年 8年', () => {
     const input: Input = {
       initialAsset: 0,
       amounts: [3, 4, 5],
@@ -210,7 +151,7 @@ describe('CalculateService', () => {
       rate: 5,
     };
 
-    const expectedCompoundInterest = 12377555;
+    const expectedCompoundInterest = 12055913;
     const expectedSimpleInterest = 8280000;
     const expectedDiff = expectedCompoundInterest - expectedSimpleInterest;
 
@@ -221,7 +162,7 @@ describe('CalculateService', () => {
     expect(Math.trunc(result.diff)).toBe(expectedDiff);
   });
 
-  it('【2】正しく計算が行われ、期待通りのデータが取れるか', () => {
+  it('年利:5%, 初期資産:115万, 積立額:3万 4万 5万, 積立年数:3年 5年 8年', () => {
     const input: Input = {
       initialAsset: 115,
       amounts: [3, 4, 5],
@@ -229,7 +170,7 @@ describe('CalculateService', () => {
       rate: 5,
     };
 
-    const expectedCompoundInterest = 14887861;
+    const expectedCompoundInterest = 14566219;
     const expectedSimpleInterest = 9430000;
     const expectedDiff = expectedCompoundInterest - expectedSimpleInterest;
 
