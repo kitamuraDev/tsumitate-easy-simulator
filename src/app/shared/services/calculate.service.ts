@@ -16,62 +16,33 @@ export class CalculateService {
    * @returns 出力
    */
   public tsumitateEasyCalculate = (input: Input): Output => {
-    const { initialAsset, amounts: monthlyAmounts, years, rate } = input;
+    const { initialAsset, amounts, years, rate } = input;
 
-    const convertedInitialAsset = this.convertToManen(initialAsset);
-    const yearlyAmounts = this.convertToYearlyAmounts(monthlyAmounts);
-    const convertedRate = this.convertRate(rate);
+    const initialAssetManYen = initialAsset * 10000;              // 初期資産を万単位に変換
+    const monthlyAmounts = amounts.map(amount => amount * 10000); // 月間積立投資額を万単位に変換
+    const monthlyYears = years.map(year => year * 12);            // 年数を月数に変換
+    const monthlyRate = ((rate / 100) + 1) ** (1 / 12);           // 年利を月利に変換 ※年利(%) ** (1/12)で月利に変換できる
 
-    const compoundInterestCalcResult = this.compoundInterestCalc(convertedInitialAsset, yearlyAmounts, years, convertedRate);
-    const simpleInterestCalcResult = this.simpleInterestCalc(convertedInitialAsset, yearlyAmounts, years);
+    const compoundInterestCalcResult = this.compoundInterestCalc(initialAssetManYen, monthlyAmounts, monthlyYears, monthlyRate);
+    const simpleInterestCalcResult = this.simpleInterestCalc(initialAssetManYen, monthlyAmounts, monthlyYears);
     const diff = compoundInterestCalcResult - simpleInterestCalcResult;
 
     return { compoundInterestCalcResult, simpleInterestCalcResult, diff };
   };
 
   // 複利計算
-  private compoundInterestCalc(initialAsset: number, yearlyAmounts: number[], years: number[], rate: number): number {
-    return yearlyAmounts.reduce(
-      (acc, curr, i) => Array.from({ length: years[i] }).reduce<number>(prev => (prev + curr) * rate, acc),
-      initialAsset,
+  private compoundInterestCalc(initialAssetManYen: number, monthlyAmounts: number[], monthlyYears: number[], monthlyRate: number): number {
+    return monthlyAmounts.reduce(
+      (acc, curr, i) => Array.from({ length: monthlyYears[i] }).reduce<number>((prev) => prev * monthlyRate + curr, acc),
+      initialAssetManYen
     );
   }
 
   // 合算
-  private simpleInterestCalc(initialAsset: number, yearlyAmounts: number[], years: number[]): number {
-    return yearlyAmounts.reduce(
-      (acc, curr, i) => Array.from({ length: years[i] }).reduce<number>(prev => prev + curr, acc),
-      initialAsset,
+  private simpleInterestCalc(initialAssetManYen: number, monthlyAmounts: number[], monthlyYears: number[]): number {
+    return monthlyAmounts.reduce(
+      (acc, curr, i) => Array.from({ length: monthlyYears[i] }).reduce<number>(prev => prev + curr, acc),
+      initialAssetManYen,
     );
-  }
-
-  /**
-   * 正の整数を万単位に変換
-   *
-   * @param initialAsset 初期資産
-   * @returns 万円
-   */
-  private convertToManen(initialAsset: number): number {
-    return initialAsset * 10000;
-  }
-
-  /**
-   * 配列の中の「月間積立投資額」を「年間積立投資額」に変換
-   *
-   * @param monthlyAmounts 月間積立投資額
-   * @returns 年間積立投資額
-   */
-  private convertToYearlyAmounts(monthlyAmounts: number[]): number[] {
-    return monthlyAmounts.map(amount => amount * 10000 * 12);
-  }
-
-  /**
-   * 整数の年率を小数の年率に変換
-   *
-   * @param rate 整数の年率
-   * @returns 小数の年率
-   */
-  private convertRate(rate: number): number {
-    return (rate / 100) + 1;
   }
 }
