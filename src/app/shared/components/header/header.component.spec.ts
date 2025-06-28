@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
+    vi.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
   });
 
   it('data-drawer-target="logo-sidebar" 属性を持つボタンがあるか', async () => {

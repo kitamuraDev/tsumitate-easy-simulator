@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { ToPercentagePipe } from './to-percentage.pipe';
 
 describe('ToPercentagePipe', () => {

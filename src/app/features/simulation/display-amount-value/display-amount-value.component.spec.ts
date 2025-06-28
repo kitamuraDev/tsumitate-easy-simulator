@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
+import { describe, expect, it } from 'vitest';
+
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { DisplayAmountValueComponent } from './display-amount-value.component';
 

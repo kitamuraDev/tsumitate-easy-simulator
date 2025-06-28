@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/angular';
+import { describe, expect, it } from 'vitest';
+
 import { HeadContentComponent } from './head-content.component';
 
 describe('HeadContentComponent', () => {

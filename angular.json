@@ -65,9 +65,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:jest",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "runner": "vitest",
+            "browsers": ["chromium"],
+            "buildTarget": "::development",
             "tsConfig": "tsconfig.spec.json"
           }
         }

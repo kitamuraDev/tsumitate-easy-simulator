@@ -28,7 +28,7 @@
 
 ### テスト
 
-![Jest](https://img.shields.io/badge/Jest-v29.7.0-blue)
+![Vitest](https://img.shields.io/badge/Vitest-v3.2.4-blue)
 ![Testing Library Angular](https://img.shields.io/badge/Testing_Library_Angular-v17.3.5-blue)
 
 ### リンター・フォーマッター

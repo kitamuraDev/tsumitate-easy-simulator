@@ -1,4 +1,6 @@
 import { render, screen } from '@testing-library/angular';
+import { describe, expect, it } from 'vitest';
+
 import { LabelTextComponent } from './label-text.component';
 
 describe('LabelTextComponent', () => {

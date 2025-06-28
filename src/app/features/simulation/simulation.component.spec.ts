@@ -2,6 +2,8 @@ import '@testing-library/jest-dom';
 import { DeferBlockState } from '@angular/core/testing';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { SettingDatabaseService } from '../../core/setting-database.service';
 import { TruncateToTenThousandsPipe } from '../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { CalculateService } from '../../shared/services/calculate.service';
@@ -9,7 +11,7 @@ import SimulationComponent from './simulation.component';
 
 describe('SimulationComponent', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
+    vi.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
   });
 
   it('任意入力エリアがトグルされるか', async () => {
