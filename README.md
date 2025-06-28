@@ -9,12 +9,12 @@
 
 ### 言語
 
-![Node.js](https://img.shields.io/badge/Node-v22.0.0-blue)
+![Node.js](https://img.shields.io/badge/Node-v22.12.0-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v5.8.3-blue)
 
 ### パッケージマネージャー
 
-![npm](https://img.shields.io/badge/npm-v10.5.1-blue)
+![npm](https://img.shields.io/badge/npm-v10.9.0-blue)
 
 ### フレームワーク
 
