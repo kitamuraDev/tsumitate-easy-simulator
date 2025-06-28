@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import { TruncateToTenThousandsPipe } from './truncate-to-ten-thousands.pipe';
 
 describe('TruncateToTenThousandsPipe', () => {

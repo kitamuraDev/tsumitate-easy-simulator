@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
+
 import { SettingDatabaseService } from '../../core/setting-database.service';
 import SettingComponent from './setting.component';
 
@@ -100,7 +102,7 @@ describe('SettingComponent', () => {
 
   it('保存ボタン押下で、設定値が保存されること', async () => {
     const user = userEvent.setup();
-    const mockUpdateNoInvestmentPeriodIncluded = jest.fn();
+    const mockUpdateNoInvestmentPeriodIncluded = vi.fn();
 
     await render(SettingComponent, {
       componentProperties: {

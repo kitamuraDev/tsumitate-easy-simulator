@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import type { SidebarIcon } from '../sidebar.component';
 import { SidebarLinkComponent } from './sidebar-link.component';
 
@@ -11,7 +13,7 @@ type InputType = {
 
 describe('SidebarLinkComponent', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
+    vi.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
   });
 
   it.each([

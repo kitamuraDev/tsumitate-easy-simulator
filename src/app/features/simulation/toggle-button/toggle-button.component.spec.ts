@@ -1,12 +1,14 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
+
 import { ToggleButtonComponent } from './toggle-button.component';
 
 describe('ToggleButtonComponent', () => {
   it('ボタン押下でクリックイベントが発火されるか', async () => {
     const user = userEvent.setup();
-    const clickEvent = jest.fn();
+    const clickEvent = vi.fn();
 
     await render(ToggleButtonComponent, { on: { clickEvent } });
     await user.click(screen.getByRole('button'));
