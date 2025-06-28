@@ -10,7 +10,7 @@
 ### 言語
 
 ![Node.js](https://img.shields.io/badge/Node-v22.0.0-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-v5.5.4-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-v5.8.3-blue)
 
 ### パッケージマネージャー
 
@@ -18,7 +18,7 @@
 
 ### フレームワーク
 
-![Angular](https://img.shields.io/badge/Angular-v19.1.1-blue)
+![Angular](https://img.shields.io/badge/Angular-v20.0.4-blue)
 
 ### ライブラリ
 
