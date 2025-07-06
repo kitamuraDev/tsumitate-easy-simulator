@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matCalculate, matHome, matSettings, matStorage } from '@ng-icons/material-icons/baseline';
@@ -11,10 +11,10 @@ import type { SidebarIcon } from '../sidebar.component';
   template: `
     <li>
       <a
-        routerLink="{{ path }}"
+        routerLink="{{ path() }}"
         class="hidden sm:flex items-center gap-3 p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
       >
-        @switch (icon) {
+        @switch (icon()) {
           @case ('overview') {
             <ng-icon name="matHome" size="24" />
           }
@@ -28,14 +28,14 @@ import type { SidebarIcon } from '../sidebar.component';
             <ng-icon name="matSettings" size="24" />
           }
         }
-        <span>{{ name }}</span>
+        <span>{{ name() }}</span>
       </a>
       <a
-        routerLink="{{ path }}"
+        routerLink="{{ path() }}"
         data-drawer-toggle="logo-sidebar"
         class="flex sm:hidden items-center gap-3 p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
       >
-        @switch (icon) {
+        @switch (icon()) {
           @case ('overview') {
             <ng-icon name="matHome" size="24" />
           }
@@ -49,13 +49,13 @@ import type { SidebarIcon } from '../sidebar.component';
             <ng-icon name="matSettings" size="24" />
           }
         }
-        <span>{{ name }}</span>
+        <span>{{ name() }}</span>
       </a>
     </li>
   `,
 })
 export class SidebarLinkComponent {
-  @Input({ required: true }) path!: string;
-  @Input({ required: true }) name!: string;
-  @Input({ required: true }) icon!: SidebarIcon;
+  path = input.required<string>();
+  name = input.required<string>();
+  icon = input.required<SidebarIcon>();
 }

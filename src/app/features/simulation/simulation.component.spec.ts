@@ -1,3 +1,5 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+
 import '@testing-library/jest-dom';
 import { DeferBlockState } from '@angular/core/testing';
 import { render, screen, within } from '@testing-library/angular';
@@ -16,7 +18,9 @@ describe('SimulationComponent', () => {
 
   it('任意入力エリアがトグルされるか', async () => {
     const user = userEvent.setup();
-    const { container } = await render(SimulationComponent);
+    const { container } = await render(SimulationComponent, {
+      providers: [provideZonelessChangeDetection()],
+    });
 
     const toggleButton = container.querySelector('app-toggle-button button') as HTMLButtonElement;
     const anyInputsContainer = screen.getByTestId('any-inputs-container');
@@ -36,7 +40,9 @@ describe('SimulationComponent', () => {
     const { transform } = new TruncateToTenThousandsPipe();
 
     it('初期表示時は、計算結果を表示するコンポーネントは非表示であるか', async () => {
-      const { container } = await render(SimulationComponent);
+      const { container } = await render(SimulationComponent, {
+        providers: [provideZonelessChangeDetection()],
+      });
       const displayAmountValueComponent = container.querySelector('app-display-amount-value');
 
       expect(displayAmountValueComponent).toBeFalsy();
@@ -46,6 +52,7 @@ describe('SimulationComponent', () => {
       const user = userEvent.setup();
       const { renderDeferBlock } = await render(SimulationComponent, {
         providers: [
+          provideZonelessChangeDetection(),
           {
             provide: SettingDatabaseService,
             useValue: {
@@ -85,6 +92,7 @@ describe('SimulationComponent', () => {
     it('積立無しの期間を含めない設定にしている場合は、元の配列が返却されるか', async () => {
       const { fixture } = await render(SimulationComponent, {
         providers: [
+          provideZonelessChangeDetection(),
           {
             provide: SettingDatabaseService,
             useValue: {
@@ -110,6 +118,7 @@ describe('SimulationComponent', () => {
     it('積立無しの期間を含める設定にしている場合は、元の配列に積立無しの期間を追加した配列が返却されるか', async () => {
       const { fixture } = await render(SimulationComponent, {
         providers: [
+          provideZonelessChangeDetection(),
           {
             provide: SettingDatabaseService,
             useValue: {
@@ -135,6 +144,7 @@ describe('SimulationComponent', () => {
     it('積立無しの期間が0未満の場合は、元の配列が返却されるか', async () => {
       const { fixture } = await render(SimulationComponent, {
         providers: [
+          provideZonelessChangeDetection(),
           {
             provide: SettingDatabaseService,
             useValue: {
@@ -160,6 +170,7 @@ describe('SimulationComponent', () => {
     it('積立無しの期間が0の場合は、元の配列が返却されるか', async () => {
       const { fixture } = await render(SimulationComponent, {
         providers: [
+          provideZonelessChangeDetection(),
           {
             provide: SettingDatabaseService,
             useValue: {

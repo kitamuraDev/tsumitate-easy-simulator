@@ -34,11 +34,11 @@ export default class SimulationComponent {
   private readonly validationService = inject(ValidationService);
 
   compoundInterestCalcResult = signal<number>(0);
-  isAbnormalInput = false;
-  isOpenAnyInputsBlock = false;
+  isAbnormalInput = signal(false);
+  isOpenAnyInputsBlock = signal(false);
 
   toggleOpenAnyInputsBlock() {
-    this.isOpenAnyInputsBlock = !this.isOpenAnyInputsBlock;
+    this.isOpenAnyInputsBlock.update((v) => !v);
   }
 
   // biome-ignore format: 一行にまとめたいため
@@ -65,7 +65,7 @@ export default class SimulationComponent {
     // `this.inputs.valid`は全てのフォームのバリデーションが通れば`true`が返る
     // `[disabled]=""`をfalseにするとボタン押下できるようになる。つまり、`&&`で繋いだ全ての条件を満たしたときにボタン押下できるようになる
     // `!(boolean)`は、すべてtrueなら反転してfalseを返すということ
-    this.isAbnormalInput = !(this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3);
+    this.isAbnormalInput.set(!(this.inputs.valid && resultAnyInput1 && resultAnyInput2 && resultAnyInput3));
   }
 
   // biome-ignore format: 一行にまとめたいため

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
 
 @Component({
@@ -6,10 +6,10 @@ import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-te
   imports: [TruncateToTenThousandsPipe],
   template: `
     <span class="text-2xl font-semibold">
-      {{ compoundInterestCalcResult | truncateToTenThousands }}
+      {{ compoundInterestCalcResult() | truncateToTenThousands }}
     </span>
   `,
 })
 export class DisplayAmountValueComponent {
-  @Input({ required: true }) compoundInterestCalcResult!: number;
+  compoundInterestCalcResult = input.required<number>();
 }

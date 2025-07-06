@@ -1,3 +1,5 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import { describe, expect, it } from 'vitest';
@@ -12,6 +14,7 @@ describe('DisplayAmountValueComponent', () => {
     { amount: 12825000, formattedAmount: '1,282' },
   ])('万の位を切り捨てたフォーマット済みの値が表示されるか', async ({ amount, formattedAmount }) => {
     await render(DisplayAmountValueComponent, {
+      providers: [provideZonelessChangeDetection()],
       inputs: { compoundInterestCalcResult: amount },
       imports: [TruncateToTenThousandsPipe],
     });
