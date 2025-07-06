@@ -1,3 +1,5 @@
+import { provideZonelessChangeDetection, signal } from '@angular/core';
+
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
@@ -10,11 +12,12 @@ describe('SettingComponent', () => {
   it('「積立無しの期間を含めるかどうかのフラグ」がtrueの場合、セレクトボックスが操作できること', async () => {
     await render(SettingComponent, {
       componentProperties: {
-        isNoInvestmentPeriodIncluded: true,
-        selectedCurrentAge: '25',
-        selectedEndAge: '65',
+        isNoInvestmentPeriodIncluded: signal(true),
+        selectedCurrentAge: signal('25'),
+        selectedEndAge: signal('65'),
       },
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: SettingDatabaseService,
           useValue: {
@@ -39,11 +42,12 @@ describe('SettingComponent', () => {
   it('「積立無しの期間を含めるかどうかのフラグ」がfalseの場合、セレクトボックスが操作できないこと', async () => {
     await render(SettingComponent, {
       componentProperties: {
-        isNoInvestmentPeriodIncluded: false,
-        selectedCurrentAge: '25',
-        selectedEndAge: '65',
+        isNoInvestmentPeriodIncluded: signal(false),
+        selectedCurrentAge: signal('25'),
+        selectedEndAge: signal('65'),
       },
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: SettingDatabaseService,
           useValue: {
@@ -70,12 +74,13 @@ describe('SettingComponent', () => {
 
     await render(SettingComponent, {
       componentProperties: {
-        isFormEdited: false,
-        isNoInvestmentPeriodIncluded: true,
-        selectedCurrentAge: '25',
-        selectedEndAge: '65',
+        isFormEdited: signal(false),
+        isNoInvestmentPeriodIncluded: signal(true),
+        selectedCurrentAge: signal('25'),
+        selectedEndAge: signal('65'),
       },
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: SettingDatabaseService,
           useValue: {
@@ -106,12 +111,13 @@ describe('SettingComponent', () => {
 
     await render(SettingComponent, {
       componentProperties: {
-        isFormEdited: false,
-        isNoInvestmentPeriodIncluded: false,
-        selectedCurrentAge: '20',
-        selectedEndAge: '50',
+        isFormEdited: signal(false),
+        isNoInvestmentPeriodIncluded: signal(false),
+        selectedCurrentAge: signal('20'),
+        selectedEndAge: signal('50'),
       },
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: SettingDatabaseService,
           useValue: {

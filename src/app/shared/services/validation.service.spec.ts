@@ -1,3 +1,5 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+
 import { TestBed } from '@angular/core/testing';
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -8,7 +10,9 @@ describe('ValidationService', () => {
   let service: ValidationService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()],
+    });
     service = TestBed.inject(ValidationService);
   });
 

@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
 @Component({
   selector: 'app-toggle-button',
   imports: [],
   template: `
-    @let rotateStyle = isOpen ? 'rotate-180' : 'rotate-90';
+    @let rotateStyle = isOpen() ? 'rotate-180' : 'rotate-90';
 
     <button
       type="button"
@@ -21,6 +21,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class ToggleButtonComponent {
-  @Input({ required: true }) isOpen!: boolean;
+  isOpen = input.required<boolean>();
   @Output() clickEvent: EventEmitter<void> = new EventEmitter<void>();
 }

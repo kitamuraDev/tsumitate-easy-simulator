@@ -1,3 +1,5 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
@@ -10,7 +12,11 @@ describe('ToggleButtonComponent', () => {
     const user = userEvent.setup();
     const clickEvent = vi.fn();
 
-    await render(ToggleButtonComponent, { on: { clickEvent } });
+    await render(ToggleButtonComponent, {
+      providers: [provideZonelessChangeDetection()],
+      inputs: { isOpen: false },
+      on: { clickEvent },
+    });
     await user.click(screen.getByRole('button'));
 
     expect(clickEvent).toHaveBeenCalled();
@@ -18,6 +24,7 @@ describe('ToggleButtonComponent', () => {
 
   it('開いている状態の場合、期待通りのクラスが適用されているか', async () => {
     const { container } = await render(ToggleButtonComponent, {
+      providers: [provideZonelessChangeDetection()],
       inputs: { isOpen: true },
     });
 
@@ -26,6 +33,7 @@ describe('ToggleButtonComponent', () => {
 
   it('閉じている状態の場合、期待通りのクラスが適用されているか', async () => {
     const { container } = await render(ToggleButtonComponent, {
+      providers: [provideZonelessChangeDetection()],
       inputs: { isOpen: false },
     });
 

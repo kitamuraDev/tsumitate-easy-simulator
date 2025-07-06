@@ -77,11 +77,11 @@
     </div>
 
     <div class="p-2 flex items-center gap-2">
-      <app-toggle-button [isOpen]="isOpenAnyInputsBlock" (clickEvent)="toggleOpenAnyInputsBlock()" />
+      <app-toggle-button [isOpen]="isOpenAnyInputsBlock()" (clickEvent)="toggleOpenAnyInputsBlock()" />
       <p class="text-xs font-medium text-gray-900">後から積立額を変更する場合の入力項目</p>
     </div>
 
-    <div data-testid="any-inputs-container" class="space-y-2.5 py-4 px-8 bg-gray-100 {{ isOpenAnyInputsBlock ? 'block' : 'hidden' }}">
+    <div data-testid="any-inputs-container" class="space-y-2.5 py-4 px-8 bg-gray-100 {{ isOpenAnyInputsBlock() ? 'block' : 'hidden' }}">
       <!-- 任意入力 1 -->
       <div data-testid="amount-any-1-container">
         <div class="flex items-center justify-between">
@@ -192,10 +192,10 @@
 </section>
 
 <!-- 計算ボタン -->
-@let bgStyles = isAbnormalInput ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
+@let bgStyles = isAbnormalInput() ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
 <button
   data-testid="calculate-button"
-  [disabled]="isAbnormalInput"
+  [disabled]="isAbnormalInput()"
   (click)="onCalculate()"
   class="{{bgStyles}} text-white opacity-90 inline-flex justify-center items-center w-14 h-14 rounded-full fixed right-4 bottom-4 z-50"
 >

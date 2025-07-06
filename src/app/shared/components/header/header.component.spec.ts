@@ -1,3 +1,5 @@
+import { provideZonelessChangeDetection } from '@angular/core';
+
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/angular';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -10,7 +12,9 @@ describe('HeaderComponent', () => {
   });
 
   it('data-drawer-target="logo-sidebar" 属性を持つボタンがあるか', async () => {
-    await render(HeaderComponent);
+    await render(HeaderComponent, {
+      providers: [provideZonelessChangeDetection()],
+    });
 
     const button = screen.getByRole('button', { name: 'open sidebar' });
 
@@ -18,7 +22,9 @@ describe('HeaderComponent', () => {
   });
 
   it('data-drawer-toggle="logo-sidebar" 属性を持つボタンがあるか', async () => {
-    await render(HeaderComponent);
+    await render(HeaderComponent, {
+      providers: [provideZonelessChangeDetection()],
+    });
 
     const button = screen.getByRole('button', { name: 'open sidebar' });
 
