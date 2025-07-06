@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import { DeferBlockState } from '@angular/core/testing';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';

@@ -1,6 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/angular';
 import { describe, expect, it } from 'vitest';
 
