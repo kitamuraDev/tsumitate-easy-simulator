@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBarChart, matNotes } from '@ng-icons/material-icons/baseline';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, NgIcon],
+  imports: [NgIcon],
   viewProviders: provideIcons({ matBarChart, matNotes }),
   template: `
     <header class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
       <nav class="px-3 sm:px-5 py-3 sm:py-5">
         <div class="flex items-center justify-between">
-          <a href="#" routerLink="/overview" class="flex gap-2 sm:gap-3 items-center">
+          <div class="flex gap-2 sm:gap-3 items-center">
             <ng-icon name="matBarChart" size="24" />
             <h1 class="text-base sm:text-xl font-semibold whitespace-nowrap dark:text-white">
               積立かんたんシュミレーター
             </h1>
-          </a>
+          </div>
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
