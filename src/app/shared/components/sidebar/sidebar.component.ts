@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { SidebarLinkComponent } from './sidebar-link/sidebar-link.component';
 
-export type SidebarLinkPath = '/overview' | '/simulation' | '/history' | '/setting';
-export type SidebarName = 'はじめに' | 'シュミレーション' | '履歴' | 'アプリ設定';
-export type SidebarIcon = 'overview' | 'simulation' | 'history' | 'setting';
+export type SidebarLinkPath = '/simulation' | '/history' | '/setting';
+export type SidebarName = 'シュミレーション' | '履歴' | 'アプリ設定';
+export type SidebarIcon = 'simulation' | 'history' | 'setting';
 
 type SidebarLinkInfoType = {
   id: number;
@@ -21,24 +21,18 @@ export class SidebarComponent {
   readonly sidebarLinkInfomations: SidebarLinkInfoType[] = [
     {
       id: 1,
-      path: '/overview',
-      name: 'はじめに',
-      icon: 'overview',
-    },
-    {
-      id: 2,
       path: '/simulation',
       name: 'シュミレーション',
       icon: 'simulation',
     },
     {
-      id: 3,
+      id: 2,
       path: '/history',
       name: '履歴',
       icon: 'history',
     },
     {
-      id: 4,
+      id: 3,
       path: '/setting',
       name: 'アプリ設定',
       icon: 'setting',

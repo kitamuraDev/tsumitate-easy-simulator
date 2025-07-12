@@ -1,13 +1,13 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matCalculate, matHome, matSettings, matStorage } from '@ng-icons/material-icons/baseline';
+import { matCalculate, matSettings, matStorage } from '@ng-icons/material-icons/baseline';
 import type { SidebarIcon } from '../sidebar.component';
 
 @Component({
   selector: 'app-sidebar-link',
   imports: [RouterLink, NgIcon],
-  viewProviders: provideIcons({ matCalculate, matHome, matSettings, matStorage }),
+  viewProviders: provideIcons({ matCalculate, matSettings, matStorage }),
   template: `
     <li>
       <a
@@ -15,9 +15,6 @@ import type { SidebarIcon } from '../sidebar.component';
         class="hidden sm:flex items-center gap-3 p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
       >
         @switch (icon()) {
-          @case ('overview') {
-            <ng-icon name="matHome" size="24" />
-          }
           @case ('simulation') {
             <ng-icon name="matCalculate" size="24" />
           }
@@ -36,9 +33,6 @@ import type { SidebarIcon } from '../sidebar.component';
         class="flex sm:hidden items-center gap-3 p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
       >
         @switch (icon()) {
-          @case ('overview') {
-            <ng-icon name="matHome" size="24" />
-          }
           @case ('simulation') {
             <ng-icon name="matCalculate" size="24" />
           }

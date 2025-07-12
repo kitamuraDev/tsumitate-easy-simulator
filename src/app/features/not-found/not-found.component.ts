@@ -15,7 +15,7 @@ import { HeadContentComponent } from '../../shared/components/head-content/head-
     </app-head-content>
     <div class="px-3 sm:px-6">
       <button
-        (click)="toOverViewPage()"
+        (click)="toSimulationPage()"
         class="text-base font-medium text-center rounded-lg w-48 sm:w-52 px-2 py-3 transition-opacity text-white bg-blue-500 hover:opacity-70"
       >
         ホームヘ戻る
@@ -26,7 +26,7 @@ import { HeadContentComponent } from '../../shared/components/head-content/head-
 export default class NotFoundComponent {
   private readonly router = inject(Router);
 
-  toOverViewPage() {
-    this.router.navigate(['/overview']);
+  toSimulationPage() {
+    this.router.navigate(['/simulation']);
   }
 }

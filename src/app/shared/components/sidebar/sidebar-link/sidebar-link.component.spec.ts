@@ -15,7 +15,6 @@ type InputType = {
 };
 
 const sidebarLinkTestData: InputType[] = [
-  { path: '/overview', name: 'はじめに', icon: 'overview', selector: 'ng-icon[name="matHome"]' },
   { path: '/simulation', name: 'シュミレーション', icon: 'simulation', selector: 'ng-icon[name="matCalculate"]' },
   { path: '/history', name: '履歴', icon: 'history', selector: 'ng-icon[name="matStorage"]' },
   { path: '/setting', name: 'アプリ設定', icon: 'setting', selector: 'ng-icon[name="matSettings"]' },
