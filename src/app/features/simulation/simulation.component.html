@@ -180,24 +180,27 @@
     </div>
   </form>
 
-  <div class="w-80 h-20 p-6 m-auto flex justify-between items-center bg-blue-100">
-    <span class="text-sm font-medium">最終評価額</span>
-    <div class="flex items-center gap-1">
-      @defer (when compoundInterestCalcResult()) {
-        <app-display-amount-value [compoundInterestCalcResult]="compoundInterestCalcResult()" />
-      }
-      <span class="text-sm font-medium">万円</span>
+  <div class="flex gap-2 p-4">
+    <!-- 最終評価額 -->
+    <div class="h-14 px-4 flex-1 flex justify-between items-center bg-blue-100 rounded">
+      <span class="text-sm font-medium">最終評価額</span>
+      <div class="flex items-center gap-1">
+        @defer (when compoundInterestCalcResult()) {
+          <app-display-amount-value [compoundInterestCalcResult]="compoundInterestCalcResult()" />
+        }
+        <span class="text-sm font-medium">万円</span>
+      </div>
     </div>
+
+    <!-- 計算ボタン -->
+    @let bgStyles = isAbnormalInput() ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
+    <button
+      data-testid="calculate-button"
+      [disabled]="isAbnormalInput()"
+      (click)="onCalculate()"
+      class="{{bgStyles}} text-white opacity-90 inline-flex justify-center items-center w-14 h-14 rounded"
+    >
+      <ng-icon name="matEquals" size="24" />
+    </button>
   </div>
 </section>
-
-<!-- 計算ボタン -->
-@let bgStyles = isAbnormalInput() ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
-<button
-  data-testid="calculate-button"
-  [disabled]="isAbnormalInput()"
-  (click)="onCalculate()"
-  class="{{bgStyles}} text-white opacity-90 inline-flex justify-center items-center w-14 h-14 rounded-full fixed right-4 bottom-4 z-50"
->
-  <ng-icon name="matEquals" size="24" />
-</button>
