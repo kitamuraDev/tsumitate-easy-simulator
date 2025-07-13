@@ -23,7 +23,6 @@
 ### ライブラリ
 
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v3.4.0-blue)
-![Flowbite](https://img.shields.io/badge/Flowbite-v2.2.1-blue)
 ![Dexie](https://img.shields.io/badge/Dexie-v3.2.4-blue)
 
 ### テスト

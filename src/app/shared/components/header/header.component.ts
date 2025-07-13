@@ -1,34 +1,71 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matBarChart, matNotes } from '@ng-icons/material-icons/baseline';
+import { matCalculate, matSettings, matStorage } from '@ng-icons/material-icons/baseline';
+
+type RoutingInfoType = {
+  id: number;
+  path: '/simulation' | '/history' | '/setting';
+  name: 'シュミレーション' | '履歴' | 'アプリ設定';
+  icon: 'simulation' | 'history' | 'setting';
+};
 
 @Component({
   selector: 'app-header',
-  imports: [NgIcon],
-  viewProviders: provideIcons({ matBarChart, matNotes }),
+  imports: [RouterLink, NgIcon],
+  viewProviders: provideIcons({ matCalculate, matSettings, matStorage }),
   template: `
-    <header class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-      <nav class="px-3 sm:px-5 py-3 sm:py-5">
-        <div class="flex items-center justify-between">
-          <div class="flex gap-2 sm:gap-3 items-center">
-            <ng-icon name="matBarChart" size="24" />
-            <h1 class="text-base sm:text-xl font-semibold whitespace-nowrap dark:text-white">
-              積立かんたんシュミレーター
-            </h1>
-          </div>
-          <button
-            data-drawer-target="logo-sidebar"
-            data-drawer-toggle="logo-sidebar"
-            aria-controls="logo-sidebar"
-            type="button"
-            class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+    <header class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[90%] rounded bg-white border border-gray-100 shadow-md">
+      <nav class="flex items-center justify-around">
+        @for (routingInfo of routingInfos; track routingInfo.id) {
+          @let activePathBg = isActivePath(routingInfo.path) ? 'bg-blue-100' : '';
+
+          <a
+            [routerLink]="routingInfo.path"
+            class="inline-flex items-center justify-center w-1/3 p-4 rounded transition-colors {{ activePathBg }}"
           >
-            <span class="sr-only">open sidebar</span>
-            <ng-icon name="matNotes" size="24" />
-          </button>
-        </div>
+            @switch (routingInfo.icon) {
+              @case ('simulation') {
+                <ng-icon name="matCalculate" size="24" />
+              }
+              @case ('history') {
+                <ng-icon name="matStorage" size="24" />
+              }
+              @case ('setting') {
+                <ng-icon name="matSettings" size="24" />
+              }
+            }
+          </a>
+        }
       </nav>
     </header>
   `,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  private readonly router = inject(Router);
+
+  readonly routingInfos: RoutingInfoType[] = [
+    {
+      id: 1,
+      path: '/simulation',
+      name: 'シュミレーション',
+      icon: 'simulation',
+    },
+    {
+      id: 2,
+      path: '/history',
+      name: '履歴',
+      icon: 'history',
+    },
+    {
+      id: 3,
+      path: '/setting',
+      name: 'アプリ設定',
+      icon: 'setting',
+    },
+  ];
+
+  isActivePath(path: string): boolean {
+    return this.router.url === path;
+  }
+}
