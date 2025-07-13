@@ -1,7 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 
 import '@testing-library/jest-dom/vitest';
-import { DeferBlockState } from '@angular/core/testing';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -50,7 +49,7 @@ describe('SimulationComponent', () => {
 
     it('「計算」ボタンを押下で、計算結果が表示されるか', async () => {
       const user = userEvent.setup();
-      const { renderDeferBlock } = await render(SimulationComponent, {
+      await render(SimulationComponent, {
         providers: [
           provideZonelessChangeDetection(),
           {
@@ -82,8 +81,6 @@ describe('SimulationComponent', () => {
       // 計算ボタン押下
       await user.click(screen.getByTestId('calculate-button'));
 
-      // 計算ボタン押下後、値が0から更新されるのを契機に、`DisplayAmountValueComponent`が初めて表示されるため、`DeferBlockState.Complete`とする
-      await renderDeferBlock(DeferBlockState.Complete);
       expect(await screen.findByText(expectedCalcResult)).toBeVisible();
     });
   });
