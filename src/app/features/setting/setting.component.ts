@@ -23,7 +23,7 @@ export default class SettingComponent implements OnInit {
   selectedEndAge = signal(this.endAgeList[0]);
 
   ngOnInit() {
-    this.getNoInvestmentPeriodIncluded();
+    this.getNoInvestmentPeriodIncludedSetting();
   }
 
   // ユーザーが一度でも編集した場合、フラグをを立てる
@@ -32,8 +32,8 @@ export default class SettingComponent implements OnInit {
   }
 
   // 設定値を取得
-  async getNoInvestmentPeriodIncluded() {
-    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncluded();
+  async getNoInvestmentPeriodIncludedSetting() {
+    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncludedSetting();
 
     this.isNoInvestmentPeriodIncluded.set(result.isNoInvestmentPeriodIncluded);
     this.selectedCurrentAge.set(result.selectedCurrentAge);
@@ -42,7 +42,7 @@ export default class SettingComponent implements OnInit {
 
   // 設定値を保存
   async saveSetting() {
-    await this.settingDatabaseService.updateNoInvestmentPeriodIncluded({
+    await this.settingDatabaseService.updateNoInvestmentPeriodIncludedSetting({
       isNoInvestmentPeriodIncluded: this.isNoInvestmentPeriodIncluded(),
       selectedCurrentAge: this.selectedCurrentAge(),
       selectedEndAge: this.selectedEndAge(),

@@ -21,7 +21,7 @@ describe('SettingComponent', () => {
         {
           provide: SettingDatabaseService,
           useValue: {
-            getNoInvestmentPeriodIncluded: () =>
+            getNoInvestmentPeriodIncludedSetting: () =>
               Promise.resolve({
                 isNoInvestmentPeriodIncluded: true,
                 selectedCurrentAge: '25',
@@ -51,7 +51,7 @@ describe('SettingComponent', () => {
         {
           provide: SettingDatabaseService,
           useValue: {
-            getNoInvestmentPeriodIncluded: () =>
+            getNoInvestmentPeriodIncludedSetting: () =>
               Promise.resolve({
                 isNoInvestmentPeriodIncluded: false,
                 selectedCurrentAge: '25',
@@ -84,7 +84,7 @@ describe('SettingComponent', () => {
         {
           provide: SettingDatabaseService,
           useValue: {
-            getNoInvestmentPeriodIncluded: () =>
+            getNoInvestmentPeriodIncludedSetting: () =>
               Promise.resolve({
                 isNoInvestmentPeriodIncluded: true,
                 selectedCurrentAge: '25',
@@ -107,7 +107,7 @@ describe('SettingComponent', () => {
 
   it('保存ボタン押下で、設定値が保存されること', async () => {
     const user = userEvent.setup();
-    const mockUpdateNoInvestmentPeriodIncluded = vi.fn();
+    const mockUpdateNoInvestmentPeriodIncludedSetting = vi.fn();
 
     await render(SettingComponent, {
       componentProperties: {
@@ -121,13 +121,13 @@ describe('SettingComponent', () => {
         {
           provide: SettingDatabaseService,
           useValue: {
-            getNoInvestmentPeriodIncluded: () =>
+            getNoInvestmentPeriodIncludedSetting: () =>
               Promise.resolve({
                 isNoInvestmentPeriodIncluded: false,
                 selectedCurrentAge: '20',
                 selectedEndAge: '50',
               }),
-            updateNoInvestmentPeriodIncluded: mockUpdateNoInvestmentPeriodIncluded,
+            updateNoInvestmentPeriodIncludedSetting: mockUpdateNoInvestmentPeriodIncludedSetting,
           },
         },
       ],
@@ -151,7 +151,7 @@ describe('SettingComponent', () => {
     const saveButton = screen.getByRole('button', { name: '保存' }) as HTMLButtonElement;
     await user.click(saveButton);
 
-    expect(mockUpdateNoInvestmentPeriodIncluded).toHaveBeenCalledWith({
+    expect(mockUpdateNoInvestmentPeriodIncludedSetting).toHaveBeenCalledWith({
       isNoInvestmentPeriodIncluded: true,
       selectedCurrentAge: '25',
       selectedEndAge: '65',

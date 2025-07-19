@@ -114,7 +114,7 @@ export default class SimulationComponent {
 
   // 積立無しの期間を考慮した配列の調整
   private async adjustForNoInvestmentPeriod(amounts: number[], years: number[]) {
-    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncluded();
+    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncludedSetting();
     const currentAge = Number(result.selectedCurrentAge);
     const endAge = Number(result.selectedEndAge);
     const noInvestmentPeriodYear = endAge - currentAge - years.reduce((acc, cur) => acc + cur, 0); // 積立無しの期間

@@ -55,7 +55,7 @@ describe('SimulationComponent', () => {
           {
             provide: SettingDatabaseService,
             useValue: {
-              getNoInvestmentPeriodIncluded: () =>
+              getNoInvestmentPeriodIncludedSetting: () =>
                 Promise.resolve({
                   isNoInvestmentPeriodIncluded: false,
                   selectedCurrentAge: '25',
@@ -93,7 +93,7 @@ describe('SimulationComponent', () => {
           {
             provide: SettingDatabaseService,
             useValue: {
-              getNoInvestmentPeriodIncluded: () =>
+              getNoInvestmentPeriodIncludedSetting: () =>
                 Promise.resolve({
                   isNoInvestmentPeriodIncluded: false,
                   selectedCurrentAge: '25',
@@ -119,7 +119,7 @@ describe('SimulationComponent', () => {
           {
             provide: SettingDatabaseService,
             useValue: {
-              getNoInvestmentPeriodIncluded: () =>
+              getNoInvestmentPeriodIncludedSetting: () =>
                 Promise.resolve({
                   isNoInvestmentPeriodIncluded: true,
                   selectedCurrentAge: '25',
@@ -145,7 +145,7 @@ describe('SimulationComponent', () => {
           {
             provide: SettingDatabaseService,
             useValue: {
-              getNoInvestmentPeriodIncluded: () =>
+              getNoInvestmentPeriodIncludedSetting: () =>
                 Promise.resolve({
                   isNoInvestmentPeriodIncluded: true,
                   selectedCurrentAge: '25',
@@ -171,7 +171,7 @@ describe('SimulationComponent', () => {
           {
             provide: SettingDatabaseService,
             useValue: {
-              getNoInvestmentPeriodIncluded: () =>
+              getNoInvestmentPeriodIncludedSetting: () =>
                 Promise.resolve({
                   isNoInvestmentPeriodIncluded: true,
                   selectedCurrentAge: '25',
