@@ -55,12 +55,13 @@
 </div>
 
 @let bgStyles = !isFormEdited() ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
-<div class="absolute bottom-0 left-0 grid place-content-center w-full p-4">
-  <button
-    [disabled]="!isFormEdited()"
-    (click)="saveSetting()"
-    class="{{bgStyles}} text-base font-medium text-center rounded-lg w-24 px-2 py-3 transition-opacity text-white bg-blue-500 hover:opacity-70"
-  >
-    保存
-  </button>
-</div>
+<button
+  [disabled]="!isFormEdited()"
+  (click)="saveSetting()"
+  class="
+    {{bgStyles}} transition-opacity
+    text-base font-medium text-center text-white
+    fixed left-1/2 -translate-x-1/2 bottom-16 mb-3 w-24 px-2 py-3 rounded-lg"
+>
+  保存
+</button>

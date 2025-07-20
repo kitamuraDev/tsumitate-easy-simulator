@@ -2,7 +2,6 @@ import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-label-text',
-  imports: [],
   template: `
     <label for="{{ id() }}" class="block w-28 sm:w-48 text-sm font-medium text-gray-900">
       <ng-content />

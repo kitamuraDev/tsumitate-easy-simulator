@@ -2,9 +2,8 @@ import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-head-content',
-  imports: [],
   template: `
-    <section class="max-w-screen-md p-3 sm:p-6 mb-5">
+    <section class="p-3 mb-5">
       <h1 class="text-xl sm:text-2xl font-semibold whitespace-nowrap">{{ title() }}</h1>
       @if (hasDescription()) {
         <div class="text-sm font-medium mt-5 space-y-2">
