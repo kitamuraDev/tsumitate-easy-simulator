@@ -54,14 +54,6 @@
   </section>
 </div>
 
-@let bgStyles = !isFormEdited() ? 'bg-blue-500 bg-opacity-40 cursor-not-allowed' : 'bg-blue-500 hover:opacity-70';
-<button
-  [disabled]="!isFormEdited()"
-  (click)="saveSetting()"
-  class="
-    {{bgStyles}} transition-opacity
-    text-base font-medium text-center text-white
-    fixed left-1/2 -translate-x-1/2 bottom-16 mb-3 w-24 px-2 py-3 rounded-lg"
->
+<app-base-button [disabled]="!isFormEdited()" (clickEvent)="saveSetting()">
   保存
-</button>
+</app-base-button>

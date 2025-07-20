@@ -1,13 +1,14 @@
 import { Component, type OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
+import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { SelectBoxComponent } from './components/select-box/select-box.component';
 import { SwitchButtonComponent } from './components/switch-button/switch-button.component';
 
 @Component({
   selector: 'app-setting',
-  imports: [FormsModule, HeadContentComponent, SwitchButtonComponent, SelectBoxComponent],
+  imports: [FormsModule, HeadContentComponent, SwitchButtonComponent, SelectBoxComponent, BaseButtonComponent],
   templateUrl: './setting.component.html',
 })
 export default class SettingComponent implements OnInit {
