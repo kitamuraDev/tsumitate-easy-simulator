@@ -1,9 +1,8 @@
 import { Component, type OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matEquals } from '@ng-icons/material-icons/baseline';
 import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
+import { BaseButtonComponent } from '../../shared/components/base-button/base-button.component';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { CalculateService } from '../../shared/services/calculate.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -20,9 +19,8 @@ import { LabelTextComponent } from './label-text/label-text.component';
     LabelTextComponent,
     DisplayAmountValueComponent,
     DisplayRangeInputValueComponent,
-    NgIcon,
+    BaseButtonComponent,
   ],
-  viewProviders: provideIcons({ matEquals }),
   templateUrl: './simulation.component.html',
 })
 export default class SimulationComponent implements OnInit {

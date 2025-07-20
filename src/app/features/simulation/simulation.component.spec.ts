@@ -211,7 +211,7 @@ describe('SimulationComponent', () => {
       const expectedCalcResult = transform(calcResult.compoundInterestCalcResult);
 
       // 計算ボタン押下
-      await user.click(screen.getByTestId('calculate-button'));
+      await user.click(screen.getByRole('button', { name: '計算' }));
 
       expect(await screen.findByText(expectedCalcResult)).toBeVisible();
     });
