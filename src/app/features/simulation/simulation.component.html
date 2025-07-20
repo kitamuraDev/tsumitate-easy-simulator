@@ -1,7 +1,7 @@
 <app-head-content [title]="'シュミレーション'" [hasDescription]="false" />
-<section class="sm:w-fit flex flex-col gap-8 sm:p-6">
-  <form [formGroup]="inputs">
-    <div class="space-y-2.5 py-4 px-8">
+<section class="flex flex-col gap-8">
+  <form [formGroup]="inputs" class="flex flex-col gap-6 p-6">
+    <div class="space-y-2.5">
       <!-- 初期資産額 -->
       <div data-testid="initial-asset-container">
         <div class="flex items-center justify-between">
@@ -76,108 +76,111 @@
       </div>
     </div>
 
-    <div class="p-2 flex items-center gap-2">
-      <app-toggle-button [isOpen]="isOpenAnyInputsBlock()" (clickEvent)="toggleOpenAnyInputsBlock()" />
-      <p class="text-xs font-medium text-gray-900">後から積立額を変更する場合の入力項目</p>
-    </div>
-
-    <div data-testid="any-inputs-container" class="space-y-2.5 py-4 px-8 bg-gray-100 {{ isOpenAnyInputsBlock() ? 'block' : 'hidden' }}">
-      <!-- 任意入力 1 -->
-      <div data-testid="amount-any-1-container">
-        <div class="flex items-center justify-between">
-          <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
-          <app-display-range-input-value>{{ inputs.value.amountAny1 }}</app-display-range-input-value>
+    @defer (when amountChangeSetting().isAmountChangeEnabled) {
+      @if (amountChangeSetting().isAmountChangeEnabled) {
+        <div data-testid="any-inputs-container" class="space-y-2.5">
+          <!-- 任意入力 1 -->
+          @if (['1', '2', '3'].includes(amountChangeSetting().selectedAmountChangeCount)) {
+            <div data-testid="amount-any-1-container">
+              <div class="flex items-center justify-between">
+                <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
+                <app-display-range-input-value>{{ inputs.value.amountAny1 }}</app-display-range-input-value>
+              </div>
+              <input
+                type="range"
+                id="amountAny1"
+                formControlName="amountAny1"
+                min="0"
+                max="30"
+                (input)="updateFormValidState()"
+                class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+            <div data-testid="year-any-1-container">
+              <div class="flex items-center justify-between">
+                <app-label-text [id]="'yearAny1'" [isRequired]="false">積立期間</app-label-text>
+                <app-display-range-input-value>{{ inputs.value.yearAny1 }}</app-display-range-input-value>
+              </div>
+              <input
+                type="range"
+                id="yearAny1"
+                formControlName="yearAny1"
+                min="0"
+                max="40"
+                (input)="updateFormValidState()"
+                class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+          }
+          <!-- 任意入力 2 -->
+          @if (['2', '3'].includes(amountChangeSetting().selectedAmountChangeCount)) {
+            <div data-testid="amount-any-2-container">
+              <div class="flex items-center justify-between">
+                <app-label-text [id]="'amountAny2'" [isRequired]="false">毎月積立額</app-label-text>
+                <app-display-range-input-value>{{ inputs.value.amountAny2 }}</app-display-range-input-value>
+              </div>
+              <input
+                type="range"
+                id="amountAny2"
+                formControlName="amountAny2"
+                min="0"
+                max="30"
+                (input)="updateFormValidState()"
+                class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+            <div data-testid="year-any-2-container">
+              <div class="flex items-center justify-between">
+                <app-label-text [id]="'yearAny2'" [isRequired]="false">積立期間</app-label-text>
+                <app-display-range-input-value>{{ inputs.value.yearAny2 }}</app-display-range-input-value>
+              </div>
+              <input
+                type="range"
+                id="yearAny2"
+                formControlName="yearAny2"
+                min="0"
+                max="40"
+                (input)="updateFormValidState()"
+                class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+          }
+          <!-- 任意入力 3 -->
+          @if (['3'].includes(amountChangeSetting().selectedAmountChangeCount)) {
+            <div data-testid="amount-any-3-container">
+              <div class="flex items-center justify-between">
+                <app-label-text [id]="'amountAny3'" [isRequired]="false">毎月積立額</app-label-text>
+                <app-display-range-input-value>{{ inputs.value.amountAny3 }}</app-display-range-input-value>
+              </div>
+              <input
+                type="range"
+                id="amountAny3"
+                formControlName="amountAny3"
+                min="0"
+                max="30"
+                (input)="updateFormValidState()"
+                class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+            <div data-testid="year-any-3-container">
+              <div class="flex items-center justify-between">
+                <app-label-text [id]="'yearAny3'" [isRequired]="false">積立期間</app-label-text>
+                <app-display-range-input-value>{{ inputs.value.yearAny3 }}</app-display-range-input-value>
+              </div>
+              <input
+                type="range"
+                id="yearAny3"
+                formControlName="yearAny3"
+                min="0"
+                max="40"
+                (input)="updateFormValidState()"
+                class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              />
+            </div>
+          }
         </div>
-        <input
-          type="range"
-          id="amountAny1"
-          formControlName="amountAny1"
-          min="0"
-          max="30"
-          (input)="updateFormValidState()"
-          class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-      <div data-testid="year-any-1-container">
-        <div class="flex items-center justify-between">
-          <app-label-text [id]="'yearAny1'" [isRequired]="false">積立期間</app-label-text>
-          <app-display-range-input-value>{{ inputs.value.yearAny1 }}</app-display-range-input-value>
-        </div>
-        <input
-          type="range"
-          id="yearAny1"
-          formControlName="yearAny1"
-          min="0"
-          max="40"
-          (input)="updateFormValidState()"
-          class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-
-      <!-- 任意入力 2 -->
-      <div data-testid="amount-any-2-container">
-        <div class="flex items-center justify-between">
-          <app-label-text [id]="'amountAny2'" [isRequired]="false">毎月積立額</app-label-text>
-          <app-display-range-input-value>{{ inputs.value.amountAny2 }}</app-display-range-input-value>
-        </div>
-        <input
-          type="range"
-          id="amountAny2"
-          formControlName="amountAny2"
-          min="0"
-          max="30"
-          (input)="updateFormValidState()"
-          class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-      <div data-testid="year-any-2-container">
-        <div class="flex items-center justify-between">
-          <app-label-text [id]="'yearAny2'" [isRequired]="false">積立期間</app-label-text>
-          <app-display-range-input-value>{{ inputs.value.yearAny2 }}</app-display-range-input-value>
-        </div>
-        <input
-          type="range"
-          id="yearAny2"
-          formControlName="yearAny2"
-          min="0"
-          max="40"
-          (input)="updateFormValidState()"
-          class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-
-      <!-- 任意入力 3 -->
-      <div data-testid="amount-any-3-container">
-        <div class="flex items-center justify-between">
-          <app-label-text [id]="'amountAny3'" [isRequired]="false">毎月積立額</app-label-text>
-          <app-display-range-input-value>{{ inputs.value.amountAny3 }}</app-display-range-input-value>
-        </div>
-        <input
-          type="range"
-          id="amountAny3"
-          formControlName="amountAny3"
-          min="0"
-          max="30"
-          (input)="updateFormValidState()"
-          class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-      <div data-testid="year-any-3-container">
-        <div class="flex items-center justify-between">
-          <app-label-text [id]="'yearAny3'" [isRequired]="false">積立期間</app-label-text>
-          <app-display-range-input-value>{{ inputs.value.yearAny3 }}</app-display-range-input-value>
-        </div>
-        <input
-          type="range"
-          id="yearAny3"
-          formControlName="yearAny3"
-          min="0"
-          max="40"
-          (input)="updateFormValidState()"
-          class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-        />
-      </div>
-    </div>
+      }
+    }
   </form>
 
   <div class="flex gap-2 p-4">

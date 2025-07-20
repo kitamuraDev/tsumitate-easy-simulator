@@ -1,11 +1,12 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 
 import '@testing-library/jest-dom/vitest';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { SettingDatabaseService } from '../../core/setting-database.service';
+import { DeferBlockState } from '@angular/core/testing';
+import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
 import { TruncateToTenThousandsPipe } from '../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { CalculateService } from '../../shared/services/calculate.service';
 import SimulationComponent from './simulation.component';
@@ -15,23 +16,149 @@ describe('SimulationComponent', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
   });
 
-  it('任意入力エリアがトグルされるか', async () => {
-    const user = userEvent.setup();
-    const { container } = await render(SimulationComponent, {
-      providers: [provideZonelessChangeDetection()],
+  describe('任意入力エリア', () => {
+    it('「積立額を変更するかどうかのフラグ」がfalseの場合、任意入力エリアが表示されないこと', async () => {
+      await render(SimulationComponent, {
+        componentProperties: {
+          amountChangeSetting: signal<AmountChangeSetting>({
+            isAmountChangeEnabled: false,
+            selectedAmountChangeCount: '1',
+          }),
+        },
+        providers: [
+          provideZonelessChangeDetection(),
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: false,
+                  selectedAmountChangeCount: '1',
+                }),
+            },
+          },
+        ],
+      });
+
+      expect(screen.queryByTestId('any-inputs-container')).toBeNull();
     });
 
-    const toggleButton = container.querySelector('app-toggle-button button') as HTMLButtonElement;
-    const anyInputsContainer = screen.getByTestId('any-inputs-container');
+    it('「積立額を変更するかどうかのフラグ」がtrueの場合、任意入力エリアが表示されること', async () => {
+      const { renderDeferBlock } = await render(SimulationComponent, {
+        componentProperties: {
+          amountChangeSetting: signal<AmountChangeSetting>({
+            isAmountChangeEnabled: true,
+            selectedAmountChangeCount: '1',
+          }),
+        },
+        providers: [
+          provideZonelessChangeDetection(),
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: true,
+                  selectedAmountChangeCount: '1',
+                }),
+            },
+          },
+        ],
+      });
+      await renderDeferBlock(DeferBlockState.Complete);
 
-    // 任意入力エリアが非表示であること（初期表示時）
-    expect(anyInputsContainer).toHaveClass('hidden');
+      expect(screen.getByTestId('any-inputs-container')).toBeVisible();
+    });
 
-    await user.click(toggleButton);
-    expect(anyInputsContainer).toHaveClass('block');
+    it('「変更回数」が1回の場合、任意入力エリアが1つ表示されること', async () => {
+      const { renderDeferBlock } = await render(SimulationComponent, {
+        componentProperties: {
+          amountChangeSetting: signal<AmountChangeSetting>({
+            isAmountChangeEnabled: true,
+            selectedAmountChangeCount: '1',
+          }),
+        },
+        providers: [
+          provideZonelessChangeDetection(),
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: true,
+                  selectedAmountChangeCount: '1',
+                }),
+            },
+          },
+        ],
+      });
+      await renderDeferBlock(DeferBlockState.Complete);
 
-    await user.click(toggleButton);
-    expect(anyInputsContainer).toHaveClass('hidden');
+      expect(screen.getByTestId('any-inputs-container')).toBeVisible();
+      expect(screen.getByTestId('amount-any-1-container')).toBeVisible();
+      expect(screen.queryByTestId('amount-any-2-container')).toBeNull();
+      expect(screen.queryByTestId('amount-any-3-container')).toBeNull();
+    });
+
+    it('「変更回数」が2回の場合、任意入力エリアが2つ表示されること', async () => {
+      const { renderDeferBlock } = await render(SimulationComponent, {
+        componentProperties: {
+          amountChangeSetting: signal<AmountChangeSetting>({
+            isAmountChangeEnabled: true,
+            selectedAmountChangeCount: '2',
+          }),
+        },
+        providers: [
+          provideZonelessChangeDetection(),
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: true,
+                  selectedAmountChangeCount: '2',
+                }),
+            },
+          },
+        ],
+      });
+      await renderDeferBlock(DeferBlockState.Complete);
+
+      expect(screen.getByTestId('any-inputs-container')).toBeVisible();
+      expect(screen.getByTestId('amount-any-1-container')).toBeVisible();
+      expect(screen.getByTestId('amount-any-2-container')).toBeVisible();
+      expect(screen.queryByTestId('amount-any-3-container')).toBeNull();
+    });
+
+    it('「変更回数」が3回の場合、任意入力エリアが3つ表示されること', async () => {
+      const { renderDeferBlock } = await render(SimulationComponent, {
+        componentProperties: {
+          amountChangeSetting: signal<AmountChangeSetting>({
+            isAmountChangeEnabled: true,
+            selectedAmountChangeCount: '3',
+          }),
+        },
+        providers: [
+          provideZonelessChangeDetection(),
+          {
+            provide: SettingDatabaseService,
+            useValue: {
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: true,
+                  selectedAmountChangeCount: '3',
+                }),
+            },
+          },
+        ],
+      });
+      await renderDeferBlock(DeferBlockState.Complete);
+
+      expect(screen.getByTestId('any-inputs-container')).toBeVisible();
+      expect(screen.getByTestId('amount-any-1-container')).toBeVisible();
+      expect(screen.getByTestId('amount-any-2-container')).toBeVisible();
+      expect(screen.getByTestId('amount-any-3-container')).toBeVisible();
+    });
   });
 
   describe('最終評価額', () => {
@@ -60,6 +187,11 @@ describe('SimulationComponent', () => {
                   isNoInvestmentPeriodIncluded: false,
                   selectedCurrentAge: '25',
                   selectedEndAge: '65',
+                }),
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: false,
+                  selectedAmountChangeCount: '1',
                 }),
             },
           },
@@ -99,6 +231,11 @@ describe('SimulationComponent', () => {
                   selectedCurrentAge: '25',
                   selectedEndAge: '65',
                 }),
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: false,
+                  selectedAmountChangeCount: '1',
+                }),
             },
           },
         ],
@@ -124,6 +261,11 @@ describe('SimulationComponent', () => {
                   isNoInvestmentPeriodIncluded: true,
                   selectedCurrentAge: '25',
                   selectedEndAge: '65',
+                }),
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: false,
+                  selectedAmountChangeCount: '1',
                 }),
             },
           },
@@ -151,6 +293,11 @@ describe('SimulationComponent', () => {
                   selectedCurrentAge: '25',
                   selectedEndAge: '65',
                 }),
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: false,
+                  selectedAmountChangeCount: '1',
+                }),
             },
           },
         ],
@@ -176,6 +323,11 @@ describe('SimulationComponent', () => {
                   isNoInvestmentPeriodIncluded: true,
                   selectedCurrentAge: '25',
                   selectedEndAge: '65',
+                }),
+              getAmountChangeSetting: () =>
+                Promise.resolve({
+                  isAmountChangeEnabled: false,
+                  selectedAmountChangeCount: '1',
                 }),
             },
           },
