@@ -1,8 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, type OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matEquals } from '@ng-icons/material-icons/baseline';
-import { SettingDatabaseService } from '../../core/setting-database.service';
+import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
 import { TsumitateDatabaseService } from '../../core/tsumitate-database.service';
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { CalculateService } from '../../shared/services/calculate.service';
@@ -11,7 +11,6 @@ import type { Input } from '../../shared/types/tsumitate';
 import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
 import { DisplayRangeInputValueComponent } from './display-range-input-value/display-range-input-value.component';
 import { LabelTextComponent } from './label-text/label-text.component';
-import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
 
 @Component({
   selector: 'app-simulation',
@@ -21,13 +20,12 @@ import { ToggleButtonComponent } from './toggle-button/toggle-button.component';
     LabelTextComponent,
     DisplayAmountValueComponent,
     DisplayRangeInputValueComponent,
-    ToggleButtonComponent,
     NgIcon,
   ],
   viewProviders: provideIcons({ matEquals }),
   templateUrl: './simulation.component.html',
 })
-export default class SimulationComponent {
+export default class SimulationComponent implements OnInit {
   private readonly calcService = inject(CalculateService);
   private readonly tsumitateDatabaseService = inject(TsumitateDatabaseService);
   private readonly settingDatabaseService = inject(SettingDatabaseService);
@@ -35,10 +33,10 @@ export default class SimulationComponent {
 
   compoundInterestCalcResult = signal<number>(0);
   isAbnormalInput = signal(false);
-  isOpenAnyInputsBlock = signal(false);
+  amountChangeSetting = signal<AmountChangeSetting>({ isAmountChangeEnabled: false, selectedAmountChangeCount: '1' });
 
-  toggleOpenAnyInputsBlock() {
-    this.isOpenAnyInputsBlock.update((v) => !v);
+  async ngOnInit() {
+    this.amountChangeSetting.set(await this.settingDatabaseService.getAmountChangeSetting());
   }
 
   // biome-ignore format: 一行にまとめたいため
@@ -114,7 +112,7 @@ export default class SimulationComponent {
 
   // 積立無しの期間を考慮した配列の調整
   private async adjustForNoInvestmentPeriod(amounts: number[], years: number[]) {
-    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncluded();
+    const result = await this.settingDatabaseService.getNoInvestmentPeriodIncludedSetting();
     const currentAge = Number(result.selectedCurrentAge);
     const endAge = Number(result.selectedEndAge);
     const noInvestmentPeriodYear = endAge - currentAge - years.reduce((acc, cur) => acc + cur, 0); // 積立無しの期間
