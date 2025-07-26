@@ -36,7 +36,7 @@
           </td>
           <td class="px-6 py-4">{{ tsumitate.output.compoundInterestCalcResult | truncateToTenThousands }}万円</td>
           <td class="px-6 py-4">
-            <button type="button" (click)="deleteTsumitate.emit(tsumitate.id)">
+            <button type="button" (click)="deleteTsumitate.emit(tsumitate.id!)">
               <ng-icon name="matDelete" size="24" />
             </button>
           </td>
