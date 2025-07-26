@@ -3,7 +3,7 @@ import { provideZonelessChangeDetection, signal } from '@angular/core';
 import '@testing-library/jest-dom/vitest';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { DeferBlockState } from '@angular/core/testing';
 import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
@@ -12,10 +12,6 @@ import { CalculateService } from '../../shared/services/calculate.service';
 import SimulationComponent from './simulation.component';
 
 describe('SimulationComponent', () => {
-  beforeEach(() => {
-    vi.spyOn(console, 'error').mockImplementation(() => {}); // ng-iconのエラーを無視
-  });
-
   describe('任意入力エリア', () => {
     it('「積立額を変更するかどうかのフラグ」がfalseの場合、任意入力エリアが表示されないこと', async () => {
       await render(SimulationComponent, {
