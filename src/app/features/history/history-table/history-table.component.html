@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (tsumitate of tsumitateList$(); track $index) {
+      @for (tsumitate of tsumitateList(); track $index) {
         <tr class="odd:bg-white even:bg-gray-50 border-b">
           <td class="px-6 py-4">{{ tsumitate.input.initialAsset }}万円</td>
           <td class="px-6 py-4">{{ tsumitate.input.rate }}%</td>
@@ -36,7 +36,7 @@
           </td>
           <td class="px-6 py-4">{{ tsumitate.output.compoundInterestCalcResult | truncateToTenThousands }}万円</td>
           <td class="px-6 py-4">
-            <button type="button" (click)="deleteTsumitate.emit(tsumitate.id!)">
+            <button type="button" (click)="deleteTsumitate.emit(tsumitate.id!)" aria-label="履歴削除ボタン">
               <ng-icon name="matDelete" size="24" />
             </button>
           </td>

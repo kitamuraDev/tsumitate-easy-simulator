@@ -12,7 +12,7 @@ import type { Tsumitate } from '../../../shared/types/tsumitate';
   templateUrl: 'history-table.component.html',
 })
 export class HistoryTableComponent {
-  tsumitateList$ = input.required<Tsumitate[]>();
+  tsumitateList = input.required<Tsumitate[]>();
   deleteTsumitate = output<number>();
 
   readonly tableHeaderNames = [

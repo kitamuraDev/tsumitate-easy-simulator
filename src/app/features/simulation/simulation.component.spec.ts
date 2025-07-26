@@ -1,11 +1,11 @@
 import { provideZonelessChangeDetection, signal } from '@angular/core';
+import { DeferBlockState } from '@angular/core/testing';
 
 import '@testing-library/jest-dom/vitest';
 import { render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 
-import { DeferBlockState } from '@angular/core/testing';
 import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
 import { TruncateToTenThousandsPipe } from '../../shared/pipes/truncate-to-ten-thousands.pipe';
 import { CalculateService } from '../../shared/services/calculate.service';

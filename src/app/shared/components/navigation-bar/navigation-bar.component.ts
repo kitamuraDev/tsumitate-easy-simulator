@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matCalculate, matSettings, matStorage } from '@ng-icons/material-icons/baseline';
 
@@ -12,16 +12,16 @@ type RoutingInfoType = {
 
 @Component({
   selector: 'app-navigation-bar',
-  imports: [RouterLink, NgIcon],
+  imports: [RouterLink, RouterLinkActive, NgIcon],
   viewProviders: provideIcons({ matCalculate, matSettings, matStorage }),
   template: `
     <nav class="fixed bottom-0 z-50 w-full flex items-center justify-around bg-white border border-gray-100">
       @for (routingInfo of routingInfos; track routingInfo.id) {
-        @let activePathBg = isActivePath(routingInfo.path) ? 'bg-blue-100' : '';
-
         <a
           [routerLink]="routingInfo.path"
-          class="inline-flex items-center justify-center w-1/3 p-4 transition-colors {{ activePathBg }}"
+          [routerLinkActive]="'bg-blue-100'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="inline-flex items-center justify-center w-1/3 p-4 transition-colors"
         >
           @switch (routingInfo.icon) {
             @case ('simulation') {
@@ -34,14 +34,13 @@ type RoutingInfoType = {
               <ng-icon name="matSettings" size="24" />
             }
           }
+          <span class="sr-only">{{ routingInfo.name }}</span>
         </a>
       }
     </nav>
   `,
 })
 export class NavigationBarComponent {
-  private readonly router = inject(Router);
-
   readonly routingInfos: RoutingInfoType[] = [
     {
       id: 1,
@@ -62,8 +61,4 @@ export class NavigationBarComponent {
       icon: 'setting',
     },
   ];
-
-  isActivePath(path: string): boolean {
-    return this.router.url === path;
-  }
 }
