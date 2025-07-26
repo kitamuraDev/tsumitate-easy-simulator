@@ -2,7 +2,6 @@ import { Pipe, type PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'truncateToTenThousands',
-  standalone: true,
 })
 export class TruncateToTenThousandsPipe implements PipeTransform {
   /**

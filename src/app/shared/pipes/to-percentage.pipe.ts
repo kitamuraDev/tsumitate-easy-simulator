@@ -2,7 +2,6 @@ import { Pipe, type PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'toPercentage',
-  standalone: true,
 })
 export class ToPercentagePipe implements PipeTransform {
   /**

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matDelete } from '@ng-icons/material-icons/baseline';
 import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
@@ -12,8 +12,8 @@ import type { Tsumitate } from '../../../shared/types/tsumitate';
   templateUrl: 'history-table.component.html',
 })
 export class HistoryTableComponent {
-  tsumitateList$ = input.required<Tsumitate[]>();
-  @Output() deleteTsumitate: EventEmitter<number> = new EventEmitter<number>();
+  tsumitateList = input.required<Tsumitate[]>();
+  deleteTsumitate = output<number>();
 
   readonly tableHeaderNames = [
     '初期資産額',
