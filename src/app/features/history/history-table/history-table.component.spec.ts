@@ -44,11 +44,11 @@ describe('HistoryTableComponent', () => {
       expect(screen.getByRole('columnheader', { name: header })).toBeInTheDocument();
     }
 
-    // 初期資産額
+    // 初期投資額
     const initialAsset = `${expectedHistory.input.initialAsset}万円`;
     expect(screen.getByText(initialAsset)).toBeInTheDocument();
 
-    // 想定利回り
+    // 年率
     const rate = `${expectedHistory.input.rate}%`;
     expect(screen.getByText(rate)).toBeInTheDocument();
 
@@ -56,11 +56,11 @@ describe('HistoryTableComponent', () => {
     const amountsAndYears = `${expectedHistory.input.amounts[0]}万円 (${expectedHistory.input.years[0]}年) ${expectedHistory.input.amounts[1]}万円 (${expectedHistory.input.years[1]}年)`;
     expect(screen.getByText(amountsAndYears)).toBeInTheDocument();
 
-    // 運用金額
+    // 投資元本
     const simpleInterestCalcResult = `${truncateTransform(expectedHistory.output.simpleInterestCalcResult)}万円`;
     expect(screen.getByText(simpleInterestCalcResult)).toBeInTheDocument();
 
-    // 評価損益 (率)
+    // 評価損益
     const diff = `${truncateTransform(expectedHistory.output.diff)}万円 (${percentageTransform(expectedHistory.output.simpleInterestCalcResult, expectedHistory.output.compoundInterestCalcResult)})`;
     expect(screen.getByText(diff)).toBeInTheDocument();
 

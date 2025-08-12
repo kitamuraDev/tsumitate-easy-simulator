@@ -219,8 +219,8 @@ describe('SimulationComponent', () => {
       await renderDeferBlock(DeferBlockState.Complete);
 
       // 各スライダーの値変更
-      changeSliderValue('slider-initial-asset', '初期資産額', input.initialAsset);
-      changeSliderValue('slider-rate', '想定利回り', input.rate);
+      changeSliderValue('slider-initial-asset', '初期投資額', input.initialAsset);
+      changeSliderValue('slider-rate', '年率', input.rate);
       changeSliderValue('slider-amount-required', '毎月積立額', input.amounts[0]);
       changeSliderValue('slider-year-required', '積立期間', input.years[0]);
       changeSliderValue('slider-amount-any-1', '毎月積立額', input.amounts[1]);

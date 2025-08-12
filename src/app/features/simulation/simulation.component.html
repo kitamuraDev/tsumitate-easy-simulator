@@ -2,10 +2,10 @@
 <section class="flex flex-col gap-8">
   <form [formGroup]="inputs" class="flex flex-col gap-6 p-6">
     <div class="space-y-2.5">
-      <!-- 初期資産額 -->
+      <!-- 初期投資額 -->
       <div data-testid="slider-initial-asset">
         <div class="flex items-center justify-between">
-          <app-label-text [id]="'initialAsset'" [isRequired]="true">初期資産額</app-label-text>
+          <app-label-text [id]="'initialAsset'" [isRequired]="true">初期投資額</app-label-text>
           <app-display-range-input-value>{{ inputs.value.initialAsset }}</app-display-range-input-value>
         </div>
         <input
@@ -21,10 +21,10 @@
         />
       </div>
 
-      <!-- 想定利回り -->
+      <!-- 年率 -->
       <div data-testid="slider-rate">
         <div class="flex items-center justify-between">
-          <app-label-text [id]="'rate'" [isRequired]="true">想定利回り</app-label-text>
+          <app-label-text [id]="'rate'" [isRequired]="true">年率</app-label-text>
           <app-display-range-input-value>{{ inputs.value.rate }}</app-display-range-input-value>
         </div>
         <input
