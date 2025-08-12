@@ -6,9 +6,9 @@ import { BaseButtonComponent } from '../../shared/components/base-button/base-bu
 import { HeadContentComponent } from '../../shared/components/head-content/head-content.component';
 import { CalculateService } from '../../shared/services/calculate.service';
 import { ValidationService } from '../../shared/services/validation.service';
-import type { Input } from '../../shared/types/tsumitate';
-import { DisplayAmountValueComponent } from './display-amount-value/display-amount-value.component';
+import type { Input, Tsumitate } from '../../shared/types/tsumitate';
 import { DisplayRangeInputValueComponent } from './display-range-input-value/display-range-input-value.component';
+import { DisplaySimulationResultComponent } from './display-simulation-result/display-simulation-result.component';
 import { LabelTextComponent } from './label-text/label-text.component';
 
 @Component({
@@ -17,7 +17,7 @@ import { LabelTextComponent } from './label-text/label-text.component';
     ReactiveFormsModule,
     HeadContentComponent,
     LabelTextComponent,
-    DisplayAmountValueComponent,
+    DisplaySimulationResultComponent,
     DisplayRangeInputValueComponent,
     BaseButtonComponent,
   ],
@@ -29,7 +29,10 @@ export default class SimulationComponent implements OnInit {
   private readonly settingDatabaseService = inject(SettingDatabaseService);
   private readonly validationService = inject(ValidationService);
 
-  compoundInterestCalcResult = signal<number>(0);
+  tsumitateSimulationResult = signal<Tsumitate>({
+    input: { initialAsset: 0, rate: 5, amounts: [3], years: [1] },
+    output: { simpleInterestCalcResult: 368177, diff: 8177, compoundInterestCalcResult: 360000 },
+  });
   isAbnormalInput = signal(false);
   amountChangeSetting = signal<AmountChangeSetting>({ isAmountChangeEnabled: false, selectedAmountChangeCount: '1' });
 
@@ -84,8 +87,8 @@ export default class SimulationComponent implements OnInit {
     // 計算
     const tsumitateOutput = this.calcService.tsumitateEasyCalculate(tsumitateInput);
 
-    // compoundInterestCalcResult を更新
-    this.compoundInterestCalcResult.update(() => tsumitateOutput.compoundInterestCalcResult);
+    // シュミレーション結果を更新
+    this.tsumitateSimulationResult.set({ input: tsumitateInput, output: tsumitateOutput });
 
     // 初期資産額をセッションストレージに保存
     this.setInitialAssetInSessionStorage(tsumitateInput.initialAsset);

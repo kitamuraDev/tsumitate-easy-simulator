@@ -2,13 +2,14 @@ import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { DeferBlockState } from '@angular/core/testing';
 
 import '@testing-library/jest-dom/vitest';
-import { render, screen, within } from '@testing-library/angular';
+import { fireEvent, render, screen, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 
 import { type AmountChangeSetting, SettingDatabaseService } from '../../core/setting-database.service';
+import { ToPercentagePipe } from '../../shared/pipes/to-percentage.pipe';
 import { TruncateToTenThousandsPipe } from '../../shared/pipes/truncate-to-ten-thousands.pipe';
-import { CalculateService } from '../../shared/services/calculate.service';
+import type { Tsumitate } from '../../shared/types/tsumitate';
 import SimulationComponent from './simulation.component';
 
 describe('SimulationComponent', () => {
@@ -91,9 +92,9 @@ describe('SimulationComponent', () => {
       await renderDeferBlock(DeferBlockState.Complete);
 
       expect(screen.getByTestId('any-inputs-container')).toBeVisible();
-      expect(screen.getByTestId('amount-any-1-container')).toBeVisible();
-      expect(screen.queryByTestId('amount-any-2-container')).toBeNull();
-      expect(screen.queryByTestId('amount-any-3-container')).toBeNull();
+      expect(screen.getByTestId('slider-amount-any-1')).toBeVisible();
+      expect(screen.queryByTestId('slider-amount-any-2')).toBeNull();
+      expect(screen.queryByTestId('slider-amount-any-3')).toBeNull();
     });
 
     it('「変更回数」が2回の場合、任意入力エリアが2つ表示されること', async () => {
@@ -121,9 +122,9 @@ describe('SimulationComponent', () => {
       await renderDeferBlock(DeferBlockState.Complete);
 
       expect(screen.getByTestId('any-inputs-container')).toBeVisible();
-      expect(screen.getByTestId('amount-any-1-container')).toBeVisible();
-      expect(screen.getByTestId('amount-any-2-container')).toBeVisible();
-      expect(screen.queryByTestId('amount-any-3-container')).toBeNull();
+      expect(screen.getByTestId('slider-amount-any-1')).toBeVisible();
+      expect(screen.getByTestId('slider-amount-any-2')).toBeVisible();
+      expect(screen.queryByTestId('slider-amount-any-3')).toBeNull();
     });
 
     it('「変更回数」が3回の場合、任意入力エリアが3つ表示されること', async () => {
@@ -151,28 +152,50 @@ describe('SimulationComponent', () => {
       await renderDeferBlock(DeferBlockState.Complete);
 
       expect(screen.getByTestId('any-inputs-container')).toBeVisible();
-      expect(screen.getByTestId('amount-any-1-container')).toBeVisible();
-      expect(screen.getByTestId('amount-any-2-container')).toBeVisible();
-      expect(screen.getByTestId('amount-any-3-container')).toBeVisible();
+      expect(screen.getByTestId('slider-amount-any-1')).toBeVisible();
+      expect(screen.getByTestId('slider-amount-any-2')).toBeVisible();
+      expect(screen.getByTestId('slider-amount-any-3')).toBeVisible();
     });
   });
 
-  describe('最終評価額', () => {
-    const { tsumitateEasyCalculate } = new CalculateService();
-    const { transform } = new TruncateToTenThousandsPipe();
+  // biome-ignore format: 一行にまとめたいため
+  describe('シミュレーション結果モーダル', () => {
+    const { transform: truncate } = new TruncateToTenThousandsPipe();
+    const { transform: toPercentage } = new ToPercentagePipe();
 
-    it('初期表示時は、計算結果を表示するコンポーネントは非表示であるか', async () => {
-      const { container } = await render(SimulationComponent, {
-        providers: [provideZonelessChangeDetection()],
-      });
-      const displayAmountValueComponent = container.querySelector('app-display-amount-value');
+    const changeSliderValue = (testId: string, roleName: string, value: number) => {
+      const slider = within(screen.getByTestId(testId)).getByRole('slider', {name: new RegExp(roleName)}) as HTMLInputElement;
+      fireEvent.change(slider, { target: { value } });
+    };
 
-      expect(displayAmountValueComponent).toBeFalsy();
-    });
+    const mockTsumitateList: Tsumitate[] = [
+      {
+        input: { initialAsset: 0, rate: 5, amounts: [5, 0, 0, 0], years: [1, 0, 0, 0] },
+        output: { compoundInterestCalcResult: 613628, diff: 13628, simpleInterestCalcResult: 600000 },
+      },
+      {
+        input: { initialAsset: 0, rate: 5, amounts: [5, 6, 0, 0], years: [1, 2, 0, 0] },
+        output: { compoundInterestCalcResult: 2186052, diff: 146052, simpleInterestCalcResult: 2040000 },
+      },
+      {
+        input: { initialAsset: 0, rate: 5, amounts: [5, 6, 7, 0], years: [1, 2, 3, 0] },
+        output: { compoundInterestCalcResult: 5238880, diff: 678880, simpleInterestCalcResult: 4560000 },
+      },
+      {
+        input: { initialAsset: 0, rate: 5, amounts: [5, 6, 7, 8], years: [1, 2, 3, 4] },
+        output: { compoundInterestCalcResult: 10599599, diff: 2199599, simpleInterestCalcResult: 8400000 },
+      },
+    ];
 
-    it('「計算」ボタンを押下で、計算結果が表示されるか', async () => {
+    it.each(mockTsumitateList)('「計算」ボタン押下で、input/outputの値がシュミレーション結果モーダルに反映されること', async ({ input, output }) => {
       const user = userEvent.setup();
-      await render(SimulationComponent, {
+      const { renderDeferBlock } = await render(SimulationComponent, {
+        componentProperties: {
+          amountChangeSetting: signal<AmountChangeSetting>({
+            isAmountChangeEnabled: true,
+            selectedAmountChangeCount: '3',
+          }),
+        },
         providers: [
           provideZonelessChangeDetection(),
           {
@@ -186,30 +209,50 @@ describe('SimulationComponent', () => {
                 }),
               getAmountChangeSetting: () =>
                 Promise.resolve({
-                  isAmountChangeEnabled: false,
-                  selectedAmountChangeCount: '1',
+                  isAmountChangeEnabled: true,
+                  selectedAmountChangeCount: '3',
                 }),
             },
           },
         ],
       });
+      await renderDeferBlock(DeferBlockState.Complete);
 
-      const iac = within(screen.getByTestId('initial-asset-container'));
-      const initialAsset = Number((iac.getByRole('slider', { name: /初期資産額/ }) as HTMLInputElement).value);
-      const rc = within(screen.getByTestId('rate-container'));
-      const rate = Number((rc.getByRole('slider', { name: /想定利回り/ }) as HTMLInputElement).value);
-      const arc = within(screen.getByTestId('amount-required-container'));
-      const amount = Number((arc.getByRole('slider', { name: /毎月積立額/ }) as HTMLInputElement).value);
-      const yrc = within(screen.getByTestId('year-required-container'));
-      const year = Number((yrc.getByRole('slider', { name: /積立期間/ }) as HTMLInputElement).value);
-
-      const calcResult = tsumitateEasyCalculate({ initialAsset, amounts: [amount], years: [year], rate });
-      const expectedCalcResult = transform(calcResult.compoundInterestCalcResult);
+      // 各スライダーの値変更
+      changeSliderValue('slider-initial-asset', '初期資産額', input.initialAsset);
+      changeSliderValue('slider-rate', '想定利回り', input.rate);
+      changeSliderValue('slider-amount-required', '毎月積立額', input.amounts[0]);
+      changeSliderValue('slider-year-required', '積立期間', input.years[0]);
+      changeSliderValue('slider-amount-any-1', '毎月積立額', input.amounts[1]);
+      changeSliderValue('slider-year-any-1', '積立期間', input.years[1]);
+      changeSliderValue('slider-amount-any-2', '毎月積立額', input.amounts[2]);
+      changeSliderValue('slider-year-any-2', '積立期間', input.years[2]);
+      changeSliderValue('slider-amount-any-3', '毎月積立額', input.amounts[3]);
+      changeSliderValue('slider-year-any-3', '積立期間', input.years[3]);
 
       // 計算ボタン押下
       await user.click(screen.getByRole('button', { name: '計算' }));
 
-      expect(await screen.findByText(expectedCalcResult)).toBeVisible();
+      const mo = within(screen.getByTestId('modal-output'))
+      // 最終評価額
+      expect(mo.getByText(`${truncate(output.compoundInterestCalcResult)}`)).toBeVisible();
+      // 評価損益
+      expect(mo.getByText(`+${truncate(output.diff)}万円 (${toPercentage(output.simpleInterestCalcResult, output.compoundInterestCalcResult)})`),).toBeVisible();
+      // 投資元本
+      expect(mo.getByText(`${truncate(output.simpleInterestCalcResult)}万円`)).toBeVisible();
+
+      const mi = within(screen.getByTestId('modal-input'))
+      // 初期投資額
+      expect(mi.getByText(`${input.initialAsset}`)).toBeVisible();
+      // 年率
+      expect(mi.getByText(`${input.rate}`)).toBeVisible();
+      // 積立詳細
+      input.years.forEach((year, index) => {
+        if (year > 0) {
+          expect(mi.getByText(`${input.amounts[index]}万円`)).toBeVisible();
+          expect(mi.getByText(`を ${year}年間`)).toBeVisible();
+        }
+      });
     });
   });
 
