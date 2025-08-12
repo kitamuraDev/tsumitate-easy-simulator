@@ -3,7 +3,7 @@
   <form [formGroup]="inputs" class="flex flex-col gap-6 p-6">
     <div class="space-y-2.5">
       <!-- 初期資産額 -->
-      <div data-testid="initial-asset-container">
+      <div data-testid="slider-initial-asset">
         <div class="flex items-center justify-between">
           <app-label-text [id]="'initialAsset'" [isRequired]="true">初期資産額</app-label-text>
           <app-display-range-input-value>{{ inputs.value.initialAsset }}</app-display-range-input-value>
@@ -22,7 +22,7 @@
       </div>
 
       <!-- 想定利回り -->
-      <div data-testid="rate-container">
+      <div data-testid="slider-rate">
         <div class="flex items-center justify-between">
           <app-label-text [id]="'rate'" [isRequired]="true">想定利回り</app-label-text>
           <app-display-range-input-value>{{ inputs.value.rate }}</app-display-range-input-value>
@@ -40,7 +40,7 @@
       </div>
 
       <!-- 毎月積立額 -->
-      <div data-testid="amount-required-container">
+      <div data-testid="slider-amount-required">
         <div class="flex items-center justify-between">
           <app-label-text [id]="'amountRequired'" [isRequired]="true">毎月積立額</app-label-text>
           <app-display-range-input-value>{{ inputs.value.amountRequired }}</app-display-range-input-value>
@@ -58,7 +58,7 @@
       </div>
 
       <!-- 積立期間 -->
-      <div data-testid="year-required-container">
+      <div data-testid="slider-year-required">
         <div class="flex items-center justify-between">
           <app-label-text [id]="'yearRequired'" [isRequired]="true">積立期間</app-label-text>
           <app-display-range-input-value>{{ inputs.value.yearRequired }}</app-display-range-input-value>
@@ -81,7 +81,7 @@
         <div data-testid="any-inputs-container" class="space-y-2.5">
           <!-- 任意入力 1 -->
           @if (['1', '2', '3'].includes(amountChangeSetting().selectedAmountChangeCount)) {
-            <div data-testid="amount-any-1-container">
+            <div data-testid="slider-amount-any-1">
               <div class="flex items-center justify-between">
                 <app-label-text [id]="'amountAny1'" [isRequired]="false">毎月積立額</app-label-text>
                 <app-display-range-input-value>{{ inputs.value.amountAny1 }}</app-display-range-input-value>
@@ -96,7 +96,7 @@
                 class="w-full h-1 bg-gray-200 rounded appearance-none cursor-pointer custom-range-thumb"
               />
             </div>
-            <div data-testid="year-any-1-container">
+            <div data-testid="slider-year-any-1">
               <div class="flex items-center justify-between">
                 <app-label-text [id]="'yearAny1'" [isRequired]="false">積立期間</app-label-text>
                 <app-display-range-input-value>{{ inputs.value.yearAny1 }}</app-display-range-input-value>
@@ -114,7 +114,7 @@
           }
           <!-- 任意入力 2 -->
           @if (['2', '3'].includes(amountChangeSetting().selectedAmountChangeCount)) {
-            <div data-testid="amount-any-2-container">
+            <div data-testid="slider-amount-any-2">
               <div class="flex items-center justify-between">
                 <app-label-text [id]="'amountAny2'" [isRequired]="false">毎月積立額</app-label-text>
                 <app-display-range-input-value>{{ inputs.value.amountAny2 }}</app-display-range-input-value>
@@ -129,7 +129,7 @@
                 class="w-full h-1 bg-gray-200 rounded appearance-none cursor-pointer custom-range-thumb"
               />
             </div>
-            <div data-testid="year-any-2-container">
+            <div data-testid="slider-year-any-2">
               <div class="flex items-center justify-between">
                 <app-label-text [id]="'yearAny2'" [isRequired]="false">積立期間</app-label-text>
                 <app-display-range-input-value>{{ inputs.value.yearAny2 }}</app-display-range-input-value>
@@ -147,7 +147,7 @@
           }
           <!-- 任意入力 3 -->
           @if (['3'].includes(amountChangeSetting().selectedAmountChangeCount)) {
-            <div data-testid="amount-any-3-container">
+            <div data-testid="slider-amount-any-3">
               <div class="flex items-center justify-between">
                 <app-label-text [id]="'amountAny3'" [isRequired]="false">毎月積立額</app-label-text>
                 <app-display-range-input-value>{{ inputs.value.amountAny3 }}</app-display-range-input-value>
@@ -162,7 +162,7 @@
                 class="w-full h-1 bg-gray-200 rounded appearance-none cursor-pointer custom-range-thumb"
               />
             </div>
-            <div data-testid="year-any-3-container">
+            <div data-testid="slider-year-any-3">
               <div class="flex items-center justify-between">
                 <app-label-text [id]="'yearAny3'" [isRequired]="false">積立期間</app-label-text>
                 <app-display-range-input-value>{{ inputs.value.yearAny3 }}</app-display-range-input-value>
@@ -182,18 +182,10 @@
       }
     }
   </form>
-
-  <div class="w-80 h-20 p-6 m-auto flex justify-between items-center bg-blue-100">
-    <span class="text-sm font-medium">最終評価額</span>
-    <div class="flex items-center gap-1">
-      @if (compoundInterestCalcResult()) {
-        <app-display-amount-value [compoundInterestCalcResult]="compoundInterestCalcResult()" />
-      }
-      <span class="text-sm font-medium">万円</span>
-    </div>
-  </div>
 </section>
 
-<app-base-button [disabled]="isAbnormalInput()" (clickEvent)="onCalculate()">
+<app-base-button [disabled]="isAbnormalInput()" popovertarget="display-simulation-result" (clickEvent)="onCalculate()">
   計算
 </app-base-button>
+
+<app-display-simulation-result [tsumitateSimulationResult]="tsumitateSimulationResult()" />

@@ -8,6 +8,7 @@ import { Component, input, output } from '@angular/core';
     <button
       [disabled]="disabled()"
       (click)="clickEvent.emit()"
+      [attr.popovertarget]="popovertarget()"
       class="
         {{bgStyles}} transition-opacity
         text-base font-medium text-center text-white
@@ -19,5 +20,6 @@ import { Component, input, output } from '@angular/core';
 })
 export class BaseButtonComponent {
   disabled = input.required<boolean>();
+  popovertarget = input<string>();
   clickEvent = output();
 }
