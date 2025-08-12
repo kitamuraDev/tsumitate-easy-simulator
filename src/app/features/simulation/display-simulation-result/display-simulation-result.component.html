@@ -3,7 +3,7 @@
   id="display-simulation-result"
   class="w-screen h-svh bg-slate-50 text-slate-800"
 >
-  <div class="container mx-auto flex h-full flex-col p-4 md:p-8">
+  <div class="container mx-auto min-h-full flex flex-col p-4 md:p-8">
     <header class="flex items-center justify-between my-6">
       <h2 class="text-2xl font-bold text-slate-700">シミュレーション結果</h2>
       <button
@@ -16,11 +16,11 @@
       </button>
     </header>
 
-    <main class="grid flex-1 gap-8 md:grid-cols-2 min-h-0">
+    <main class="grid flex-1 gap-8 md:grid-cols-2">
       @let result = tsumitateSimulationResult();
 
       <!-- Left: Output -->
-      <div data-testid="modal-output" class="flex flex-col items-center justify-center p-8 rounded-xl bg-white shadow overflow-y-auto">
+      <div data-testid="modal-output" class="flex flex-col items-center justify-center p-8 rounded-xl bg-white shadow">
         <h3 class="mb-2 text-lg text-slate-500">最終評価額</h3>
         <p class="text-6xl font-extrabold text-slate-900">
           {{ result.output.compoundInterestCalcResult | truncateToTenThousands }}<span class="text-2xl font-semibold">万円</span>
@@ -42,7 +42,7 @@
       </div>
 
       <!-- Right: Input -->
-      <div data-testid="modal-input" class="flex flex-col p-8 rounded-xl bg-white shadow overflow-y-auto">
+      <div data-testid="modal-input" class="flex flex-col p-8 rounded-xl bg-white shadow">
         <h3 class="mb-6 text-xl font-bold text-slate-700">入力情報</h3>
         <div class="space-y-6">
           <div class="flex items-baseline justify-between border-b pb-4">
