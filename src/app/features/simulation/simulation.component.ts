@@ -90,18 +90,18 @@ export default class SimulationComponent implements OnInit {
     // シュミレーション結果を更新
     this.tsumitateSimulationResult.set({ input: tsumitateInput, output: tsumitateOutput });
 
-    // 初期資産額をセッションストレージに保存
+    // 初期投資額をセッションストレージに保存
     this.setInitialAssetInSessionStorage(tsumitateInput.initialAsset);
 
     // DB登録
     await this.tsumitateDatabaseService.add({ input: tsumitateInput, output: tsumitateOutput });
   }
 
-  // 初期資産額をセッションストレージに保存
+  // 初期投資額をセッションストレージに保存
   private setInitialAssetInSessionStorage(initialAsset: number): void {
     sessionStorage.setItem('initial-asset', initialAsset.toString());
   }
-  // 初期資産額をセッションストレージから取得
+  // 初期投資額をセッションストレージから取得
   private getInitialAssetInSessionStorage(): number {
     return Number(sessionStorage.getItem('initial-asset'));
   }

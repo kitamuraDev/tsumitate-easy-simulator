@@ -3,7 +3,7 @@ export type Input = {
   initialAsset: number; // 初期資産
   amounts: number[];    // 月間積立投資額
   years: number[];      // 積立期間
-  rate: number;         // 想定利回り（年率）
+  rate: number;         // 年率
 };
 
 // biome-ignore format: コメントを揃えたいため

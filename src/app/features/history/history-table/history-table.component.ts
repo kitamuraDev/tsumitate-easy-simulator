@@ -16,11 +16,11 @@ export class HistoryTableComponent {
   deleteTsumitate = output<number>();
 
   readonly tableHeaderNames = [
-    '初期資産額',
-    '想定利回り',
+    '初期投資額',
+    '年率',
     '毎月積立額（積立期間）',
-    '運用金額',
-    '評価損益（率）',
+    '投資元本',
+    '評価損益',
     '最終評価額',
     '削除',
   ];
