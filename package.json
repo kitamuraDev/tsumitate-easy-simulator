@@ -1,6 +1,6 @@
 {
   "name": "tsumitate-easy-simulator",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "private": true,
   "volta": {
     "node": "22.12.0"
