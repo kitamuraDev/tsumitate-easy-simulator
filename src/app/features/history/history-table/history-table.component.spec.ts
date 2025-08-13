@@ -7,35 +7,46 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { ToPercentagePipe } from '../../../shared/pipes/to-percentage.pipe';
 import { TruncateToTenThousandsPipe } from '../../../shared/pipes/truncate-to-ten-thousands.pipe';
+import type { Tsumitate } from '../../../shared/types/tsumitate';
 import { HistoryTableComponent } from './history-table.component';
 
 describe('HistoryTableComponent', () => {
-  const mockTsumitateList = [
+  const mockTsumitateList: Tsumitate[] = [
     {
       id: 1,
-      input: {
-        initialAsset: 210,
-        amounts: [20, 10, 0, 0],
-        years: [2, 5, 0, 0],
-        rate: 5,
-      },
-      output: {
-        compoundInterestCalcResult: 16158223.093541713,
-        simpleInterestCalcResult: 12900000,
-        diff: 3258223.0935417134,
-      },
+      input: { initialAsset: 0, rate: 5, amounts: [5], years: [1] },
+      output: { compoundInterestCalcResult: 613628, diff: 13628, simpleInterestCalcResult: 600000 },
+    },
+    {
+      id: 2,
+      input: { initialAsset: 0, rate: 5, amounts: [5, 6], years: [1, 2] },
+      output: { compoundInterestCalcResult: 2186052, diff: 146052, simpleInterestCalcResult: 2040000 },
+    },
+    {
+      id: 3,
+      input: { initialAsset: 0, rate: 5, amounts: [5, 6, 7], years: [1, 2, 3] },
+      output: { compoundInterestCalcResult: 5238880, diff: 678880, simpleInterestCalcResult: 4560000 },
+    },
+    {
+      id: 4,
+      input: { initialAsset: 0, rate: 5, amounts: [5, 6, 7, 8], years: [1, 2, 3, 4] },
+      output: { compoundInterestCalcResult: 10599599, diff: 2199599, simpleInterestCalcResult: 8400000 },
+    },
+    {
+      id: 5,
+      input: { initialAsset: 0, rate: 5, amounts: [5, 6, 7, 8, 0], years: [1, 2, 3, 4, 30] },
+      output: { compoundInterestCalcResult: 45810858, diff: 37410858, simpleInterestCalcResult: 8400000 },
     },
   ];
 
-  it('履歴データが履歴テーブルに表示されること', async () => {
+  it.each(mockTsumitateList)('履歴データが履歴テーブルに表示されること', async ({ id, input, output }) => {
     const { transform: truncateTransform } = new TruncateToTenThousandsPipe();
     const { transform: percentageTransform } = new ToPercentagePipe();
-    const expectedHistory = mockTsumitateList[0];
 
     const { fixture } = await render(HistoryTableComponent, {
       providers: [provideZonelessChangeDetection()],
       imports: [TruncateToTenThousandsPipe, ToPercentagePipe],
-      inputs: { tsumitateList: mockTsumitateList },
+      inputs: { tsumitateList: [{ id, input, output }] },
     });
 
     // テーブルヘッダー
@@ -45,40 +56,47 @@ describe('HistoryTableComponent', () => {
     }
 
     // 初期投資額
-    const initialAsset = `${expectedHistory.input.initialAsset}万円`;
+    const initialAsset = `${input.initialAsset}万円`;
     expect(screen.getByText(initialAsset)).toBeInTheDocument();
 
     // 年率
-    const rate = `${expectedHistory.input.rate}%`;
+    const rate = `${input.rate}%`;
     expect(screen.getByText(rate)).toBeInTheDocument();
 
     // 毎月積立額 (積立期間)
-    const amountsAndYears = `${expectedHistory.input.amounts[0]}万円 (${expectedHistory.input.years[0]}年) ${expectedHistory.input.amounts[1]}万円 (${expectedHistory.input.years[1]}年)`;
+    const amountsAndYears = input.amounts
+      .map((amount, index) => {
+        const year = input.years[index];
+        return year ? `${amount}万円 (${year}年)` : '';
+      })
+      .filter(Boolean)
+      .join(' ');
     expect(screen.getByText(amountsAndYears)).toBeInTheDocument();
 
     // 投資元本
-    const simpleInterestCalcResult = `${truncateTransform(expectedHistory.output.simpleInterestCalcResult)}万円`;
+    const simpleInterestCalcResult = `${truncateTransform(output.simpleInterestCalcResult)}万円`;
     expect(screen.getByText(simpleInterestCalcResult)).toBeInTheDocument();
 
     // 評価損益
-    const diff = `${truncateTransform(expectedHistory.output.diff)}万円 (${percentageTransform(expectedHistory.output.simpleInterestCalcResult, expectedHistory.output.compoundInterestCalcResult)})`;
+    const diff = `${truncateTransform(output.diff)}万円 (${percentageTransform(output.simpleInterestCalcResult, output.compoundInterestCalcResult)})`;
     expect(screen.getByText(diff)).toBeInTheDocument();
 
     // 最終評価額
-    const compoundInterestCalcResult = `${truncateTransform(expectedHistory.output.compoundInterestCalcResult)}万円`;
+    const compoundInterestCalcResult = `${truncateTransform(output.compoundInterestCalcResult)}万円`;
     expect(screen.getByText(compoundInterestCalcResult)).toBeInTheDocument();
 
     // 削除ボタン
     expect(screen.getByRole('button', { name: '履歴削除ボタン' })).toBeInTheDocument();
   });
 
-  it('削除アイコンのボタン押下で履歴データの削除メソッドが呼ばれること', async () => {
+  // biome-ignore format: 一行にまとめたいため
+  it.each(mockTsumitateList)('削除アイコンのボタン押下で履歴データの削除メソッドが呼ばれること', async ({ id, input, output }) => {
     const user = userEvent.setup();
     const deleteTsumitateSpy = vi.fn();
 
     const { fixture } = await render(HistoryTableComponent, {
       providers: [provideZonelessChangeDetection()],
-      inputs: { tsumitateList: mockTsumitateList },
+      inputs: { tsumitateList: [{ id, input, output }] },
       on: { deleteTsumitate: deleteTsumitateSpy },
     });
 
@@ -88,6 +106,6 @@ describe('HistoryTableComponent', () => {
 
     expect(deleteTsumitateSpy).toHaveBeenCalled();
     expect(deleteTsumitateSpy).toHaveBeenCalledTimes(1);
-    expect(deleteTsumitateSpy).toHaveBeenCalledWith(mockTsumitateList[0].id);
+    expect(deleteTsumitateSpy).toHaveBeenCalledWith(id);
   });
 });
